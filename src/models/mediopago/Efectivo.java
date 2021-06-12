@@ -15,5 +15,7 @@ public class Efectivo {
 
     private Float monto;
 
-
+    public void getMonto() {
+        // TODO implement here
+    }
 }

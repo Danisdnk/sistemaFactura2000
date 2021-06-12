@@ -1,7 +1,7 @@
 package models.proveedor;
-import models.impuesto.CertificadoExento;
+import models.documento.Factura;
 import models.impuesto.ResponsableIva;
-
+import models.impuesto.CertificadoExento;
 import java.time.LocalDate;
 import java.util.*;
 
@@ -28,9 +28,11 @@ public class Proveedor {
 
     private ResponsableIva responsableIva;
 
+    private List<Factura> facturas;
+
     private List<CertificadoExento> certificados;
 
-    private List<models.documento.Factura> Factura;
+    private List<Factura> Factura;
 
     private Float credito;
 
@@ -50,17 +52,74 @@ public class Proveedor {
     /**
      * @param cuit
      */
-    public void getCuit(String cuit) {
+    public void getFacturas(String cuit, Date fecha) {
         // TODO implement here
     }
 
     /**
-     * @param idItem 
+     * @param cuit
+     */
+    public void getFacturas(String cuit) {
+        // TODO implement here
+    }
+
+    /**
+     *
+     */
+    public void getFactura() {
+        // TODO implement here
+    }
+
+    /**
+     * @param idItem
      * @return
      */
     public float getItemProveedor(int idItem) {
         // TODO implement here
         return 0.0f;
     }
+
+    /**
+     * @param cuit
+     */
+    public void calcularDeudaDelProveedor(String cuit) {
+        // TODO implement here
+    }
+
+    /**
+     *
+     */
+    public void getDocumentosImpagos() {
+        // TODO implement here
+    }
+
+    /**
+     *
+     */
+    public void getNotasProveedor() {
+        // TODO implement here
+    }
+
+    /**
+     *
+     */
+    public void getPagosRealizados() {
+        // TODO implement here
+    }
+
+    /**
+     *
+     */
+    public void getNombreProveedor() {
+        // TODO implement here
+    }
+
+    /**
+     *
+     */
+    public void getCuit() {
+        // TODO implement here
+    }
+
 
 }

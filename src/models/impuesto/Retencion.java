@@ -13,5 +13,8 @@ public class Retencion {
     private TipoImpuesto tipo;
 
     private double monto;
-
+    private boolean exento;
+    public void getTotalRetencion() {
+        // TODO implement here
+    }
 }

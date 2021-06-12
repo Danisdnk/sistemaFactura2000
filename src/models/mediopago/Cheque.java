@@ -26,6 +26,9 @@ public class Cheque {
 
     private Float monto;
 
+    public void getMonto() {
+        // TODO implement here
+    }
 
 
 }

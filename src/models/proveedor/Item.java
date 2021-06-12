@@ -1,7 +1,5 @@
 package models.proveedor;
-
 import models.impuesto.IVA;
-
 public class Item {
 
 
@@ -14,13 +12,11 @@ public class Item {
     private String nombre;
 
     private TipoItem tipo;
-
+    private IVA iva;
 
     private Unidad unidad;
 
-    private IVA iva;
-
-
+    public Rubro pertenece;
 
 
 
@@ -38,5 +34,7 @@ public class Item {
         // TODO implement here
         return 0;
     }
-
+    public void getIva() {
+        // TODO implement here
+    }
 }
