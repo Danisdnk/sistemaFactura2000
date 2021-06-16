@@ -30,11 +30,51 @@ public class Item {
      * @param idItem 
      * @return
      */
-    public int getItemID(int idItem) {
-        // TODO implement here
-        return 0;
+    public int getIdItem() {
+        return idItem;
     }
-    public void getIva() {
-        // TODO implement here
+
+    public void setIdItem(int idItem) {
+        this.idItem = idItem;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public TipoItem getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(TipoItem tipo) {
+        this.tipo = tipo;
+    }
+
+    public IVA getIva() {
+        return iva;
+    }
+
+    public void setIva(IVA iva) {
+        this.iva = iva;
+    }
+
+    public Unidad getUnidad() {
+        return unidad;
+    }
+
+    public void setUnidad(Unidad unidad) {
+        this.unidad = unidad;
+    }
+
+    public Rubro getPertenece() {
+        return pertenece;
+    }
+
+    public void setPertenece(Rubro pertenece) {
+        this.pertenece = pertenece;
     }
 }

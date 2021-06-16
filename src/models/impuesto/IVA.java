@@ -12,4 +12,11 @@ public class IVA {
 
     }
 
+    public Float getImporteIva() {
+        return importeIva;
+    }
+
+    public void setImporteIva(Float importeIva) {
+        this.importeIva = importeIva;
+    }
 }

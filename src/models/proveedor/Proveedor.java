@@ -40,44 +40,95 @@ public class Proveedor {
 
 
 
+// PROVEEDORES CONTROLER - DAR DE ALTA , MODIFICAR, LISTAR Prov del sistema, BORRAR
 
+    public String getCuit() {
+        return cuit;
+    }
 
+    public void setCuit(String cuit) {
+        this.cuit = cuit;
+    }
 
+    public String getRazonSocial() {
+        return razonSocial;
+    }
 
+    public void setRazonSocial(String razonSocial) {
+        this.razonSocial = razonSocial;
+    }
 
+    public String getNombre() {
+        return nombre;
+    }
 
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
 
+    public String getDireccion() {
+        return direccion;
+    }
 
+    public void setDireccion(String direccion) {
+        this.direccion = direccion;
+    }
 
-    /**
-     * @param cuit
-     */
-    public void getFacturas(String cuit, Date fecha) {
-        // TODO implement here
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getNumeroIIBB() {
+        return numeroIIBB;
+    }
+
+    public void setNumeroIIBB(String numeroIIBB) {
+        this.numeroIIBB = numeroIIBB;
+    }
+
+    public LocalDate getInicioActividades() {
+        return inicioActividades;
+    }
+
+    public void setInicioActividades(LocalDate inicioActividades) {
+        this.inicioActividades = inicioActividades;
+    }
+
+    public ResponsableIva getResponsableIva() {
+        return responsableIva;
+    }
+
+    public void setResponsableIva(ResponsableIva responsableIva) {
+        this.responsableIva = responsableIva;
+    }
+
+    public Float getCredito() {
+        return credito;
+    }
+
+    public void setCredito(Float credito) {
+        this.credito = credito;
     }
 
     /**
      * @param cuit
      */
-    public void getFacturas(String cuit) {
-        // TODO implement here
-    }
+
 
     /**
-     *
+     * @param cuit
      */
-    public void getFactura() {
-        // TODO implement here
-    }
+
 
     /**
      * @param idItem
      * @return
      */
-    public float getItemProveedor(int idItem) {
-        // TODO implement here
-        return 0.0f;
-    }
+
 
     /**
      * @param cuit
@@ -86,40 +137,8 @@ public class Proveedor {
         // TODO implement here
     }
 
-    /**
-     *
-     */
-    public void getDocumentosImpagos() {
-        // TODO implement here
-    }
 
-    /**
-     *
-     */
-    public void getNotasProveedor() {
-        // TODO implement here
-    }
 
-    /**
-     *
-     */
-    public void getPagosRealizados() {
-        // TODO implement here
-    }
-
-    /**
-     *
-     */
-    public void getNombreProveedor() {
-        // TODO implement here
-    }
-
-    /**
-     *
-     */
-    public void getCuit() {
-        // TODO implement here
-    }
 
 
 }
