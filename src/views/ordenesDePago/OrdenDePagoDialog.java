@@ -10,9 +10,9 @@ import java.awt.event.ActionListener;
 
 public class OrdenDePagoDialog extends JDialog implements ActionListener{
     private JPanel opMain;
-    private JComboBox ddlFormasPago;
-    private JComboBox ddlProveedores;
-    private JComboBox ddlFacturas;
+    private JComboBox<DDLItemDTO> ddlFormasPago;
+    private JComboBox<DDLItemDTO> ddlProveedores;
+    private JComboBox<DDLItemDTO> ddlFacturas;
     private JTextField txtTotalPagar;
     private JButton btnGuardar;
 
@@ -46,7 +46,7 @@ public class OrdenDePagoDialog extends JDialog implements ActionListener{
     private void setupForm(Integer opID) {
         this.op = this.controlador.getOPByID(opID);
 
-        this.ddlFormasPago.setSelectedItem(this.op.getFormaPago());
+        this.ddlFormasPago.setSelectedItem(this.op.getFormaPago().toDDL());
         this.ddlProveedores.setSelectedItem(this.op.getProveedor());
         this.ddlFacturas.setSelectedItem(this.op.getFactura());
         this.txtTotalPagar.setText(String.valueOf(this.op.getTotalACancelar()));
