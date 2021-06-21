@@ -2,29 +2,14 @@ package models.mediopago;
 
 import java.util.*;
 
-/**
- * 
- */
-public class Cheque {
-
-
-    public Cheque() {
-    }
-
-
-    private int idPago;
-
-
+public class Cheque extends TipoPago {
     private String tipoCheque;
 
     private Date fechaEmision;
 
     private Date fechaVencimiento;
 
-
     private String idFirmante;
-
-    private Float monto;
 
     public void getMonto() {
         // TODO implement here

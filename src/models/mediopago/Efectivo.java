@@ -1,20 +1,6 @@
 package models.mediopago;
 
-/**
- * 
- */
-public class Efectivo {
-
-
-    public Efectivo() {
-    }
-
-
-    private int idPago;
-
-
-    private Float monto;
-
+public class Efectivo extends TipoPago {
     public void getMonto() {
         // TODO implement here
     }
