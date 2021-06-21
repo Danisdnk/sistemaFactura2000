@@ -2,12 +2,13 @@ package views.ordenesDePago;
 
 import controllers.ControladorOrdenPago;
 import models.documento.OrdenPago;
+import models.dtos.DDLItemDTO;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class OrdenDePago extends JDialog implements ActionListener{
+public class OrdenDePagoDialog extends JDialog implements ActionListener{
     private JPanel opMain;
     private JComboBox ddlFormasPago;
     private JComboBox ddlProveedores;
@@ -18,7 +19,7 @@ public class OrdenDePago extends JDialog implements ActionListener{
     private ControladorOrdenPago controlador;
     private OrdenPago op;
 
-    public OrdenDePago(){
+    public OrdenDePagoDialog(Integer opID){
         this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         this.setContentPane(opMain);
         this.setSize(400,400);
@@ -26,7 +27,29 @@ public class OrdenDePago extends JDialog implements ActionListener{
 
         this.controlador = ControladorOrdenPago.getInstancia();
 
+        this.ddlProveedores.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                var seleccionado = (DDLItemDTO)ddlProveedores.getSelectedItem();
+
+                ddlFacturas.setModel(new DefaultComboBoxModel());
+            }
+        });
+
+        if (opID != null) {
+            this.setupForm(opID);
+        }
+
         btnGuardar.addActionListener(this);
+    }
+
+    private void setupForm(Integer opID) {
+        this.op = this.controlador.getOPByID(opID);
+
+        this.ddlFormasPago.setSelectedItem(this.op.getFormaPago());
+        this.ddlProveedores.setSelectedItem(this.op.getProveedor());
+        this.ddlFacturas.setSelectedItem(this.op.getFactura());
+        this.txtTotalPagar.setText(String.valueOf(this.op.getTotalACancelar()));
     }
 
     public void actionPerformed(ActionEvent e) {
@@ -36,7 +59,7 @@ public class OrdenDePago extends JDialog implements ActionListener{
         dispose();
     }
 
-    OrdenPago showDialog() {
+    public OrdenPago showDialog() {
         setVisible(true);
         return this.op;
     }

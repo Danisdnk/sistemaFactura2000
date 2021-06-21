@@ -35,6 +35,15 @@ public class ControladorOrdenPago {
         return this.ordenesDePago;
     }
 
+    // TODO agregar a diagrama clases
+    public OrdenPago getOPByID(int opID) {
+        return this.ordenesDePago
+                .stream()
+                .filter(op -> op.getOpID() == opID)
+                .findFirst()
+                .get();
+    }
+
     public static ControladorOrdenPago getInstancia() {
         if (instancia == null) {
             instancia = new ControladorOrdenPago();

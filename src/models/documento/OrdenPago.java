@@ -1,22 +1,26 @@
 package models.documento;
 
+import models.mediopago.TipoPago;
+import models.proveedor.Proveedor;
+
 import java.util.*;
 
 public class OrdenPago {
-
-    public OrdenPago() {
-    }
-
     // TODO agregar a diagrama clases
     private int opID;
 
-    private List<Factura> factura;
+    // TODO agregar a diagrama clases
+    private Proveedor proveedor;
+
+    // TODO renombrar a diagrama clases
+    private List<Factura> facturas;
 
     private List<Nota> nota;
 
     private float totalACancelar;
 
-    private int idFormaPago;
+    // TODO cambio de id a TipoPago a diagrama clases
+    private TipoPago formaPago;
 
     private float totalRetenciones;
 
@@ -30,6 +34,15 @@ public class OrdenPago {
     // TODO agregar a diagrama clases
     public int getOpID() {
         return opID;
+    }
+
+    // TODO agregar a diagrama clases
+    public Proveedor getProveedor() {
+        return proveedor;
+    }
+
+    public Factura getFactura() {
+        return this.facturas.stream().findFirst().get();
     }
 
     public void comprobarMedioPago() {
@@ -48,12 +61,14 @@ public class OrdenPago {
         this.totalACancelar = totalACancelar;
     }
 
-    public int getIdFormaPago() {
-        return idFormaPago;
+    // TODO agregar a diagrama clases
+    public TipoPago getFormaPago() {
+        return this.formaPago;
     }
 
-    public void setIdFormaPago(int idFormaPago) {
-        this.idFormaPago = idFormaPago;
+    // TODO agregar a diagrama clases
+    public void setFormaPago(TipoPago pago) {
+        this.formaPago = pago;
     }
 
     public float getTotalRetenciones() {

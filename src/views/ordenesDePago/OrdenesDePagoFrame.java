@@ -6,19 +6,17 @@ import views.utils.ButtonRenderer;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableCellRenderer;
 import java.awt.*;
 import java.awt.event.*;
-import java.util.ArrayList;
 
-public class OrdenesDePago extends JFrame {
+public class OrdenesDePagoFrame extends JFrame {
     private JPanel opMain;
     private JButton btnAddOP;
     private JTable tbOPs;
 
     private ControladorOrdenPago controlador;
 
-    public OrdenesDePago() {
+    public OrdenesDePagoFrame() {
         this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         this.setContentPane(opMain);
         this.setSize(400,400);
@@ -27,16 +25,20 @@ public class OrdenesDePago extends JFrame {
         btnAddOP.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                try {
-                    OrdenDePago dialog = new OrdenDePago();
-                    dialog.setModalityType(Dialog.ModalityType.APPLICATION_MODAL);
-
-                    addRow(dialog.showDialog());
-                } catch (Exception ex) {
-                    ex.printStackTrace();
-                }
+                abrirModalOP(null);
             }
         });
+    }
+
+    private void abrirModalOP(Integer opID){
+        try {
+            OrdenDePagoDialog dialog = new OrdenDePagoDialog(opID);
+            dialog.setModalityType(Dialog.ModalityType.APPLICATION_MODAL);
+
+            addRow(dialog.showDialog());
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
     }
 
     private void addRow(OrdenPago op) {
@@ -54,10 +56,25 @@ public class OrdenesDePago extends JFrame {
             dataVector[i] = new Object[]{ "Editar", ops.get(i).getOpID() };
         }
 
-        dm.setDataVector(dataVector, new Object[] { "Acciones", "Ordenes de Pago" });
+        dm.setDataVector(dataVector, new Object[] { "", "Ordenes de Pago" });
 
         this.tbOPs = new JTable(dm);
 
-        this.tbOPs.getColumn("Acciones").setCellRenderer(new ButtonRenderer());
+        var btnEdit = new ButtonRenderer();
+
+        btnEdit.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JTable table = (JTable)e.getSource();
+                var row = table.getSelectedRow();
+
+                // Columna 1 posee el id de la op.
+                var opID = (int)table.getValueAt(row, 1);
+
+                abrirModalOP(opID);
+            }
+        });
+
+        this.tbOPs.getColumn("").setCellRenderer(btnEdit);
     }
 }
