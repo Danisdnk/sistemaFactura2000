@@ -2,6 +2,7 @@ package views.ordenesDePago;
 
 import controllers.ControladorFacturas;
 import controllers.ControladorOrdenesDePagos;
+import controllers.ControladorProveedor;
 import models.documento.OrdenPago;
 import models.dtos.DDLItemDTO;
 
@@ -59,8 +60,8 @@ public class OrdenDePagoDialog extends JDialog implements ActionListener{
     }
 
     private void setDDLProveedores() {
-//        var model = ControladorFacturas.getInstancia().getOpcionesDDLFacturaByProveedor(provID);
-//        this.ddlFacturas.setModel(new DefaultComboBoxModel((Vector) model));
+       var model = ControladorProveedor.getInstancia().getOpcionesDDLProveedores();
+       this.ddlProveedores.setModel(new DefaultComboBoxModel(model.toArray()));
     }
 
     private void setupForm(Integer opID) {
