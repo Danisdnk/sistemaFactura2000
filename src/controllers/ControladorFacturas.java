@@ -13,13 +13,15 @@ public class ControladorFacturas {
     private List<Factura> facturas;
 
     private ControladorFacturas() {
+        var provCont = ControladorProveedor.getInstancia();
+
         this.facturas = new ArrayList<Factura>();
 
-        this.agregarFactura(new Factura("0001-00002555"));
-        this.agregarFactura(new Factura("0001-00002556"));
-        this.agregarFactura(new Factura("0001-00002557"));
-        this.agregarFactura(new Factura("0001-00002558"));
-        this.agregarFactura(new Factura("0001-00002590"));
+        this.agregarFactura(new Factura(provCont.getProveedorByNombre("Coto"), "0001-00002555"));
+        this.agregarFactura(new Factura(provCont.getProveedorByNombre("Coto"),"0001-00002556"));
+        this.agregarFactura(new Factura(provCont.getProveedorByNombre("Coto"),"0001-00002557"));
+        this.agregarFactura(new Factura(provCont.getProveedorByNombre("Philips"),"0001-00002558"));
+        this.agregarFactura(new Factura(provCont.getProveedorByNombre("Philips"),"0001-00002590"));
     }
 
     public void agregarFactura(Factura fac) {
