@@ -1,16 +1,22 @@
 package controllers;
 
+import models.documento.Factura;
 import models.documento.OrdenPago;
+import models.dtos.DDLItemDTO;
+import models.mediopago.Cheque;
+import models.mediopago.Efectivo;
+import models.mediopago.TipoPago;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ControladorOrdenPago {
-    private static ControladorOrdenPago instancia;
+public class ControladorOrdenesDePagos {
+    private static ControladorOrdenesDePagos instancia;
     private int indexer = 1;
     private List<OrdenPago> ordenesDePago;
+    private List<TipoPago> formasDePago;
 
-    private ControladorOrdenPago() {
+    private ControladorOrdenesDePagos() {
         this.ordenesDePago = new ArrayList<OrdenPago>();
 
         this.agregarOP(new OrdenPago());
@@ -19,6 +25,10 @@ public class ControladorOrdenPago {
         this.agregarOP(new OrdenPago());
         this.agregarOP(new OrdenPago());
         this.agregarOP(new OrdenPago());
+
+        this.formasDePago = new ArrayList<TipoPago>();
+        this.formasDePago.add(new TipoPago("Cheque"));
+        this.formasDePago.add(new TipoPago("Efectivo"));
     }
 
     public void agregarOP(OrdenPago op) {
@@ -36,6 +46,14 @@ public class ControladorOrdenPago {
     }
 
     // TODO agregar a diagrama clases
+    public List<DDLItemDTO> getOpcionesDDLFormasDePago() {
+        return this.formasDePago
+                .stream()
+                .map(TipoPago::toDDL)
+                .toList();
+    }
+
+    // TODO agregar a diagrama clases
     public OrdenPago getOPByID(int opID) {
         return this.ordenesDePago
                 .stream()
@@ -44,9 +62,9 @@ public class ControladorOrdenPago {
                 .get();
     }
 
-    public static ControladorOrdenPago getInstancia() {
+    public static ControladorOrdenesDePagos getInstancia() {
         if (instancia == null) {
-            instancia = new ControladorOrdenPago();
+            instancia = new ControladorOrdenesDePagos();
         }
 
         return instancia;
