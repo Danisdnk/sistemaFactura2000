@@ -1,6 +1,6 @@
 package views.ordenesDePago;
 
-import controllers.ControladorOrdenPago;
+import controllers.ControladorOrdenesDePagos;
 import models.documento.OrdenPago;
 import views.utils.ButtonRenderer;
 
@@ -14,7 +14,7 @@ public class OrdenesDePagoFrame extends JFrame {
     private JButton btnAddOP;
     private JTable tbOPs;
 
-    private ControladorOrdenPago controlador;
+    private ControladorOrdenesDePagos controlador;
 
     public OrdenesDePagoFrame() {
         this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
@@ -47,7 +47,7 @@ public class OrdenesDePagoFrame extends JFrame {
     }
 
     private void createUIComponents() {
-        this.controlador = ControladorOrdenPago.getInstancia();
+        this.controlador = ControladorOrdenesDePagos.getInstancia();
         var ops = this.controlador.getOPs();
         DefaultTableModel dm = new DefaultTableModel();
 
