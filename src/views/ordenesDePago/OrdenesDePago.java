@@ -2,6 +2,7 @@ package views.ordenesDePago;
 
 import controllers.ControladorOrdenPago;
 import models.documento.OrdenPago;
+import views.utils.ButtonRenderer;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -58,24 +59,5 @@ public class OrdenesDePago extends JFrame {
         this.tbOPs = new JTable(dm);
 
         this.tbOPs.getColumn("Acciones").setCellRenderer(new ButtonRenderer());
-    }
-
-    class ButtonRenderer extends JButton implements TableCellRenderer {
-        public ButtonRenderer() {
-            setOpaque(true);
-        }
-
-        public Component getTableCellRendererComponent(JTable table, Object value,
-                                                       boolean isSelected, boolean hasFocus, int row, int column) {
-            if (isSelected) {
-                setForeground(table.getSelectionForeground());
-                setBackground(table.getSelectionBackground());
-            } else {
-                setForeground(table.getForeground());
-                setBackground(UIManager.getColor("Button.background"));
-            }
-
-            return this;
-        }
     }
 }
