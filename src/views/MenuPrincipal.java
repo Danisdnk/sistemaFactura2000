@@ -1,6 +1,6 @@
 package views;
 
-import views.ordenesDePago.OrdenesDePago;
+import views.ordenesDePago.OrdenesDePagoFrame;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -23,7 +23,7 @@ public class MenuPrincipal extends JFrame {
         ordenesDePagoButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                OrdenesDePago op = new OrdenesDePago();
+                OrdenesDePagoFrame op = new OrdenesDePagoFrame();
                 op.setVisible(true);
             }
         });
