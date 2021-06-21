@@ -19,11 +19,14 @@ public class Factura implements DDLeable {
     private List<Retencion> retencion;
     private List<ItemFactura> itemFactura;
     private Date fecha;
-    private int monto;
 
-    public Factura(Proveedor prov, String nroFactura) {
+    // TODO agregar a diagrama clases. Cambio tipo de dato de int a float
+    private float monto;
+
+    public Factura(Proveedor prov, String nroFactura, float monto) {
         this.proveedor = prov;
         this.nroFactura = nroFactura;
+        this.monto = monto;
     }
 
     public void devolverFacturaDeUnaFecha(Date fecha) {
@@ -62,7 +65,7 @@ public class Factura implements DDLeable {
         this.fecha = fecha;
     }
 
-    public int getMonto() {
+    public float getMonto() {
         return monto;
     }
 

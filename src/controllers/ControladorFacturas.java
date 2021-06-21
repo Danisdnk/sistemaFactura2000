@@ -17,11 +17,11 @@ public class ControladorFacturas {
 
         this.facturas = new ArrayList<Factura>();
 
-        this.agregarFactura(new Factura(provCont.getProveedorByNombre("Coto"), "0001-00002555"));
-        this.agregarFactura(new Factura(provCont.getProveedorByNombre("Coto"),"0001-00002556"));
-        this.agregarFactura(new Factura(provCont.getProveedorByNombre("Coto"),"0001-00002557"));
-        this.agregarFactura(new Factura(provCont.getProveedorByNombre("Philips"),"0001-00002558"));
-        this.agregarFactura(new Factura(provCont.getProveedorByNombre("Philips"),"0001-00002590"));
+        this.agregarFactura(new Factura(provCont.getProveedorByNombre("Coto"), "0001-00002555", 5000));
+        this.agregarFactura(new Factura(provCont.getProveedorByNombre("Coto"),"0001-00002556", 2500));
+        this.agregarFactura(new Factura(provCont.getProveedorByNombre("Coto"),"0001-00002557", 1250));
+        this.agregarFactura(new Factura(provCont.getProveedorByNombre("Philips"),"0001-00002558", 3000));
+        this.agregarFactura(new Factura(provCont.getProveedorByNombre("Philips"),"0001-00002590", 4800));
     }
 
     public void agregarFactura(Factura fac) {

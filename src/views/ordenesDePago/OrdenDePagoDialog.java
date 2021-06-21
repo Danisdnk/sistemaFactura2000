@@ -33,12 +33,28 @@ public class OrdenDePagoDialog extends JDialog implements ActionListener{
         this.setDDLProveedores();
         this.setDDLFormasPago();
 
+        this.ddlFacturas.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                var sel = (DDLItemDTO)ddlFacturas.getSelectedItem();
+
+                if (sel != null) {
+                    var factura = ControladorFacturas.getInstancia().getFacturaByID(sel.getId());
+                    txtTotalPagar.setText(String.valueOf(factura.getMonto()));
+                }
+            }
+        });
+
         this.ddlProveedores.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 var sel = (DDLItemDTO)ddlProveedores.getSelectedItem();
 
-                setDDLFacturas(sel.getId());
+                if (sel != null) {
+                    setDDLFacturas(sel.getId());
+                } else {
+                    clearDDLFacturas();
+                }
             }
         });
 
@@ -57,11 +73,22 @@ public class OrdenDePagoDialog extends JDialog implements ActionListener{
     private void setDDLFacturas(int provID) {
         var model = ControladorFacturas.getInstancia().getOpcionesDDLFacturaByProveedor(provID);
         this.ddlFacturas.setModel(new DefaultComboBoxModel(model.toArray()));
+
+        // valor seleccionado por default
+        model.add(0, null);
+    }
+
+    private void clearDDLFacturas(){
+        this.ddlFacturas.setModel(new DefaultComboBoxModel());
     }
 
     private void setDDLProveedores() {
        var model = ControladorProveedor.getInstancia().getOpcionesDDLProveedores();
+
        this.ddlProveedores.setModel(new DefaultComboBoxModel(model.toArray()));
+
+        // valor seleccionado por default
+        model.add(0, null);
     }
 
     private void setupForm(Integer opID) {
