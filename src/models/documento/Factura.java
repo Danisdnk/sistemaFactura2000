@@ -21,7 +21,8 @@ public class Factura implements DDLeable {
     private Date fecha;
     private int monto;
 
-    public Factura(String nroFactura) {
+    public Factura(Proveedor prov, String nroFactura) {
+        this.proveedor = prov;
         this.nroFactura = nroFactura;
     }
 
