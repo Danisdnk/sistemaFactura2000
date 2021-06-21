@@ -1,6 +1,11 @@
 package views;
 
+import views.ordenesDePago.OrdenesDePagoFrame;
+import views.proveedores.provedorView;
+
 import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.time.LocalDate;
 
 public class MenuPrincipal extends JFrame {
@@ -9,6 +14,8 @@ public class MenuPrincipal extends JFrame {
     private JPanel panelCentral;
     private JTextField fecha;
     private JLabel nombreCiudad;
+    private JButton proveedoresButton;
+    private JButton ordenesDePagoButton;
 
    public MenuPrincipal(String title) {
        super(title);
@@ -16,6 +23,22 @@ public class MenuPrincipal extends JFrame {
        this.setContentPane(mainPanel);
        this.setSize(400,400);
        this.pack();
+
+       ordenesDePagoButton.addActionListener(new ActionListener() {
+           @Override
+           public void actionPerformed(ActionEvent e) {
+               OrdenesDePagoFrame op = new OrdenesDePagoFrame();
+               op.setVisible(true);
+           }
+       });
+
+       proveedoresButton.addActionListener(new ActionListener() {
+           @Override
+           public void actionPerformed(ActionEvent e) {
+               provedorView principal = new provedorView();
+               principal.setVisible(true);
+           }
+       });
    }
 
    public void agregarCiudad() {
