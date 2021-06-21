@@ -32,8 +32,9 @@ public class loginView extends JFrame {
                 String pass = textPass.getText();
 
                 if ( nombre.equals("dani") && pass.equals("123") ) {
-                    provedorView principal = new provedorView();
-                    principal.setVisible(true);
+                    var menuPrincipal = new MenuPrincipal("Factura 2000");
+                    menuPrincipal.setVisible(true);
+
                     dispose(); //cierra la ventana para mostrar la otra vista
                 } else {
                     JOptionPane.showMessageDialog(
