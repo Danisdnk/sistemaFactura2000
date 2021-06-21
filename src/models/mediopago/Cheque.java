@@ -2,7 +2,10 @@ package models.mediopago;
 
 import java.util.*;
 
-public class Cheque extends TipoPago {
+public class Cheque {
+    private int idPago;
+    private Float monto;
+
     private String tipoCheque;
 
     private Date fechaEmision;

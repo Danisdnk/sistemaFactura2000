@@ -4,14 +4,18 @@ import models.dtos.DDLItemDTO;
 import models.dtos.DDLeable;
 
 // TODO agregar a diagrama clases
-public abstract class TipoPago implements DDLeable {
-    protected int idPago;
-    protected Float monto;
+public class TipoPago implements DDLeable {
+    private int ID;
+    private String type;
+
+    public TipoPago(String type) {
+        this.type = type;
+    }
 
     public DDLItemDTO toDDL(){
         var ddl = new DDLItemDTO(){ };
-        ddl.setDescripcion(String.valueOf(this.monto));
-        ddl.setId(this.idPago);
+        ddl.setDescripcion(String.valueOf(this.type));
+        ddl.setId(this.ID);
         return ddl;
     }
 }

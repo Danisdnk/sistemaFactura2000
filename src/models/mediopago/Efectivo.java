@@ -1,6 +1,9 @@
 package models.mediopago;
 
-public class Efectivo extends TipoPago {
+public class Efectivo {
+    private int idPago;
+    private Float monto;
+
     public void getMonto() {
         // TODO implement here
     }
