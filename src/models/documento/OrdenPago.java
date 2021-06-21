@@ -6,28 +6,35 @@ public class OrdenPago {
 
     public OrdenPago() {
     }
-    private List<Factura> factura;
 
+    // TODO agregar a diagrama clases
+    private int opID;
+
+    private List<Factura> factura;
 
     private List<Nota> nota;
 
-
     private float totalACancelar;
-
 
     private int idFormaPago;
 
-
     private float totalRetenciones;
-
 
     private int monto;
 
+    // TODO agregar a diagrama clases
+    public void setOpID(int opID) {
+        this.opID = opID;
+    }
+
+    // TODO agregar a diagrama clases
+    public int getOpID() {
+        return opID;
+    }
 
     public void comprobarMedioPago() {
         // TODO implement here
     }
-
 
     public void getMontoyVerificarPago() {
         // TODO implement here
