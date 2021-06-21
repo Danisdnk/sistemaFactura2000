@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="views.proveedores.provedorView">
+  <grid id="27dc6" binding="vistaProv" layout-manager="GridBagLayout">
+    <constraints>
+      <xy x="20" y="41" width="766" height="663"/>
+    </constraints>
+    <properties>
+      <background color="-15194296"/>
+      <doubleBuffered value="false"/>
+      <foreground color="-12123969"/>
+      <minimumSize width="300" height="82"/>
+      <opaque value="true"/>
+      <preferredSize width="600" height="900"/>
+    </properties>
+    <border type="line"/>
+    <children>
+      <toolbar id="5b4d8">
+        <constraints>
+          <grid row="0" column="0" row-span="1" col-span="4" vsize-policy="0" hsize-policy="6" anchor="1" fill="1" indent="0" use-parent-layout="false">
+            <preferred-size width="-1" height="20"/>
+          </grid>
+          <gridbag weightx="1.0" weighty="1.0"/>
+        </constraints>
+        <properties>
+          <background color="-14139535"/>
+          <borderPainted value="false"/>
+          <focusable value="false"/>
+          <foreground color="-12161083"/>
+          <inheritsPopupMenu value="true"/>
+          <maximumSize width="200" height="80"/>
+          <orientation value="0"/>
+        </properties>
+        <border type="none"/>
+        <children>
+          <component id="a49b9" class="javax.swing.JButton" binding="btnprov">
+            <constraints/>
+            <properties>
+              <actionCommand value=""/>
+              <alignmentY value="0.5"/>
+              <background color="-15194296"/>
+              <borderPainted value="false"/>
+              <enabled value="true"/>
+              <foreground color="-15194296"/>
+              <icon value="img/social-3088_bbbd1b6d-a330-437d-ac97-86da83af180a.png"/>
+              <iconTextGap value="0"/>
+              <maximumSize width="80" height="80"/>
+              <minimumSize width="80" height="80"/>
+              <text value=""/>
+              <toolTipText value="proveedores"/>
+            </properties>
+          </component>
+          <component id="4d485" class="javax.swing.JButton" binding="btnItems">
+            <constraints/>
+            <properties>
+              <actionCommand value=""/>
+              <background color="-15194296"/>
+              <borderPainted value="false"/>
+              <foreground color="-15194296"/>
+              <icon value="img/shopping-cart-2522_2fb9aac0-8c8f-4b52-a0b0-42f248f55f8b.png"/>
+              <iconTextGap value="0"/>
+              <maximumSize width="80" height="80"/>
+              <minimumSize width="80" height="80"/>
+              <text value=""/>
+              <toolTipText value="Productos y serv"/>
+            </properties>
+          </component>
+          <component id="f03c0" class="javax.swing.JButton" binding="btnconsultas">
+            <constraints/>
+            <properties>
+              <actionCommand value=""/>
+              <background color="-15194296"/>
+              <borderPainted value="false"/>
+              <foreground color="-15194296"/>
+              <icon value="img/search-folder-4237_4ecd7f14-6129-4006-835d-82ef11aed961.png"/>
+              <iconTextGap value="0"/>
+              <maximumSize width="80" height="80"/>
+              <minimumSize width="80" height="80"/>
+              <text value=""/>
+              <toolTipText value="consultas generales"/>
+            </properties>
+          </component>
+          <component id="86631" class="javax.swing.JButton" binding="btnDocs">
+            <constraints/>
+            <properties>
+              <actionCommand value=""/>
+              <background color="-15194296"/>
+              <borderPainted value="false"/>
+              <foreground color="-15194296"/>
+              <hideActionText value="false"/>
+              <icon value="img/documents-4188_e4752169-7bd1-4f22-a20d-705d8ed475e7.png"/>
+              <iconTextGap value="0"/>
+              <maximumSize width="80" height="80"/>
+              <minimumSize width="80" height="80"/>
+              <text value="btnDocs"/>
+            </properties>
+          </component>
+          <component id="b232f" class="javax.swing.JButton">
+            <constraints/>
+            <properties>
+              <actionCommand value=""/>
+              <background color="-15194296"/>
+              <borderPainted value="false"/>
+              <foreground color="-15194296"/>
+              <icon value="img/hand-truck-2675_b9c5f823-4adf-4534-a455-01aec8efdf30.png"/>
+              <iconTextGap value="0"/>
+              <maximumSize width="80" height="80"/>
+              <minimumSize width="80" height="80"/>
+              <text value="btnDocs"/>
+            </properties>
+          </component>
+        </children>
+      </toolbar>
+      <component id="76511" class="javax.swing.JLabel" binding="labelProveedor">
+        <constraints>
+          <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+          <gridbag weightx="0.0" weighty="0.0"/>
+        </constraints>
+        <properties>
+          <foreground color="-22507"/>
+          <horizontalAlignment value="11"/>
+          <horizontalTextPosition value="0"/>
+          <text value="Seleccionar Proveedor "/>
+        </properties>
+      </component>
+      <component id="64ae3" class="javax.swing.JComboBox" binding="comboBox1" default-binding="true">
+        <constraints>
+          <grid row="1" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="9" fill="0" indent="0" use-parent-layout="false"/>
+          <gridbag top="0" left="0" bottom="0" right="10" weightx="0.0" weighty="0.0"/>
+        </constraints>
+        <properties>
+          <model>
+            <item value="Juan"/>
+            <item value="carlos"/>
+            <item value="pepe"/>
+          </model>
+        </properties>
+      </component>
+      <component id="d7bc8" class="javax.swing.JButton" binding="addProveedor">
+        <constraints>
+          <grid row="1" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="1" fill="1" indent="0" use-parent-layout="false"/>
+          <gridbag weightx="0.0" weighty="0.0"/>
+        </constraints>
+        <properties>
+          <text value="Agregar Proveedor"/>
+        </properties>
+      </component>
+    </children>
+  </grid>
+</form>
