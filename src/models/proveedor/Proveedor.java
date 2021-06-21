@@ -37,11 +37,19 @@ public class Proveedor implements DDLeable {
 
     private Float credito;
 
+    public Proveedor(String nombre) {
+        this.nombre = nombre;
+    }
+
    // public ControladorSistema ; //metodo para devolver algo al controlador???
 
     // PROVEEDORES CONTROLER - DAR DE ALTA , MODIFICAR, LISTAR Prov del sistema, BORRAR
     public int getID() {
         return ID;
+    }
+
+    public void setID(int ID) {
+        this.ID = ID;
     }
 
     public String getCuit() {
