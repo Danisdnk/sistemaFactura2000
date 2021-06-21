@@ -3,6 +3,7 @@ package models.mediopago;
 import models.dtos.DDLItemDTO;
 import models.dtos.DDLeable;
 
+// TODO agregar a diagrama clases
 public abstract class TipoPago implements DDLeable {
     protected int idPago;
     protected Float monto;

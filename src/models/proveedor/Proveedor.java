@@ -1,15 +1,16 @@
 package models.proveedor;
 import models.documento.Factura;
+import models.dtos.DDLItemDTO;
+import models.dtos.DDLeable;
 import models.impuesto.ResponsableIva;
 import models.impuesto.CertificadoExento;
 import java.time.LocalDate;
 import java.util.*;
 
-public class Proveedor {
+public class Proveedor implements DDLeable {
+    // TODO agregar a diagrama clases
+    private int ID;
 
-    public Proveedor() {
-
-    }
     private String cuit;
 
     private String razonSocial;
@@ -38,9 +39,10 @@ public class Proveedor {
 
    // public ControladorSistema ; //metodo para devolver algo al controlador???
 
-
-
-// PROVEEDORES CONTROLER - DAR DE ALTA , MODIFICAR, LISTAR Prov del sistema, BORRAR
+    // PROVEEDORES CONTROLER - DAR DE ALTA , MODIFICAR, LISTAR Prov del sistema, BORRAR
+    public int getID() {
+        return ID;
+    }
 
     public String getCuit() {
         return cuit;
@@ -114,31 +116,15 @@ public class Proveedor {
         this.credito = credito;
     }
 
-    /**
-     * @param cuit
-     */
-
-
-    /**
-     * @param cuit
-     */
-
-
-    /**
-     * @param idItem
-     * @return
-     */
-
-
-    /**
-     * @param cuit
-     */
     public void calcularDeudaDelProveedor(String cuit) {
         // TODO implement here
     }
 
-
-
-
-
+    @Override
+    public DDLItemDTO toDDL() {
+        var ddl = new DDLItemDTO();
+        ddl.setDescripcion(this.nombre);
+        ddl.setId(this.ID);
+        return ddl;
+    }
 }
