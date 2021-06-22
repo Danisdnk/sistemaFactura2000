@@ -39,11 +39,14 @@ public class ControladorFacturas {
     }
 
     public List<DDLItemDTO> getOpcionesDDLFacturaByProveedor(int proveedorID) {
-        return this.facturas
-                .stream()
-                .filter(f -> f.getProveedor().getID() == proveedorID)
-                .map(Factura::toDDL)
-                .toList();
+        List<DDLItemDTO> list = new ArrayList<>();
+        for (Factura f : this.facturas) {
+            if ( f.getProveedor().getID() == proveedorID ) {
+                DDLItemDTO toDDL = f.toDDL();
+                list.add(toDDL);
+            }
+        }
+        return list;
     }
 
     // TODO agregar a diagrama clases

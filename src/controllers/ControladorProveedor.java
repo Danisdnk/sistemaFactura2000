@@ -32,7 +32,7 @@ public class ControladorProveedor {
     public Proveedor getProveedorByNombre(String nombre) {
         return this.proveedores
                 .stream()
-                .filter(p -> p.getNombre() == nombre)
+                .filter(p -> p.getNombre().equals(nombre))
                 .findFirst()
                 .get();
     }

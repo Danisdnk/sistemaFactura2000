@@ -14,29 +14,35 @@ public class MenuPrincipal extends JFrame {
     private JPanel panelCentral;
     private JTextField fecha;
     private JLabel nombreCiudad;
-    private JButton proveedoresButton;
+    private JButton usuariosButton;
     private JButton ordenesDePagoButton;
+    private JToolBar barraNavegacion;
+    private JButton consultasGeneralesButton;
+    private JButton proveedoresButton;
+    private JButton itemsServiciosButton;
 
-   public MenuPrincipal(String title) {
+    public MenuPrincipal(String title) {
        super(title);
        this.setDefaultCloseOperation(EXIT_ON_CLOSE);
        this.setContentPane(mainPanel);
-       this.setSize(400,400);
-       this.pack();
+       this.setSize(1000,900);
+       this.setLocationRelativeTo(null);
 
        ordenesDePagoButton.addActionListener(new ActionListener() {
            @Override
            public void actionPerformed(ActionEvent e) {
                OrdenesDePagoFrame op = new OrdenesDePagoFrame();
                op.setVisible(true);
+               //dispose();//esto cierra la ventana anterior
            }
        });
 
-       proveedoresButton.addActionListener(new ActionListener() {
+       usuariosButton.addActionListener(new ActionListener() {
            @Override
            public void actionPerformed(ActionEvent e) {
                provedorView principal = new provedorView();
                principal.setVisible(true);
+               dispose();//esto cierra la ventana anterior
            }
        });
    }

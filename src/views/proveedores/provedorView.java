@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import controllers.ControladorProveedor;
+import views.ordenesDePago.OrdenesDePagoFrame;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -16,34 +17,44 @@ import java.awt.event.FocusAdapter;
 
 public class provedorView extends JFrame {
     private JPanel vistaProv;
-    private JButton proveedoresButton;
-    private JButton btnItems;
-    private JButton btnconsultas;
-    private JButton btnDocs;
-    private JButton btnprov;
+    private JButton ordenesDePagoButton;
     private JPanel panelProveedores;
-    private JComboBox comboBox1;
-    private JLabel labelProveedor;
     private JButton addProveedor;
+    private JToolBar barraNavegacion;
+    private JButton consultasGeneralesButton;
+    private JButton proveedoresButton;
+    private JButton itemsServiciosButton;
+    private JButton usuariosButton;
+    private JLabel labelProveedor;
+    private JComboBox dropListaProveedores;
+    private JTextField txtNombreFantasia;
+    private JTextField txtRazonSocial;
+    private JTextField txtCuit;
+    private JTextField txtDireccion;
+    private JTextField txtResponsabilidadIva;
+    private JTextField txtTelefono;
+    private JTextField txtEmail;
+    private JTextField txtIngresosBrutos;
+    private JTextField txtInicioActividades;
+    private JTextField txtRubro;
+    private JButton RemoveProveedor;
     private JButton borrarButton;
     private JButton modificarButton;
     private ControladorProveedor controlador;
 
     public provedorView() {
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
-        this.setSize(600, 900);
+        this.setSize(900, 1000);
         this.setContentPane(vistaProv);
-        this.pack();
+        this.setLocationRelativeTo(null);
 
-        btnconsultas.addActionListener(new ActionListener() {
-            /**
-             * Invoked when an action occurs.
-             *
-             * @param e the event to be processed
-             */
+
+        ordenesDePagoButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                OrdenesDePagoFrame op = new OrdenesDePagoFrame();
+                op.setVisible(true);
+                //dispose();//esto cierra la ventana anterior
             }
         });
         addProveedor.addActionListener(new ActionListener() {

@@ -1,9 +1,10 @@
 package models.proveedor;
+
 import models.documento.Factura;
-import models.dtos.DDLItemDTO;
-import models.dtos.DDLeable;
+import models.dtos.*;
 import models.impuesto.ResponsableIva;
 import models.impuesto.CertificadoExento;
+
 import java.time.LocalDate;
 import java.util.*;
 
@@ -41,7 +42,7 @@ public class Proveedor implements DDLeable {
         this.nombre = nombre;
     }
 
-   // public ControladorSistema ; //metodo para devolver algo al controlador???
+    // public ControladorSistema ; //metodo para devolver algo al controlador???
 
     // PROVEEDORES CONTROLER - DAR DE ALTA , MODIFICAR, LISTAR Prov del sistema, BORRAR
     public int getID() {
