@@ -5,6 +5,7 @@ import controllers.ControladorOrdenesDePagos;
 import controllers.ControladorProveedor;
 import models.documento.OrdenPago;
 import models.dtos.DDLItemDTO;
+import views.utils.DateParse;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -19,6 +20,7 @@ public class OrdenDePagoDialog extends JDialog implements ActionListener{
     private JComboBox<DDLItemDTO> ddlFacturas;
     private JTextField txtTotalPagar;
     private JButton btnGuardar;
+    private JTextField txtFechaPago;
 
     private ControladorOrdenesDePagos controlador;
     private OrdenPago op;
@@ -94,8 +96,25 @@ public class OrdenDePagoDialog extends JDialog implements ActionListener{
         this.txtTotalPagar.setText(String.valueOf(this.op.getTotalACancelar()));
     }
 
+    // Guardar
     public void actionPerformed(ActionEvent e) {
-        this.op = new OrdenPago();
+        var proveedor = (DDLItemDTO)this.ddlProveedores.getSelectedItem();
+
+        // lista de comprobantes. nueva pantalla de agregar comprobante?
+        var factura = (DDLItemDTO)this.ddlFacturas.getSelectedItem();
+
+        // switch case tipo de pago? nueva pantalla para pagos?
+        // dos botones? Agregar pago fvo y Agregar pago cheque?
+        var tipoPago = (DDLItemDTO)this.ddlFormasPago.getSelectedItem();
+
+        var fechaPago = DateParse.parse(this.txtFechaPago.getText());
+        var total = this.txtTotalPagar.getText();
+
+        var op = new OrdenPago();
+        op.setFechaPago(fechaPago);
+        op.setTotalACancelar(Float.valueOf(total));
+
+        this.op = op;
         this.controlador.agregarOP(this.op);
         setVisible(false);
         dispose();

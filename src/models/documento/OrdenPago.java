@@ -3,6 +3,7 @@ package models.documento;
 import models.mediopago.TipoPago;
 import models.proveedor.Proveedor;
 
+import java.time.LocalDate;
 import java.util.*;
 
 public class OrdenPago {
@@ -26,6 +27,8 @@ public class OrdenPago {
 
     private int monto;
 
+    private LocalDate fechaPago;
+
     // TODO agregar a diagrama clases
     public void setOpID(int opID) {
         this.opID = opID;
@@ -39,6 +42,18 @@ public class OrdenPago {
     // TODO agregar a diagrama clases
     public Proveedor getProveedor() {
         return proveedor;
+    }
+
+    public void setProveedor(Proveedor proveedor) {
+        this.proveedor = proveedor;
+    }
+
+    public LocalDate getFechaPago() {
+        return fechaPago;
+    }
+
+    public void setFechaPago(LocalDate fechaPago) {
+        this.fechaPago = fechaPago;
     }
 
     public Factura getFactura() {
