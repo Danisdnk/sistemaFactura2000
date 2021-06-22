@@ -7,9 +7,11 @@ import java.time.format.DateTimeParseException;
 public class DateParse {
     public static LocalDate parse(String date) {
         try {
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MMM/uuuu");
+            var datecomps = date.split("/");
 
-            return LocalDate.parse(date,formatter);
+            date = datecomps[2] + "-" + datecomps[1] + "-" + datecomps[0];
+
+            return LocalDate.parse(date, DateTimeFormatter.ISO_LOCAL_DATE);
         } catch (DateTimeParseException ex) {
             return null;
         }
