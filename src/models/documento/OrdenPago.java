@@ -27,6 +27,7 @@ public class OrdenPago {
 
     private int monto;
 
+    // TODO agregar a diagrama clases
     private LocalDate fechaPago;
 
     // TODO agregar a diagrama clases
