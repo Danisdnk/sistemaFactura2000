@@ -11,6 +11,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Vector;
 
+// TODO leer valores para crear OP en metodo guardar
 public class OrdenDePagoDialog extends JDialog implements ActionListener{
     private JPanel opMain;
     private JComboBox<DDLItemDTO> ddlFormasPago;
@@ -73,9 +74,6 @@ public class OrdenDePagoDialog extends JDialog implements ActionListener{
     private void setDDLFacturas(int provID) {
         var model = ControladorFacturas.getInstancia().getOpcionesDDLFacturaByProveedor(provID);
         this.ddlFacturas.setModel(new DefaultComboBoxModel(model.toArray()));
-
-        // valor seleccionado por default
-        model.add(0, null);
     }
 
     private void clearDDLFacturas(){
@@ -84,11 +82,7 @@ public class OrdenDePagoDialog extends JDialog implements ActionListener{
 
     private void setDDLProveedores() {
        var model = ControladorProveedor.getInstancia().getOpcionesDDLProveedores();
-
        this.ddlProveedores.setModel(new DefaultComboBoxModel(model.toArray()));
-
-        // valor seleccionado por default
-        model.add(0, null);
     }
 
     private void setupForm(Integer opID) {
