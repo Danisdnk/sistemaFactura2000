@@ -32,7 +32,7 @@ public class ControladorOrdenesDePagos {
     }
 
     public void agregarOP(OrdenPago op) {
-        op.setOpID(this.indexer);
+        op.setID(this.indexer);
         this.ordenesDePago.add(op);
         this.indexer++;
     }
@@ -57,7 +57,7 @@ public class ControladorOrdenesDePagos {
     public OrdenPago getOPByID(int opID) {
         return this.ordenesDePago
                 .stream()
-                .filter(op -> op.getOpID() == opID)
+                .filter(op -> op.getID() == opID)
                 .findFirst()
                 .get();
     }
