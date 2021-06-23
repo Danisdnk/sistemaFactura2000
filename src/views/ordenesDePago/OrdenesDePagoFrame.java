@@ -2,6 +2,7 @@ package views.ordenesDePago;
 
 import controllers.ControladorOrdenesDePagos;
 import models.documento.OrdenPago;
+import models.dtos.ComprobanteDTO;
 import views.utils.ButtonRenderer;
 
 import javax.swing.*;
@@ -43,20 +44,21 @@ public class OrdenesDePagoFrame extends JFrame {
 
     private void addRow(OrdenPago op) {
         DefaultTableModel model = (DefaultTableModel) this.tbOPs.getModel();
-        model.addRow(new Object[]{"Editar", op.getID()});
+        model.addRow(crearObjTabla(op));
     }
 
     private void createUIComponents() {
         this.controlador = ControladorOrdenesDePagos.getInstancia();
         var ops = this.controlador.getOPs();
-        DefaultTableModel dm = new DefaultTableModel();
+
+        DefaultTableModel dm = new DefaultTableModel(getHeaderTabla(), 1);
 
         var dataVector = new Object[ops.size()][2];
         for (int i = 0; i < ops.size(); i++) {
-            dataVector[i] = new Object[]{ "Editar", ops.get(i).getID() };
+            dataVector[i] = crearObjTabla(ops.get(i));
         }
 
-        dm.setDataVector(dataVector, new Object[] { "", "Ordenes de Pago" });
+        dm.setDataVector(dataVector, getHeaderTabla());
 
         this.tbOPs = new JTable(dm);
 
@@ -76,5 +78,13 @@ public class OrdenesDePagoFrame extends JFrame {
         });
 
         this.tbOPs.getColumn("").setCellRenderer(btnEdit);
+    }
+
+    private  Object[] crearObjTabla(OrdenPago op){
+        return new Object[]{ "Editar", op.getID() };
+    }
+
+    private Object[] getHeaderTabla() {
+        return new Object[] { "", "Nro" };
     }
 }
