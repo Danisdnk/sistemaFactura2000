@@ -20,22 +20,22 @@ public class Comprobante implements DDLeable {
     protected float total;
 
     public ComprobanteDTO toCompDTO() {
-        return new ComprobanteDTO(){
-            {
-                ID = this.ID;
-                total = this.total;
-                proveedor = this.proveedor;
-                nro = this.nro;
-                fecha = this.fecha;
-            }
-        };
+        return new ComprobanteDTO(
+                ID,
+                this.tipo(),
+                proveedor,
+                fecha,
+                nro,
+                total
+        );
     }
 
     public DDLItemDTO toDDL() {
+        var desc = this.toString();
         return new DDLItemDTO() {
             {
                 id = ID;
-                descripcion = tipo() + " " + nro;
+                descripcion = desc;
             }
         };
     }
@@ -82,5 +82,10 @@ public class Comprobante implements DDLeable {
 
     public void setTotal(float total) {
         this.total = total;
+    }
+
+    @Override
+    public String toString() {
+        return tipo() + " " + nro;
     }
 }
