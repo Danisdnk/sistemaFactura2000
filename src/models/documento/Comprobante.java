@@ -35,9 +35,13 @@ public class Comprobante implements DDLeable {
         return new DDLItemDTO() {
             {
                 id = ID;
-                descripcion = nro;
+                descripcion = tipo() + " " + nro;
             }
         };
+    }
+
+    protected String tipo() {
+        return "";
     }
 
     public int getID() {

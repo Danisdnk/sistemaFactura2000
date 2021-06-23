@@ -18,6 +18,11 @@ public class Factura extends Comprobante {
         this.total = monto;
     }
 
+    @Override
+    protected String tipo() {
+        return "FAC";
+    }
+
     public void devolverFacturaDeUnaFecha(Date fecha) {
         // TODO implement here
     }

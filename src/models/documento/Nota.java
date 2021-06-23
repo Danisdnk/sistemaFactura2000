@@ -15,6 +15,11 @@ public class Nota extends Comprobante {
         this.total = monto;
     }
 
+    @Override
+    protected String tipo() {
+        return "NOTA " + this.tipo.name();
+    }
+
     public TipoDeNota getTipo() {
         return tipo;
     }
