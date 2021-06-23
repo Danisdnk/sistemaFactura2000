@@ -9,6 +9,7 @@ import models.dtos.DDLItemDTO;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -25,10 +26,11 @@ public class ComprobantesAsociadosDialog extends JDialog implements ActionListen
     private Comprobante seleccionado;
     private Integer indiceSeleccionado;
 
-    public ComprobantesAsociadosDialog(int provID, OrdenPago op) {
+    public ComprobantesAsociadosDialog(Dialog owner, int provID, OrdenPago op) {
+        super(owner);
         this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         this.setContentPane(main);
-        this.setSize(400,400);
+        this.setSize(700,400);
         this.pack();
 
         this.comprobantesAsociados = new ArrayList<>();
@@ -75,7 +77,7 @@ public class ComprobantesAsociadosDialog extends JDialog implements ActionListen
             }
         });
 
-        createTable();
+        setTable();
     }
 
     @Override
@@ -90,7 +92,12 @@ public class ComprobantesAsociadosDialog extends JDialog implements ActionListen
     }
 
     private void createTable(){
+        this.tbFacsAsoc = new JTable(new DefaultTableModel());
+    }
+
+    private void setTable(){
         var comps = this.comprobantesAsociados.stream().map(Comprobante::toCompDTO).toList();
+
         DefaultTableModel dm = new DefaultTableModel();
 
         var dataVector = new Object[comps.size()][2];
@@ -100,17 +107,20 @@ public class ComprobantesAsociadosDialog extends JDialog implements ActionListen
 
         dm.setDataVector(dataVector, new Object[] { "Fecha", "Nro", "Monto" });
 
-        this.tbFacsAsoc = new JTable(dm);
+        this.tbFacsAsoc.setModel(dm);
     }
 
     private void setDDLComprobantesSinAsoc(List<Comprobante> comprobantes) {
-        var asocStream = this.comprobantesAsociados.stream();
-        var noAsociados = comprobantes
+        this.comprobantesSinAsociar = comprobantes
                 .stream()
-                .filter(comp -> !asocStream.anyMatch(asoc -> asoc.getNro() == comp.getNro()))
-                .map(Comprobante::toDDL);
+                .filter(comp -> !this.comprobantesAsociados.stream().anyMatch(asoc -> asoc.getNro() == comp.getNro()))
+                .toList();
 
-        this.ddlComprobantesSinAsoc.setModel(new DefaultComboBoxModel(noAsociados.toArray()));
+        this.ddlComprobantesSinAsoc.setModel(new DefaultComboBoxModel(
+                this.comprobantesSinAsociar
+                        .stream()
+                        .map(Comprobante::toDDL)
+                        .toArray()));
     }
 
     private void addRow(ComprobanteDTO comp) {
@@ -122,5 +132,7 @@ public class ComprobantesAsociadosDialog extends JDialog implements ActionListen
         return new Object[]{comp.fecha, comp.nro, comp.total};
     }
 
-    private void createUIComponents() { }
+    private void createUIComponents() {
+        createTable();
+    }
 }

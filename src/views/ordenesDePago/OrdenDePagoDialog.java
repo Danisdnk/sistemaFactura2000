@@ -73,7 +73,7 @@ public class OrdenDePagoDialog extends JDialog implements ActionListener{
     private void abrirModalComprobantes(){
         try {
             if (this.proveedorID != null) {
-                var dialog = new ComprobantesAsociadosDialog(this.proveedorID, this.op);
+                var dialog = new ComprobantesAsociadosDialog(this, this.proveedorID, this.op);
                 dialog.setModalityType(Dialog.ModalityType.APPLICATION_MODAL);
 
                 this.comprobantesAsociados = dialog.showDialog();
