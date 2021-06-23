@@ -16,7 +16,6 @@ public class Repository<T> {
     private final String DATA_DIRECTORY = "data/";
     private final String FILE_EXTENSION = ".json";
     private final String INDICE_FILE = "indice";
-    private final Type INDICE_TYPE = new TypeToken<Indice>() {}.getType();
 
     private Class<T> tipo;
     private String directorio;
