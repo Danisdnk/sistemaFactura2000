@@ -13,8 +13,7 @@ import java.util.stream.Stream;
 public class ControladorComprobantes {
     private static ControladorComprobantes instancia;
 
-    private int indiceFacturas = 1;
-    private int indiceNotas = 1;
+    private int indiceComprobantes = 1;
 
     private List<Factura> facturas;
     private List<Nota> notas;
@@ -38,15 +37,15 @@ public class ControladorComprobantes {
     }
 
     public void agregarFactura(Factura fac) {
-        fac.setID(this.indiceFacturas);
+        fac.setID(this.indiceComprobantes);
         this.facturas.add(fac);
-        this.indiceFacturas++;
+        this.indiceComprobantes++;
     }
 
     public void agregarNota(Nota nota) {
-        nota.setID(this.indiceNotas);
+        nota.setID(this.indiceComprobantes);
         this.notas.add(nota);
-        this.indiceNotas++;
+        this.indiceComprobantes++;
     }
 
     public void modificarOP(OrdenPago op) {
