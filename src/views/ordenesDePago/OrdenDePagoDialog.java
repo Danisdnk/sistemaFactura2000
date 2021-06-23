@@ -18,7 +18,6 @@ public class OrdenDePagoDialog extends JDialog implements ActionListener{
     private JPanel opMain;
     private JComboBox<DDLItemDTO> ddlFormasPago;
     private JComboBox<DDLItemDTO> ddlProveedores;
-    private JComboBox<DDLItemDTO> ddlFacturas;
     private JTextField txtTotalPagar;
     private JButton btnGuardar;
     private JTextField txtFechaPago;
@@ -48,9 +47,7 @@ public class OrdenDePagoDialog extends JDialog implements ActionListener{
 
                 if (sel != null) {
                     proveedorID = sel.id;
-                    setDDLFacturas(sel.id);
                 } else {
-                    clearDDLFacturas();
                     proveedorID = null;
                 }
             }
@@ -77,6 +74,12 @@ public class OrdenDePagoDialog extends JDialog implements ActionListener{
                 dialog.setModalityType(Dialog.ModalityType.APPLICATION_MODAL);
 
                 this.comprobantesAsociados = dialog.showDialog();
+                var total = this.comprobantesAsociados
+                        .stream()
+                        .mapToDouble(Comprobante::getTotal)
+                        .sum();
+
+                this.txtTotalPagar.setText(String.valueOf(total));
             }
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -86,15 +89,6 @@ public class OrdenDePagoDialog extends JDialog implements ActionListener{
     private void setDDLFormasPago() {
         var model = this.controlador.getOpcionesDDLFormasDePago();
         this.ddlFormasPago.setModel(new DefaultComboBoxModel(model.toArray()));
-    }
-
-    private void setDDLFacturas(int provID) {
-        var model = ControladorComprobantes.getInstancia().getOpcionesDDLFacturaByProveedor(provID);
-        this.ddlFacturas.setModel(new DefaultComboBoxModel(model.toArray()));
-    }
-
-    private void clearDDLFacturas(){
-        this.ddlFacturas.setModel(new DefaultComboBoxModel());
     }
 
     private void setDDLProveedores() {
@@ -107,16 +101,12 @@ public class OrdenDePagoDialog extends JDialog implements ActionListener{
 
         this.ddlFormasPago.setSelectedItem(this.op.getFormaPago().toDDL());
         this.ddlProveedores.setSelectedItem(this.op.getProveedor().toDDL());
-        this.ddlFacturas.setSelectedItem(this.op.getFactura().toDDL());
         this.txtTotalPagar.setText(String.valueOf(this.op.getTotal()));
     }
 
     // Guardar
     public void actionPerformed(ActionEvent e) {
-        var proveedor = (DDLItemDTO)this.ddlProveedores.getSelectedItem();
-
-        // lista de comprobantes. nueva pantalla de agregar comprobante?
-        var factura = (DDLItemDTO)this.ddlFacturas.getSelectedItem();
+        var prov = (DDLItemDTO)this.ddlProveedores.getSelectedItem();
 
         // switch case tipo de pago? nueva pantalla para pagos?
         // dos botones? Agregar pago fvo y Agregar pago cheque?
@@ -126,6 +116,7 @@ public class OrdenDePagoDialog extends JDialog implements ActionListener{
         var total = this.txtTotalPagar.getText();
 
         var op = new OrdenPago();
+        op.setProveedor(ControladorProveedor.getInstancia().getProveedorByID(prov.id));
         op.setFecha(fechaPago);
         op.setTotal(Float.valueOf(total));
         op.setComprobantesAsociados(this.comprobantesAsociados);
