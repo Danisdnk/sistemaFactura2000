@@ -20,6 +20,7 @@ public class ComprobantesAsociadosDialog extends JDialog implements ActionListen
     private JTable tbFacsAsoc;
     private JButton btnAsociar;
     private JComboBox ddlComprobantesSinAsoc;
+    private JButton btnGuardar;
 
     private List<Comprobante> comprobantesAsociados;
     private List<Comprobante> comprobantesSinAsociar;
@@ -30,7 +31,7 @@ public class ComprobantesAsociadosDialog extends JDialog implements ActionListen
         super(owner);
         this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         this.setContentPane(main);
-        this.setSize(700,400);
+        this.setSize(1500,400);
         this.pack();
 
         this.comprobantesAsociados = new ArrayList<>();
@@ -42,6 +43,8 @@ public class ComprobantesAsociadosDialog extends JDialog implements ActionListen
         if (op != null){
             this.comprobantesAsociados = op.getComprobantesAsociados();
         }
+
+        this.setTable();
 
         this.setDDLComprobantesSinAsoc(comprobantes);
 
@@ -66,10 +69,10 @@ public class ComprobantesAsociadosDialog extends JDialog implements ActionListen
                 comprobantesAsociados.add(seleccionado);
 
                 //agregar a la tabla
-                addRow(seleccionado.toCompDTO());
+                addRow(seleccionado);
 
                 //sacar del ddl
-                ddlComprobantesSinAsoc.remove(indiceSeleccionado);
+                ddlComprobantesSinAsoc.removeItemAt(indiceSeleccionado);
 
                 //limpiar seleccionado
                 seleccionado = null;
@@ -77,7 +80,7 @@ public class ComprobantesAsociadosDialog extends JDialog implements ActionListen
             }
         });
 
-        setTable();
+        this.btnGuardar.addActionListener(this);
     }
 
     @Override
@@ -92,11 +95,12 @@ public class ComprobantesAsociadosDialog extends JDialog implements ActionListen
     }
 
     private void createTable(){
-        this.tbFacsAsoc = new JTable(new DefaultTableModel());
+        var model = new DefaultTableModel(getHeaderTabla(), 1);
+        this.tbFacsAsoc = new JTable();
     }
 
     private void setTable(){
-        var comps = this.comprobantesAsociados.stream().map(Comprobante::toCompDTO).toList();
+        var comps = this.comprobantesAsociados;
 
         DefaultTableModel dm = new DefaultTableModel();
 
@@ -105,7 +109,7 @@ public class ComprobantesAsociadosDialog extends JDialog implements ActionListen
             dataVector[i] = crearObjTabla(comps.get(i));
         }
 
-        dm.setDataVector(dataVector, new Object[] { "Fecha", "Nro", "Monto" });
+        dm.setDataVector(dataVector, getHeaderTabla());
 
         this.tbFacsAsoc.setModel(dm);
     }
@@ -123,13 +127,17 @@ public class ComprobantesAsociadosDialog extends JDialog implements ActionListen
                         .toArray()));
     }
 
-    private void addRow(ComprobanteDTO comp) {
+    private void addRow(Comprobante comp) {
         DefaultTableModel model = (DefaultTableModel) this.tbFacsAsoc.getModel();
         model.addRow(crearObjTabla(comp));
     }
 
-    private  Object[] crearObjTabla(ComprobanteDTO comp){
-        return new Object[]{comp.fecha, comp.nro, comp.total};
+    private  Object[] crearObjTabla(Comprobante comp){
+        return new Object[]{comp.getFecha(), comp.toString(), comp.getTotal()};
+    }
+
+    private Object[] getHeaderTabla() {
+        return new Object[] { "Fecha", "Tipo - Nro", "Monto" };
     }
 
     private void createUIComponents() {
