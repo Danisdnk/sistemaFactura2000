@@ -29,10 +29,20 @@ public class ControladorProveedor {
         return this.proveedores;
     }
 
+    // TODO agregar a diagrama clases
     public Proveedor getProveedorByNombre(String nombre) {
         return this.proveedores
                 .stream()
                 .filter(p -> p.getNombre().equals(nombre))
+                .findFirst()
+                .get();
+    }
+
+    // TODO agregar a diagrama clases
+    public Proveedor getProveedorByID(int id) {
+        return this.proveedores
+                .stream()
+                .filter(p -> p.getID() == id)
                 .findFirst()
                 .get();
     }
