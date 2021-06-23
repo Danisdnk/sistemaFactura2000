@@ -1,10 +1,11 @@
 package models.mediopago;
 
+import dal.Identificable;
 import models.dtos.DDLItemDTO;
 import models.dtos.DDLeable;
 
 // TODO agregar a diagrama clases
-public class TipoPago implements DDLeable {
+public class TipoPago implements DDLeable, Identificable {
     private int ID;
     private String type;
 
@@ -19,5 +20,15 @@ public class TipoPago implements DDLeable {
                 descripcion = type;
             }
         };
+    }
+
+    @Override
+    public int getID() {
+        return ID;
+    }
+
+    @Override
+    public void setID(int ID) {
+        this.ID = ID;
     }
 }

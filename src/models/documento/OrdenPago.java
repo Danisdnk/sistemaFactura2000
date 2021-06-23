@@ -32,6 +32,22 @@ public class OrdenPago extends Comprobante {
         return this.facturas.stream().findFirst().get();
     }
 
+    public List<Factura> getFacturas() {
+        return facturas;
+    }
+
+    public void setFacturas(List<Factura> facturas) {
+        this.facturas = facturas;
+    }
+
+    public List<Nota> getNotas() {
+        return notas;
+    }
+
+    public void setNotas(List<Nota> notas) {
+        this.notas = notas;
+    }
+
     // TODO agregar a diagrama clases
     public void setComprobantesAsociados(List<Comprobante> comprobantes) {
 
