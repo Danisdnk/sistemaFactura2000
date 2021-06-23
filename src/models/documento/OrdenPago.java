@@ -5,40 +5,19 @@ import models.proveedor.Proveedor;
 
 import java.time.LocalDate;
 import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
-public class OrdenPago {
-    // TODO agregar a diagrama clases
-    private int opID;
-
-    // TODO agregar a diagrama clases
-    private Proveedor proveedor;
-
+public class OrdenPago extends Comprobante {
     // TODO renombrar a diagrama clases
     private List<Factura> facturas;
 
-    private List<Nota> nota;
-
-    private float totalACancelar;
+    private List<Nota> notas;
 
     // TODO cambio de id a TipoPago a diagrama clases
     private TipoPago formaPago;
 
     private float totalRetenciones;
-
-    private int monto;
-
-    // TODO agregar a diagrama clases
-    private LocalDate fechaPago;
-
-    // TODO agregar a diagrama clases
-    public void setOpID(int opID) {
-        this.opID = opID;
-    }
-
-    // TODO agregar a diagrama clases
-    public int getOpID() {
-        return opID;
-    }
 
     // TODO agregar a diagrama clases
     public Proveedor getProveedor() {
@@ -49,16 +28,19 @@ public class OrdenPago {
         this.proveedor = proveedor;
     }
 
-    public LocalDate getFechaPago() {
-        return fechaPago;
-    }
-
-    public void setFechaPago(LocalDate fechaPago) {
-        this.fechaPago = fechaPago;
-    }
-
     public Factura getFactura() {
         return this.facturas.stream().findFirst().get();
+    }
+
+    // TODO agregar a diagrama clases
+    public void setComprobantesAsociados(List<Comprobante> comprobantes) {
+
+    }
+
+    public List<Comprobante> getComprobantesAsociados() {
+        return Stream.of(this.facturas, this.notas)
+                .flatMap(Collection::stream)
+                .collect(Collectors.toList());
     }
 
     public void comprobarMedioPago() {
@@ -67,14 +49,6 @@ public class OrdenPago {
 
     public void getMontoyVerificarPago() {
         // TODO implement here
-    }
-
-    public float getTotalACancelar() {
-        return totalACancelar;
-    }
-
-    public void setTotalACancelar(float totalACancelar) {
-        this.totalACancelar = totalACancelar;
     }
 
     // TODO agregar a diagrama clases
@@ -93,13 +67,5 @@ public class OrdenPago {
 
     public void setTotalRetenciones(float totalRetenciones) {
         this.totalRetenciones = totalRetenciones;
-    }
-
-    public int getMonto() {
-        return monto;
-    }
-
-    public void setMonto(int monto) {
-        this.monto = monto;
     }
 }

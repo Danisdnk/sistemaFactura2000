@@ -1,88 +1,25 @@
 package models.documento;
-import java.time.LocalDate;
-public class Nota {
+import models.proveedor.Proveedor;
 
-    /**
-     * Default constructor
-     */
-    public Nota() {
+public class Nota extends Comprobante {
+    private TipoDeNota tipo;
+
+    public Nota(
+            TipoDeNota tipo,
+            Proveedor p,
+            String nro,
+            float monto) {
+        this.tipo = tipo;
+        this.proveedor = p;
+        this.nro = nro;
+        this.total = monto;
     }
 
-
-    private TipoDeNota tipoN;
-
-
-    private int notaID;
-
-
-    private int facturaID;
-
-
-    private String cuit;
-
-
-    private String cuitPropio;
-
-
-    private LocalDate fecha;
-
-
-    private float saldo;
-
-
-    public TipoDeNota getTipoN() {
-        return tipoN;
+    public TipoDeNota getTipo() {
+        return tipo;
     }
 
-    public void setTipoN(TipoDeNota tipoN) {
-        this.tipoN = tipoN;
-    }
-
-    public int getNotaID() {
-        return notaID;
-    }
-
-    public void setNotaID(int notaID) {
-        this.notaID = notaID;
-    }
-
-    public int getFacturaID() {
-        return facturaID;
-    }
-
-    public void setFacturaID(int facturaID) {
-        this.facturaID = facturaID;
-    }
-
-    public String getCuit() {
-        return cuit;
-    }
-
-    public void setCuit(String cuit) {
-        this.cuit = cuit;
-    }
-
-    public String getCuitPropio() {
-        return cuitPropio;
-    }
-
-    public void setCuitPropio(String cuitPropio) {
-        this.cuitPropio = cuitPropio;
-    }
-
-    public LocalDate getFecha() {
-        return fecha;
-    }
-
-    public void setFecha(LocalDate fecha) {
-        this.fecha = fecha;
-    }
-
-    public float getSaldo() {
-        return saldo;
-    }
-
-    public void setSaldo(float saldo) {
-        this.saldo = saldo;
+    public void setTipo(TipoDeNota tipo) {
+        this.tipo = tipo;
     }
 }

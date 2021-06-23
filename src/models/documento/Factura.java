@@ -8,25 +8,14 @@ import models.proveedor.Proveedor;
 import java.util.*;
 
 
-public class Factura implements DDLeable {
-    // TODO agregar a diagrama clases, rename de factura ID a ID
-    private int ID;
-
-    // TODO agregar a diagrama clases nroFactura
-    private String nroFactura;
-
-    private Proveedor proveedor;
+public class Factura extends Comprobante {
     private List<Retencion> retencion;
     private List<ItemFactura> itemFactura;
-    private Date fecha;
-
-    // TODO agregar a diagrama clases. Cambio tipo de dato de int a float
-    private float monto;
 
     public Factura(Proveedor prov, String nroFactura, float monto) {
         this.proveedor = prov;
-        this.nroFactura = nroFactura;
-        this.monto = monto;
+        this.nro = nroFactura;
+        this.total = monto;
     }
 
     public void devolverFacturaDeUnaFecha(Date fecha) {
@@ -41,43 +30,11 @@ public class Factura implements DDLeable {
         // TODO implement here
     }
 
-    public int getID() {
-        return ID;
-    }
-
-    public void setID(int ID) {
-        this.ID = ID;
-    }
-
     public Proveedor getProveedor() {
         return proveedor;
     }
 
     public void setProveedor(Proveedor proveedor) {
         this.proveedor = proveedor;
-    }
-
-    public Date getFecha() {
-        return fecha;
-    }
-
-    public void setFecha(Date fecha) {
-        this.fecha = fecha;
-    }
-
-    public float getMonto() {
-        return monto;
-    }
-
-    public void setMonto(int monto) {
-        this.monto = monto;
-    }
-
-    @Override
-    public DDLItemDTO toDDL() {
-        var ddl = new DDLItemDTO();
-        ddl.setDescripcion(this.nroFactura);
-        ddl.setId(this.ID);
-        return ddl;
     }
 }
