@@ -131,9 +131,11 @@ public class Proveedor implements DDLeable {
 
     @Override
     public DDLItemDTO toDDL() {
-        var ddl = new DDLItemDTO();
-        ddl.setDescripcion(this.nombre);
-        ddl.setId(this.ID);
-        return ddl;
+        return new DDLItemDTO() {
+            {
+                id = ID;
+                descripcion = nombre;
+            }
+        };
     }
 }

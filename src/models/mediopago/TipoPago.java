@@ -13,9 +13,11 @@ public class TipoPago implements DDLeable {
     }
 
     public DDLItemDTO toDDL(){
-        var ddl = new DDLItemDTO(){ };
-        ddl.setDescripcion(String.valueOf(this.type));
-        ddl.setId(this.ID);
-        return ddl;
+        return new DDLItemDTO(){
+            {
+                id = ID;
+                descripcion = type;
+            }
+        };
     }
 }
