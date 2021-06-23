@@ -1,5 +1,7 @@
 package controllers;
 
+import dal.RepoFactory;
+import dal.Repository;
 import models.documento.*;
 import models.dtos.ComprobanteDTO;
 import models.dtos.DDLItemDTO;
@@ -15,13 +17,14 @@ public class ControladorComprobantes {
 
     private int indiceComprobantes = 1;
 
-    private List<Factura> facturas;
-    private List<Nota> notas;
+    private Repository<Factura> repoFacturas;
+    private Repository<Nota> repoNotas;
 
     private ControladorComprobantes() {
         var provCont = ControladorProveedor.getInstancia();
 
-        this.facturas = new ArrayList<Factura>();
+        this.repoFacturas = RepoFactory.getRepoFacturas();
+        this.repoNotas = RepoFactory.getRepoNotas();
 
         var coto = provCont.getProveedorByNombre("Coto");
         var philips = provCont.getProveedorByNombre("Philips");
@@ -32,32 +35,23 @@ public class ControladorComprobantes {
         this.agregarFactura(new Factura(philips,"0001-00002558", 3000));
         this.agregarFactura(new Factura(philips,"0001-00002590", 4800));
 
-        this.notas = new ArrayList<>();
         this.agregarNota(new Nota(TipoDeNota.DEBITO, coto, "0001-00003000", 1000));
     }
 
     public void agregarFactura(Factura fac) {
-        fac.setID(this.indiceComprobantes);
-        this.facturas.add(fac);
-        this.indiceComprobantes++;
+        this.repoFacturas.crear(fac);
     }
 
     public void agregarNota(Nota nota) {
-        nota.setID(this.indiceComprobantes);
-        this.notas.add(nota);
-        this.indiceComprobantes++;
+        this.repoNotas.crear(nota);
     }
 
     public void modificarOP(OrdenPago op) {
 
     }
 
-    public List<Factura> getFacturas() {
-        return this.facturas;
-    }
-
     public List<Comprobante> getComprobantesByProveedor(int provID) {
-        return Stream.of(this.facturas, this.notas)
+        return Stream.of(this.repoFacturas.getTodos(), this.repoNotas.getTodos())
                 .flatMap(Collection::stream)
                 .filter(c -> c.getProveedor().getID() == provID)
                 .collect(Collectors.toList());
@@ -72,7 +66,7 @@ public class ControladorComprobantes {
 
     public List<DDLItemDTO> getOpcionesDDLFacturaByProveedor(int proveedorID) {
         var list = new ArrayList<DDLItemDTO>();
-        for (Factura f : this.facturas) {
+        for (Factura f : this.repoFacturas.getTodos()) {
             if ( f.getProveedor().getID() == proveedorID ) {
                 DDLItemDTO toDDL = f.toDDL();
                 list.add(toDDL);
@@ -83,7 +77,7 @@ public class ControladorComprobantes {
 
     // TODO agregar a diagrama clases
     public Factura getFacturaByID(int facID) {
-        return this.facturas
+        return this.repoFacturas.getTodos()
                 .stream()
                 .filter(fac -> fac.getID() == facID)
                 .findFirst()

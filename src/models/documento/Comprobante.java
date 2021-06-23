@@ -1,5 +1,6 @@
 package models.documento;
 
+import dal.Identificable;
 import models.dtos.ComprobanteDTO;
 import models.dtos.DDLItemDTO;
 import models.dtos.DDLeable;
@@ -8,7 +9,7 @@ import models.proveedor.Proveedor;
 import java.time.LocalDate;
 
 // TODO agregar a diagrama clases nroFactura
-public class Comprobante implements DDLeable {
+public class Comprobante implements DDLeable, Identificable {
     protected int ID;
 
     protected Proveedor proveedor;

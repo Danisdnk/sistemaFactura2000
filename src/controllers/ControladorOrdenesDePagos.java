@@ -1,53 +1,45 @@
 package controllers;
 
-import models.documento.Factura;
+import dal.RepoFactory;
+import dal.Repository;
 import models.documento.OrdenPago;
 import models.dtos.DDLItemDTO;
-import models.mediopago.Cheque;
-import models.mediopago.Efectivo;
 import models.mediopago.TipoPago;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class ControladorOrdenesDePagos {
     private static ControladorOrdenesDePagos instancia;
-    private int indexer = 1;
-    private List<OrdenPago> ordenesDePago;
-    private List<TipoPago> formasDePago;
+
+    private Repository<OrdenPago> repoOPs;
+    private Repository<TipoPago> repoTiposDePago;
 
     private ControladorOrdenesDePagos() {
-        this.ordenesDePago = new ArrayList<OrdenPago>();
+        this.repoOPs = RepoFactory.getRepoOrdenesPago();
+        this.repoTiposDePago = RepoFactory.getRepoTiposDePago();
 
-        this.agregarOP(new OrdenPago());
-        this.agregarOP(new OrdenPago());
-        this.agregarOP(new OrdenPago());
-        this.agregarOP(new OrdenPago());
-        this.agregarOP(new OrdenPago());
-        this.agregarOP(new OrdenPago());
-
-        this.formasDePago = new ArrayList<TipoPago>();
-        this.formasDePago.add(new TipoPago("Cheque"));
-        this.formasDePago.add(new TipoPago("Efectivo"));
+        if (this.repoTiposDePago.getTodos().size() == 0) {
+            this.repoTiposDePago.crear(new TipoPago("Cheque"));
+            this.repoTiposDePago.crear(new TipoPago("Efectivo"));
+        }
     }
 
     public void agregarOP(OrdenPago op) {
-        op.setID(this.indexer);
-        this.ordenesDePago.add(op);
-        this.indexer++;
+        this.repoOPs.crear(op);
     }
 
     public void modificarOP(OrdenPago op) {
-
+        this.repoOPs.updatear(op);
     }
 
     public List<OrdenPago> getOPs() {
-        return this.ordenesDePago;
+        return this.repoOPs.getTodos();
     }
 
     // TODO agregar a diagrama clases
     public List<DDLItemDTO> getOpcionesDDLFormasDePago() {
-        return this.formasDePago
+        return this.repoTiposDePago
+                .getTodos()
                 .stream()
                 .map(TipoPago::toDDL)
                 .toList();
@@ -55,7 +47,8 @@ public class ControladorOrdenesDePagos {
 
     // TODO agregar a diagrama clases
     public OrdenPago getOPByID(int opID) {
-        return this.ordenesDePago
+        return this.repoOPs
+                .getTodos()
                 .stream()
                 .filter(op -> op.getID() == opID)
                 .findFirst()
