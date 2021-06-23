@@ -1,16 +1,17 @@
 package views.ordenesDePago;
 
-import controllers.ControladorFacturas;
+import controllers.ControladorComprobantes;
 import controllers.ControladorOrdenesDePagos;
 import controllers.ControladorProveedor;
+import models.documento.Comprobante;
 import models.documento.OrdenPago;
 import models.dtos.DDLItemDTO;
 import views.utils.DateParse;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Vector;
 
 // TODO leer valores para crear OP en metodo guardar
 public class OrdenDePagoDialog extends JDialog implements ActionListener{
@@ -21,9 +22,13 @@ public class OrdenDePagoDialog extends JDialog implements ActionListener{
     private JTextField txtTotalPagar;
     private JButton btnGuardar;
     private JTextField txtFechaPago;
+    private JButton btnAgregarComprobante;
+    private JButton btnAgregarPago;
 
     private ControladorOrdenesDePagos controlador;
     private OrdenPago op;
+    private java.util.List<Comprobante> comprobantesAsociados;
+    private Integer proveedorID;
 
     public OrdenDePagoDialog(Integer opID){
         this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
@@ -36,28 +41,25 @@ public class OrdenDePagoDialog extends JDialog implements ActionListener{
         this.setDDLProveedores();
         this.setDDLFormasPago();
 
-        this.ddlFacturas.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                var sel = (DDLItemDTO)ddlFacturas.getSelectedItem();
-
-                if (sel != null) {
-                    var factura = ControladorFacturas.getInstancia().getFacturaByID(sel.getId());
-                    txtTotalPagar.setText(String.valueOf(factura.getMonto()));
-                }
-            }
-        });
-
         this.ddlProveedores.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 var sel = (DDLItemDTO)ddlProveedores.getSelectedItem();
 
                 if (sel != null) {
-                    setDDLFacturas(sel.getId());
+                    proveedorID = sel.id;
+                    setDDLFacturas(sel.id);
                 } else {
                     clearDDLFacturas();
+                    proveedorID = null;
                 }
+            }
+        });
+
+        btnAgregarComprobante.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                abrirModalComprobantes();
             }
         });
 
@@ -68,13 +70,26 @@ public class OrdenDePagoDialog extends JDialog implements ActionListener{
         btnGuardar.addActionListener(this);
     }
 
+    private void abrirModalComprobantes(){
+        try {
+            if (this.proveedorID != null) {
+                var dialog = new ComprobantesAsociadosDialog(this.proveedorID, this.op);
+                dialog.setModalityType(Dialog.ModalityType.APPLICATION_MODAL);
+
+                this.comprobantesAsociados = dialog.showDialog();
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
     private void setDDLFormasPago() {
         var model = this.controlador.getOpcionesDDLFormasDePago();
         this.ddlFormasPago.setModel(new DefaultComboBoxModel(model.toArray()));
     }
 
     private void setDDLFacturas(int provID) {
-        var model = ControladorFacturas.getInstancia().getOpcionesDDLFacturaByProveedor(provID);
+        var model = ControladorComprobantes.getInstancia().getOpcionesDDLFacturaByProveedor(provID);
         this.ddlFacturas.setModel(new DefaultComboBoxModel(model.toArray()));
     }
 
@@ -93,7 +108,7 @@ public class OrdenDePagoDialog extends JDialog implements ActionListener{
         this.ddlFormasPago.setSelectedItem(this.op.getFormaPago().toDDL());
         this.ddlProveedores.setSelectedItem(this.op.getProveedor().toDDL());
         this.ddlFacturas.setSelectedItem(this.op.getFactura().toDDL());
-        this.txtTotalPagar.setText(String.valueOf(this.op.getTotalACancelar()));
+        this.txtTotalPagar.setText(String.valueOf(this.op.getTotal()));
     }
 
     // Guardar
@@ -111,8 +126,9 @@ public class OrdenDePagoDialog extends JDialog implements ActionListener{
         var total = this.txtTotalPagar.getText();
 
         var op = new OrdenPago();
-        op.setFechaPago(fechaPago);
-        op.setTotalACancelar(Float.valueOf(total));
+        op.setFecha(fechaPago);
+        op.setTotal(Float.valueOf(total));
+        op.setComprobantesAsociados(this.comprobantesAsociados);
 
         this.op = op;
         this.controlador.agregarOP(this.op);
