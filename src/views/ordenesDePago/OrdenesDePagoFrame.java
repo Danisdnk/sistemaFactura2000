@@ -43,7 +43,7 @@ public class OrdenesDePagoFrame extends JFrame {
 
     private void addRow(OrdenPago op) {
         DefaultTableModel model = (DefaultTableModel) this.tbOPs.getModel();
-        model.addRow(new Object[]{"Editar", op.getOpID()});
+        model.addRow(new Object[]{"Editar", op.getID()});
     }
 
     private void createUIComponents() {
@@ -53,7 +53,7 @@ public class OrdenesDePagoFrame extends JFrame {
 
         var dataVector = new Object[ops.size()][2];
         for (int i = 0; i < ops.size(); i++) {
-            dataVector[i] = new Object[]{ "Editar", ops.get(i).getOpID() };
+            dataVector[i] = new Object[]{ "Editar", ops.get(i).getID() };
         }
 
         dm.setDataVector(dataVector, new Object[] { "", "Ordenes de Pago" });
