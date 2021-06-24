@@ -39,11 +39,11 @@ public class ControladorComprobantes {
     }
 
     public void agregarFactura(Factura fac) {
-        this.repoFacturas.crear(fac);
+        this.repoFacturas.insertar(fac);
     }
 
     public void agregarNota(Nota nota) {
-        this.repoNotas.crear(nota);
+        this.repoNotas.insertar(nota);
     }
 
     public void modificarOP(OrdenPago op) {
