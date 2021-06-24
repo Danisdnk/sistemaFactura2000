@@ -5,13 +5,15 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import controllers.ControladorProveedor;
+import models.proveedor.Rubro;
 import views.ordenesDePago.OrdenesDePagoFrame;
-
+import models.proveedor.Proveedor;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 import java.awt.*;
 import java.awt.event.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.awt.event.FocusAdapter;
 
@@ -47,7 +49,7 @@ public class provedorView extends JFrame {
         this.setSize(900, 1000);
         this.setContentPane(vistaProv);
         this.setLocationRelativeTo(null);
-
+        this.controlador= ControladorProveedor.getInstancia();
 
         ordenesDePagoButton.addActionListener(new ActionListener() {
             @Override
@@ -75,6 +77,30 @@ public class provedorView extends JFrame {
             }
         });
 
+        addProveedor.addActionListener(new ActionListener() {
+            /**
+             * Invoked when an action occurs.
+             *
+             * @param e the event to be processed
+             */
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                Proveedor provModel= new Proveedor(
+                        txtNombreFantasia.getText(),
+                        txtDireccion.getText(),
+                        txtEmail.getText(),
+                        txtIngresosBrutos.getText(),
+                        txtInicioActividades.getText(),
+                        txtRubro.getText(),
+                        124,
+                        (float) 2000,
+                        txtRazonSocial.getText(),
+                        txtCuit.getText());
+
+                controlador.agregarProveedor(provModel);
+            }
+        });
     }
 
 

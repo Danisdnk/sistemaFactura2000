@@ -24,22 +24,45 @@ public class Proveedor implements DDLeable {
 
     private String numeroIIBB;
 
-    private LocalDate inicioActividades;
+    private String inicioActividades;
 
-    private List<Rubro> rubros;
+    private String rubros; //List<Rubro>
 
-    private ResponsableIva responsableIva;
+    private String responsableIva;
 
-    private List<Factura> facturas;
+    //private List<Factura> facturas;
 
-    private List<CertificadoExento> certificados;
+    //private List<CertificadoExento> certificados;
 
-    private List<Factura> Factura;
+    //private List<Factura> Factura;
 
     private Float credito;
 
-    public Proveedor(String nombre) {
-        this.nombre = nombre;
+    public Proveedor(
+            String nombre,
+            String direccion,
+            String email,
+            String numeroIIBB,
+            String inicioActividades,
+            String rubros,
+            int ID,
+            Float credito,
+            String razonSocial,
+            String cuit)
+    {
+        setNombre(nombre);
+        setDireccion(direccion);
+        setEmail(email);
+        setCredito(credito);
+        setID(ID);
+        setInicioActividades(inicioActividades);
+        setResponsableIva("RE");
+        setInicioActividades(inicioActividades);
+        setNumeroIIBB(numeroIIBB);
+        setRubros(rubros);
+        setRazonSocial(razonSocial);
+        setCuit(cuit);
+
     }
 
     // public ControladorSistema ; //metodo para devolver algo al controlador???
@@ -47,6 +70,14 @@ public class Proveedor implements DDLeable {
     // PROVEEDORES CONTROLER - DAR DE ALTA , MODIFICAR, LISTAR Prov del sistema, BORRAR
     public int getID() {
         return ID;
+    }
+
+    public String getRubros() {
+        return rubros;
+    }
+
+    public void setRubros(String rubros) {
+        this.rubros = rubros;
     }
 
     public void setID(int ID) {
@@ -101,19 +132,19 @@ public class Proveedor implements DDLeable {
         this.numeroIIBB = numeroIIBB;
     }
 
-    public LocalDate getInicioActividades() {
+    public String getInicioActividades() {
         return inicioActividades;
     }
 
-    public void setInicioActividades(LocalDate inicioActividades) {
+    public void setInicioActividades(String inicioActividades) {
         this.inicioActividades = inicioActividades;
     }
 
-    public ResponsableIva getResponsableIva() {
+    public String getResponsableIva() {
         return responsableIva;
     }
 
-    public void setResponsableIva(ResponsableIva responsableIva) {
+    public void setResponsableIva(String responsableIva) {
         this.responsableIva = responsableIva;
     }
 

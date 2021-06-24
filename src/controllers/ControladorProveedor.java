@@ -1,4 +1,6 @@
 package controllers;
+import dal.RepoFactory;
+import dal.Repository;
 import models.dtos.DDLItemDTO;
 import models.mediopago.TipoPago;
 import models.proveedor.Proveedor;
@@ -8,30 +10,24 @@ import java.util.List;
 public class ControladorProveedor {
     private static ControladorProveedor instancia;
 
-    private int indexer = 1;
-    private List<Proveedor> proveedores;
+    private Repository<Proveedor> RepoProveedores;
 
     public ControladorProveedor() {
-        this.proveedores = new ArrayList<Proveedor>();
-        this.agregarProveedor(new Proveedor("Coto"));
-        this.agregarProveedor(new Proveedor("YPF"));
-        this.agregarProveedor(new Proveedor("Firulais"));
-        this.agregarProveedor(new Proveedor("Philips"));
+        this.RepoProveedores =  RepoFactory.getRepoProveedores();
+
     }
 
     public void agregarProveedor(Proveedor p){
-        p.setID(this.indexer);
-        this.proveedores.add(p);
-        this.indexer++;
+        this.RepoProveedores.crear(p);
     }
 
     public List<Proveedor> getProveedores() {
-        return this.proveedores;
+        return this.RepoProveedores.getTodos();
     }
 
     // TODO agregar a diagrama clases
     public Proveedor getProveedorByNombre(String nombre) {
-        return this.proveedores
+        return this.RepoProveedores.getTodos()
                 .stream()
                 .filter(p -> p.getNombre().equals(nombre))
                 .findFirst()
@@ -40,7 +36,7 @@ public class ControladorProveedor {
 
     // TODO agregar a diagrama clases
     public Proveedor getProveedorByID(int id) {
-        return this.proveedores
+        return this.RepoProveedores.getTodos()
                 .stream()
                 .filter(p -> p.getID() == id)
                 .findFirst()
@@ -49,7 +45,7 @@ public class ControladorProveedor {
 
     // TODO agregar a diagrama clases
     public List<DDLItemDTO> getOpcionesDDLProveedores() {
-        return this.proveedores
+        return this.RepoProveedores.getTodos()
                 .stream()
                 .map(Proveedor::toDDL)
                 .toList();
