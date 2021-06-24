@@ -19,13 +19,13 @@ public class ControladorOrdenesDePagos {
         this.repoTiposDePago = RepoFactory.getRepoTiposDePago();
 
         if (this.repoTiposDePago.getTodos().size() == 0) {
-            this.repoTiposDePago.crear(new TipoPago("Cheque"));
-            this.repoTiposDePago.crear(new TipoPago("Efectivo"));
+            this.repoTiposDePago.insertar(new TipoPago("Cheque"));
+            this.repoTiposDePago.insertar(new TipoPago("Efectivo"));
         }
     }
 
     public void agregarOP(OrdenPago op) {
-        this.repoOPs.crear(op);
+        this.repoOPs.insertar(op);
     }
 
     public void modificarOP(OrdenPago op) {

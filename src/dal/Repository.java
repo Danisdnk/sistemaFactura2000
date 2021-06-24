@@ -9,7 +9,6 @@ import java.util.List;
 import java.util.Locale;
 
 import com.google.gson.*;
-import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
 
 public class Repository<T> {
@@ -57,11 +56,11 @@ public class Repository<T> {
 
     public void crearTodos(List<T> list) {
         for (T obj:list) {
-            crear(obj);
+            insertar(obj);
         }
     }
 
-    public boolean crear(T obj) {
+    public boolean insertar(T obj) {
         var indice = getIndice();
         var path = getPath(String.valueOf(indice));
 
