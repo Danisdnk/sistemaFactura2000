@@ -11,7 +11,7 @@ import java.util.Locale;
 import com.google.gson.*;
 import com.google.gson.stream.JsonReader;
 
-public class Repository<T> {
+public class Repository<T extends Identificable> {
     private final String DATA_DIRECTORY = "data/";
     private final String FILE_EXTENSION = ".json";
     private final String INDICE_FILE = "indice";
@@ -54,20 +54,26 @@ public class Repository<T> {
         return this.cache;
     }
 
+    public T getByID(int id) {
+        return this.leerArchivo(this.tipo, getPath(String.valueOf(id)));
+    }
+
     public void crearTodos(List<T> list) {
         for (T obj:list) {
             insertar(obj);
         }
     }
 
-    public boolean insertar(T obj) {
+    public int insertar(T obj) {
         var indice = getIndice();
         var path = getPath(String.valueOf(indice));
 
         ((Identificable)obj).setID(indice);
         var next = indice + 1;
         escribirArchivo(getPath(INDICE_FILE), new Indice(next));
-        return escribirArchivo(path, obj);
+        escribirArchivo(path, obj);
+
+        return indice;
     }
 
     public boolean updatear(T obj) {
