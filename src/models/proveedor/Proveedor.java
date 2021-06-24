@@ -1,5 +1,6 @@
 package models.proveedor;
 
+import dal.Identificable;
 import models.documento.Factura;
 import models.dtos.*;
 import models.impuesto.ResponsableIva;
@@ -8,7 +9,7 @@ import models.impuesto.CertificadoExento;
 import java.time.LocalDate;
 import java.util.*;
 
-public class Proveedor implements DDLeable {
+public class Proveedor implements DDLeable, Identificable {
     // TODO agregar a diagrama clases
     private int ID;
 
@@ -37,6 +38,10 @@ public class Proveedor implements DDLeable {
     //private List<Factura> Factura;
 
     private Float credito;
+
+    public Proveedor(String nombre) {
+        this.nombre = nombre;
+    }
 
     public Proveedor(
             String nombre,
