@@ -17,11 +17,6 @@ public class ControladorOrdenesDePagos {
     private ControladorOrdenesDePagos() {
         this.repoOPs = RepoFactory.getRepoOrdenesPago();
         this.repoTiposDePago = RepoFactory.getRepoTiposDePago();
-
-        if (this.repoTiposDePago.getTodos().size() == 0) {
-            this.repoTiposDePago.insertar(new TipoPago("Cheque"));
-            this.repoTiposDePago.insertar(new TipoPago("Efectivo"));
-        }
     }
 
     public void agregarOP(OrdenPago op) {
@@ -47,12 +42,7 @@ public class ControladorOrdenesDePagos {
 
     // TODO agregar a diagrama clases
     public OrdenPago getOPByID(int opID) {
-        return this.repoOPs
-                .getTodos()
-                .stream()
-                .filter(op -> op.getID() == opID)
-                .findFirst()
-                .get();
+        return this.repoOPs.getByID(opID);
     }
 
     public static ControladorOrdenesDePagos getInstancia() {

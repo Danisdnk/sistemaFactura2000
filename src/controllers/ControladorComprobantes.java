@@ -15,39 +15,12 @@ import java.util.stream.Stream;
 public class ControladorComprobantes {
     private static ControladorComprobantes instancia;
 
-    private int indiceComprobantes = 1;
-
     private Repository<Factura> repoFacturas;
     private Repository<Nota> repoNotas;
 
     private ControladorComprobantes() {
-        var provCont = ControladorProveedor.getInstancia();
-
         this.repoFacturas = RepoFactory.getRepoFacturas();
         this.repoNotas = RepoFactory.getRepoNotas();
-
-        var coto = provCont.getProveedorByNombre("Coto");
-        var philips = provCont.getProveedorByNombre("Philips");
-
-        this.agregarFactura(new Factura(coto, "0001-00002555", 5000));
-        this.agregarFactura(new Factura(coto,"0001-00002556", 2500));
-        this.agregarFactura(new Factura(coto,"0001-00002557", 1250));
-        this.agregarFactura(new Factura(philips,"0001-00002558", 3000));
-        this.agregarFactura(new Factura(philips,"0001-00002590", 4800));
-
-        this.agregarNota(new Nota(TipoDeNota.DEBITO, coto, "0001-00003000", 1000));
-    }
-
-    public void agregarFactura(Factura fac) {
-        this.repoFacturas.insertar(fac);
-    }
-
-    public void agregarNota(Nota nota) {
-        this.repoNotas.insertar(nota);
-    }
-
-    public void modificarOP(OrdenPago op) {
-
     }
 
     public List<Comprobante> getComprobantesByProveedor(int provID) {
@@ -77,11 +50,7 @@ public class ControladorComprobantes {
 
     // TODO agregar a diagrama clases
     public Factura getFacturaByID(int facID) {
-        return this.repoFacturas.getTodos()
-                .stream()
-                .filter(fac -> fac.getID() == facID)
-                .findFirst()
-                .get();
+        return this.repoFacturas.getByID(facID);
     }
 
     public static ControladorComprobantes getInstancia() {
