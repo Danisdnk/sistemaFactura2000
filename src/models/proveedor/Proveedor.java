@@ -50,7 +50,6 @@ public class Proveedor implements DDLeable, Identificable {
             String numeroIIBB,
             String inicioActividades,
             String rubros,
-            int ID,
             Float credito,
             String razonSocial,
             String cuit)
@@ -62,7 +61,6 @@ public class Proveedor implements DDLeable, Identificable {
         setID(ID);
         setInicioActividades(inicioActividades);
         setResponsableIva("RE");
-        setInicioActividades(inicioActividades);
         setNumeroIIBB(numeroIIBB);
         setRubros(rubros);
         setRazonSocial(razonSocial);

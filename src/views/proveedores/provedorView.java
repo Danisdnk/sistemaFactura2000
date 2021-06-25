@@ -1,21 +1,17 @@
 package views.proveedores;
 
 import javax.swing.*;
+import javax.swing.text.DateFormatter;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 
 import controllers.ControladorProveedor;
-import models.proveedor.Rubro;
 import views.ordenesDePago.OrdenesDePagoFrame;
 import models.proveedor.Proveedor;
-import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableCellRenderer;
-import java.awt.*;
-import java.awt.event.*;
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.awt.event.FocusAdapter;
 
 public class provedorView extends JFrame {
     private JPanel vistaProv;
@@ -40,6 +36,7 @@ public class provedorView extends JFrame {
     private JTextField txtInicioActividades;
     private JTextField txtRubro;
     private JButton RemoveProveedor;
+    private JSpinner DateActividades;
     private JButton borrarButton;
     private JButton modificarButton;
     private ControladorProveedor controlador;
@@ -49,7 +46,7 @@ public class provedorView extends JFrame {
         this.setSize(900, 1000);
         this.setContentPane(vistaProv);
         this.setLocationRelativeTo(null);
-        this.controlador= ControladorProveedor.getInstancia();
+        this.controlador = ControladorProveedor.getInstancia();
 
         ordenesDePagoButton.addActionListener(new ActionListener() {
             @Override
@@ -77,6 +74,7 @@ public class provedorView extends JFrame {
             }
         });
 
+
         addProveedor.addActionListener(new ActionListener() {
             /**
              * Invoked when an action occurs.
@@ -86,14 +84,15 @@ public class provedorView extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                Proveedor provModel= new Proveedor(
+              //  SimpleDateFormat formatter = new SimpleDateFormat("EEE d MMM yyyy", Locale.getDefault());
+
+                Proveedor provModel = new Proveedor(
                         txtNombreFantasia.getText(),
                         txtDireccion.getText(),
                         txtEmail.getText(),
                         txtIngresosBrutos.getText(),
-                        txtInicioActividades.getText(),
+                        DateActividades.getValue().toString(),
                         txtRubro.getText(),
-                        124,
                         (float) 2000,
                         txtRazonSocial.getText(),
                         txtCuit.getText());
@@ -103,7 +102,15 @@ public class provedorView extends JFrame {
         });
     }
 
+    private void createUIComponents() { //componente custom para la fecha //TODO en facturas?
+        Date date = new Date();
+        SpinnerDateModel sm =
+                new SpinnerDateModel(date, null, null, Calendar.DAY_OF_MONTH);
+        DateActividades = new javax.swing.JSpinner(sm);
+        JSpinner.DateEditor de = new JSpinner.DateEditor(DateActividades, "d MMM yyyy");
+        DateActividades.setEditor(de);
 
+    }
 }
 
 
