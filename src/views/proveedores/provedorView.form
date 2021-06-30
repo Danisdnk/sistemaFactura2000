@@ -301,9 +301,6 @@
             <properties>
               <lightWeightPopupEnabled value="false"/>
               <model>
-                <item value="Juan"/>
-                <item value="carlos"/>
-                <item value="pepe"/>
                 <item value="Nuevo Proveedor"/>
               </model>
             </properties>
