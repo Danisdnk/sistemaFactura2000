@@ -1,17 +1,22 @@
 package models.proveedor;
 
-import java.util.*;
+import dal.Identificable;
+import models.dtos.DDLeable;
+import models.dtos.DDlProveedorItemDTO;
 
-/**
- * 
- */
-public class ProveedorItem {
 
-    public ProveedorItem() {
+public class ProveedorItem implements DDLeable, Identificable {
+
+    private int IDProveedorItem;
+
+    public ProveedorItem(Float precioUnitario, Item item, Proveedor proveedor) {
+        this.setPrecioUnitario(precioUnitario);
+        this.setItem(item);
+        this.setProveedor(proveedor);
     }
+    private Proveedor proveedor;
 
-    private List  <Proveedor> proveedor;
-    private List <Item> item;
+    private Item item;
     private Float precioUnitario;
 
 
@@ -21,22 +26,6 @@ public class ProveedorItem {
         return 0.0f;
     }
 
-    public List<Proveedor> getProveedor() {
-        return proveedor;
-    }
-
-    public void setProveedor(List<Proveedor> proveedor) {
-        this.proveedor = proveedor;
-    }
-
-    public List<Item> getItem() {
-        return item;
-    }
-
-    public void setItem(List<Item> item) {
-        this.item = item;
-    }
-
     public Float getPrecioUnitario() {
         return precioUnitario;
     }
@@ -44,4 +33,34 @@ public class ProveedorItem {
     public void setPrecioUnitario(Float precioUnitario) {
         this.precioUnitario = precioUnitario;
     }
+
+    @Override
+    public int getID() {
+        return IDProveedorItem;
+    }
+
+    @Override
+    public void setID(int ID) {
+        this.IDProveedorItem = ID;
+    }
+
+    @Override
+    public DDlProveedorItemDTO toDDL() {
+        return new DDlProveedorItemDTO(){
+            {
+                id =IDProveedorItem;
+                precio = precioUnitario;
+                descripcion = proveedor.getNombre();
+            }
+        };
+    }
+
+    public Item getItem() {return item;}
+
+    public void setItem(Item item){ this.item = item;}
+
+    public Proveedor getProveedor() {return proveedor;}
+
+    public void setProveedor(Proveedor proveedor){this.proveedor = proveedor;}
+
 }

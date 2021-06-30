@@ -6,6 +6,7 @@ import models.documento.*;
 import models.dtos.ComprobanteDTO;
 import models.dtos.DDLItemDTO;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -27,6 +28,20 @@ public class ControladorComprobantes {
         return Stream.of(this.repoFacturas.getTodos(), this.repoNotas.getTodos())
                 .flatMap(Collection::stream)
                 .filter(c -> c.getProveedor().getID() == provID)
+                .collect(Collectors.toList());
+    }
+
+    public List<Factura> getFacturasByProveedor(int provID) { //metodo para traer facturas por ID -> facturas recibidas(cuit)
+        return Stream.of(this.repoFacturas.getTodos())
+                .flatMap(Collection::stream)
+                .filter(c -> c.getProveedor().getID() == provID)
+                .collect(Collectors.toList());
+    }
+
+    public List<Factura> getFacturasByFecha(LocalDate fecha) {  //metodo para traer facturas por fecha -> facturas recibidas(fecha)
+        return Stream.of(this.repoFacturas.getTodos())
+                .flatMap(Collection::stream)
+                .filter(c -> c.getFecha()== fecha)
                 .collect(Collectors.toList());
     }
 

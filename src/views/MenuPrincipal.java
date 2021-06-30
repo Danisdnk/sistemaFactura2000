@@ -1,5 +1,6 @@
 package views;
 
+import views.consultasGenerales.ViewConsultasGenerales;
 import views.ordenesDePago.OrdenesDePagoFrame;
 import views.proveedores.provedorView;
 
@@ -45,6 +46,15 @@ public class MenuPrincipal extends JFrame {
                dispose();//esto cierra la ventana anterior
            }
        });
+
+        consultasGeneralesButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                ViewConsultasGenerales cons = new ViewConsultasGenerales();
+                cons.setVisible(true);
+                dispose();//esto cierra la ventana anterior
+            }
+        });
    }
 
    public void agregarCiudad() {

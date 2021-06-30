@@ -1,12 +1,13 @@
 package main;
 
+import controllers.ControladorItem;
 import controllers.ControladorProveedor;
 import dal.RepoFactory;
 import models.documento.Factura;
 import models.documento.Nota;
 import models.documento.TipoDeNota;
 import models.mediopago.TipoPago;
-import models.proveedor.Proveedor;
+import models.proveedor.*;
 
 public class InicializadorDeDatos {
     public static void iniciar() {
@@ -14,6 +15,10 @@ public class InicializadorDeDatos {
         var repoTiposDePago = RepoFactory.getRepoTiposDePago();
         var repoFacturas = RepoFactory.getRepoFacturas();
         var repoNotas = RepoFactory.getRepoNotas();
+        var repoItems = RepoFactory.getRepoItems();
+        var repoRubros = RepoFactory.getRepoRubros();
+        var repoProveedorItem = RepoFactory.getProveedorItem();
+
 
         //Tipos de pago
         if (repoTiposDePago.getTodos().size() == 0) {
@@ -47,5 +52,43 @@ public class InicializadorDeDatos {
 
             //Credito
         }
+
+        //Rubros
+        if(repoRubros.getTodos().size() == 0){
+
+            repoRubros.insertar(new Rubro("Materias Prima"));
+            repoRubros.insertar(new Rubro("Comida"));
+        }
+
+        //Items
+        if(repoItems.getTodos().size() == 0){
+            var materiasPrimas = ControladorItem.getInstancia().getRubroByNombre("Materias Prima");
+
+
+
+            repoItems.insertar(new Item("Madera", Unidad.PESO, TipoItem.PRODUCTO,materiasPrimas));
+            repoItems.insertar(new Item("Acero", Unidad.PESO,TipoItem.PRODUCTO,materiasPrimas));
+        }
+
+        //ProvedoorItems
+        if(repoProveedorItem.getTodos().size() == 0){
+
+            var item = ControladorItem.getInstancia().getItemByNombre("Madera");
+            var proveedor1 = ControladorProveedor.getInstancia().getProveedorByNombre("Coto");
+            var proveedor2 = ControladorProveedor.getInstancia().getProveedorByNombre("Philips");
+
+
+            repoProveedorItem.insertar(new ProveedorItem(10F, item, proveedor1) );
+            repoProveedorItem.insertar(new ProveedorItem(20F,item,proveedor2));
+
+        }
+
+
+
+
+
+
+
+
     }
 }
