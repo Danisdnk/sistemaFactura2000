@@ -1,15 +1,18 @@
 package views.consultasGenerales;
 
 import controllers.ControladorComprobantes;
+import controllers.ControladorItem;
+import models.documento.Factura;
+import models.dtos.ComprobanteDTO;
+import views.documentosRecibidos.DocumentosView;
 import views.ordenesDePago.OrdenesDePagoFrame;
 import views.proveedores.provedorView;
-import views.utils.DateParse;
 
 import javax.swing.*;
-import javax.swing.tree.DefaultTreeCellEditor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.time.LocalDate;
+import java.util.List;
 
 
 public class ViewFacturasRecibidas extends JFrame {
@@ -27,10 +30,10 @@ public class ViewFacturasRecibidas extends JFrame {
     private JToolBar barraNavegacion;
     private JButton consultasGeneralesButton;
     private JButton proveedoresButton;
-    private JButton itemsServiciosButton;
+    private JButton DocumentosButton;
     private JButton ordenesDePagoButton;
     private JButton usuariosButton;
-    private JTextArea textArea1;
+    private JTextArea textAreaResultado;
 
 
     public ViewFacturasRecibidas() {
@@ -50,21 +53,57 @@ public class ViewFacturasRecibidas extends JFrame {
             public void actionPerformed(ActionEvent e) {
 
 
-                Integer CUIT = null;
+                String cuit = null;
                 LocalDate fecha = null;
 
-                //fecha = LocalDate.parse(textDia.getText() + textMes.getText() + textAnio.getText());
-                //var fecha = DateParse.parse(textDia.getText() + textMes.getText() + textAnio.getText());
-
                 if (!textCUIT.getText().isEmpty() || !(textDia.getText() + textMes.getText() + textAnio.getText()).isEmpty()){
+
                     if (!textCUIT.getText().isEmpty()){
-                        CUIT = Integer.parseInt(textCUIT.getText());
+                        //CUIT = Integer.parseInt(textCUIT.getText());
+                        cuit = textCUIT.getText();
                         System.out.println("cuit agregado");
                     }
 
                     if(!(textDia.getText() + textMes.getText() + textAnio.getText()).isEmpty()){
-                        fecha = LocalDate.parse(textDia.getText()+ ("-") + textMes.getText()+ ("-") + textAnio.getText());
-                        System.out.println("fecha agregado");
+                        try {
+                            fecha = LocalDate.parse(textAnio.getText() + ("-") + textMes.getText() + ("-") + textDia.getText());
+                            System.out.println("fecha agregado");
+                        }catch (Exception ex) {
+                            ex.printStackTrace();
+                            JOptionPane.showMessageDialog(
+                                    consultarButton,
+                                    "Fecha ingresada no valida",
+                                    "Error",
+                                    JOptionPane.ERROR_MESSAGE);
+
+                        }
+                    }
+
+                    System.out.println("TENGO O FECHA O CUIT");
+                    if (cuit != null && fecha != null){         // tengo cuit y fecha
+
+                        System.out.println("CUIT Y FECHA");
+                        var facturas = ControladorComprobantes.getInstancia().getFacturasDTOByFechaYProveedor(cuit, fecha);
+                        setJtextArea(facturas);
+                        System.out.println(facturas);
+
+                    }else{
+                        if (cuit != null && fecha == null) {           //solo cuit
+
+                            System.out.println("CUIT");
+                            var facturas = ControladorComprobantes.getInstancia().getFacturasDTOsByProveedor(cuit);
+                            setJtextArea(facturas);
+                            System.out.println(facturas);
+
+                        }else{                                  //solo fecha
+
+                            System.out.println("FECHA");
+                            var facturas = ControladorComprobantes.getInstancia().getFacturasDTOsByFecha(fecha);
+                            setJtextArea2(facturas);
+                            System.out.println(facturas);
+
+                        }
+
                     }
 
                 }else{
@@ -74,45 +113,7 @@ public class ViewFacturasRecibidas extends JFrame {
                             "Error",
                             JOptionPane.ERROR_MESSAGE);
                 }
-
-
-
-
-
-
-                //getComprobantesByProveedor
-                //CUIT = Integer.parseInt(textCUIT.getText());
-
-
-
-                System.out.println("primer if");
-                if (CUIT != null && fecha != null){         // tengo cuit y fecha
-                    System.out.println("segundo if");
-                }else{
-                    if (CUIT != null && fecha == null) {           //solo cuit
-                        System.out.println("tercer if");
-                        var facturas = ControladorComprobantes.getInstancia().getFacturasByProveedor(CUIT);
-
-
-                        textArea1.setText(String.valueOf(facturas));
-                        System.out.println(facturas);
-                    }else{                                  //solo fecha
-                        System.out.println("cuarto if");
-                        var facturas = ControladorComprobantes.getInstancia().getFacturasByFecha(fecha);
-                    }
-
-                }
-
-
-
-
-                //var facturas = ControladorComprobantes.getInstancia().getFacturasByProveedor(CUIT);
-                //textArea1.setText(String.valueOf(facturas));
-                //System.out.println(facturas);
-                //System.out.println(fecha);
-
             }
-
         });
 
         volverButton.addActionListener(new ActionListener() {
@@ -156,8 +157,59 @@ public class ViewFacturasRecibidas extends JFrame {
             }
         });
 
+        DocumentosButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                DocumentosView docu = new DocumentosView();
+                docu.setVisible(true);
+
+            }
+        });
+
+
+    }
 
 
 
+    private void setJtextArea(List<ComprobanteDTO> facturas) {
+
+        if (facturas.isEmpty()){
+
+            this.textAreaResultado.setText("El proveedor no posee facturas");
+        }
+        else{
+
+            String text = "El proveedor " + facturas.get(0).getProveedor().getNombre()+ " tiene las facturas: \n";
+
+            for (int i=0; i<facturas.size(); i++ ){
+                System.out.println(text);
+
+                text = text +("La factura numero ")+ facturas.get(i).getNro()+(" con fecha ")+ facturas.get(i).getFecha() +(" con un monto total de ")+(facturas.get(i).getTotal())+ ("$\n");
+
+            }
+            this.textAreaResultado.setText(text);
+        }
+        System.out.println("END1");
+
+    }
+
+    private void setJtextArea2(List<ComprobanteDTO> facturas) {
+        if (facturas.isEmpty()){
+
+            this.textAreaResultado.setText("No hay facturas en la fecha ingresada");
+        }
+        else{
+
+            String text = "En la fecha " + facturas.get(0).getFecha()+ " se encuentran las siguientes facturas: \n";
+
+            for (int i=0; i<facturas.size(); i++ ){
+                System.out.println(text);
+
+                text = text +("La factura del proveedor ") +facturas.get(i).getProveedor().getNombre() +(" con el numero ")+ facturas.get(i).getNro()+(" con un monto total de ")+(facturas.get(i).getTotal())+ ("$\n");
+
+            }
+            this.textAreaResultado.setText(text);
+        }
+        System.out.println("END2");
     }
 }

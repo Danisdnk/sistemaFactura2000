@@ -31,22 +31,50 @@ public class ControladorComprobantes {
                 .collect(Collectors.toList());
     }
 
-    public List<Factura> getFacturasByProveedor(int provID) { //metodo para traer facturas por ID -> facturas recibidas(cuit)
+    public List<Factura> getFacturasByProveedor(String cuit) { //metodo para traer facturas por ID -> facturas recibidas(cuit)
         return Stream.of(this.repoFacturas.getTodos())
                 .flatMap(Collection::stream)
-                .filter(c -> c.getProveedor().getID() == provID)
+                .filter(c -> c.getProveedor().getCuit().equals(cuit) )
                 .collect(Collectors.toList());
     }
 
     public List<Factura> getFacturasByFecha(LocalDate fecha) {  //metodo para traer facturas por fecha -> facturas recibidas(fecha)
         return Stream.of(this.repoFacturas.getTodos())
                 .flatMap(Collection::stream)
-                .filter(c -> c.getFecha()== fecha)
+                .filter(c -> c.getFecha().equals(fecha))
+                .collect(Collectors.toList());
+    }
+
+    public List<Factura> getFacturasByFechaYProveedor(String cuit, LocalDate fecha) {  //metodo para traer facturas por fecha y proveedor -> facturas recibidas(cuit, fecha)
+        return Stream.of(this.repoFacturas.getTodos())
+                .flatMap(Collection::stream)
+                .filter(c -> c.getProveedor().getCuit().equals(cuit) && c.getFecha().equals(fecha) )
                 .collect(Collectors.toList());
     }
 
     public List<ComprobanteDTO> getComprobanteDTOsByProveedor(int provID) {
         return getComprobantesByProveedor(provID)
+                .stream()
+                .map(Comprobante::toCompDTO)
+                .toList();
+    }
+
+    public List<ComprobanteDTO> getFacturasDTOsByProveedor(String cuit) {
+        return getFacturasByProveedor(cuit)
+                .stream()
+                .map(Comprobante::toCompDTO)
+                .toList();
+    }
+
+    public List<ComprobanteDTO> getFacturasDTOsByFecha(LocalDate fecha) {
+        return getFacturasByFecha(fecha)
+                .stream()
+                .map(Comprobante::toCompDTO)
+                .toList();
+    }
+
+    public List<ComprobanteDTO> getFacturasDTOByFechaYProveedor(String cuit, LocalDate fecha) {
+        return getFacturasByFechaYProveedor(cuit,fecha)
                 .stream()
                 .map(Comprobante::toCompDTO)
                 .toList();

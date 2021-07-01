@@ -4,6 +4,7 @@ import controllers.ControladorItem;
 import controllers.ControladorOrdenesDePagos;
 import controllers.ControladorProveedor;
 import models.dtos.DDLItemDTO;
+import views.documentosRecibidos.DocumentosView;
 import views.ordenesDePago.OrdenesDePagoFrame;
 import views.proveedores.provedorView;
 
@@ -28,7 +29,7 @@ public class ViewCompulsaPrecios extends JFrame{
     private JToolBar barraNavegacion;
     private JButton consultasGeneralesButton;
     private JButton proveedoresButton;
-    private JButton itemsServiciosButton;
+    private JButton DocumentosButton;
     private JButton ordenesDePagoButton;
     private JButton usuariosButton;
     private JTextArea TextResultado;
@@ -88,7 +89,7 @@ public class ViewCompulsaPrecios extends JFrame{
                 var sel = (DDLItemDTO)ddlProductos.getSelectedItem() ;
 
                 if (sel != null ) {
-                    setTextResultado(sel.descripcion);
+                    setJtextArea(sel.descripcion);
                 } else {
                     rubroID = null;
 
@@ -131,6 +132,15 @@ public class ViewCompulsaPrecios extends JFrame{
             }
         });
 
+        DocumentosButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                DocumentosView docu = new DocumentosView();
+                docu.setVisible(true);
+
+            }
+        });
+
         usuariosButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -144,10 +154,7 @@ public class ViewCompulsaPrecios extends JFrame{
     }
 
 
-    private void setDDLProductos() {
-        var model = ControladorItem.getInstancia().getOpcionesDDLItems();
-        this.ddlProductos.setModel(new DefaultComboBoxModel(model.toArray()));
-    }
+
 
 
     private void setDDLRubros() {
@@ -160,16 +167,28 @@ public class ViewCompulsaPrecios extends JFrame{
         this.ddlProductos.setModel(new DefaultComboBoxModel(model.toArray()));
     }
 
-    private void setTextResultado(String descripcion) {
+    private void setDDLProductos() {
+        var model = ControladorItem.getInstancia().getOpcionesDDLItems();
+        this.ddlProductos.setModel(new DefaultComboBoxModel(model.toArray()));
+    }
+
+    private void setJtextArea(String descripcion) {
         var model = ControladorItem.getInstancia().getProveedorItemByItem(descripcion);
         if (model.isEmpty()){
             this.TextResultado.setText("Es producto no posee precio fijados por vendedores actualmente ");
         }
         else{
-            this.TextResultado.setText(model.toString());
+            
+            String text = "";
+
+            for (int i=0; i<model.size(); i++ ){
+                System.out.println(text);
+
+                text = text + "El Proveedor: " + model.get(i).descripcion + " lo vende a "+ model.get(i).precio + "$ \n";
+
+            }
+            this.TextResultado.setText(text);
         }
-
-
         System.out.println(model);
     }
 

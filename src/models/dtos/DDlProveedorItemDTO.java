@@ -10,7 +10,7 @@ public class DDlProveedorItemDTO extends DDLItemDTO {
 
         @Override
         public String toString() {
-            return  ("El Proveedor: ")+this.descripcion+(" lo vende a $")+this.precio;
+            return  this.descripcion+(" ")+this.precio;
          }
 
 }

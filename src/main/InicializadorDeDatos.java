@@ -8,6 +8,7 @@ import models.documento.Nota;
 import models.documento.TipoDeNota;
 import models.mediopago.TipoPago;
 import models.proveedor.*;
+import java.time.LocalDate;
 
 public class InicializadorDeDatos {
     public static void iniciar() {
@@ -28,8 +29,8 @@ public class InicializadorDeDatos {
 
         //Proveedores
         if (repoProveedores.getTodos().size() == 0) {
-            repoProveedores.insertar(new Proveedor("Coto"));
-            repoProveedores.insertar(new Proveedor("Philips"));
+            repoProveedores.insertar(new Proveedor("Coto", "20"));
+            repoProveedores.insertar(new Proveedor("Philips", "21"));
         }
 
         //Facturas
@@ -37,11 +38,11 @@ public class InicializadorDeDatos {
             var coto = ControladorProveedor.getInstancia().getProveedorByNombre("Coto");
             var philips = ControladorProveedor.getInstancia().getProveedorByNombre("Philips");
 
-            repoFacturas.insertar(new Factura(coto, "0001-00002555", 5000));
-            repoFacturas.insertar(new Factura(coto,"0001-00002556", 2500));
-            repoFacturas.insertar(new Factura(coto,"0001-00002557", 1250));
-            repoFacturas.insertar(new Factura(philips,"0001-00002558", 3000));
-            repoFacturas.insertar(new Factura(philips,"0001-00002590", 4800));
+            repoFacturas.insertar(new Factura(coto, "0001-00002555", 5000, LocalDate.parse("2020-01-01")));
+            repoFacturas.insertar(new Factura(coto,"0001-00002556", 2500, LocalDate.parse("2020-01-01")));
+            repoFacturas.insertar(new Factura(coto,"0001-00002557", 1250, LocalDate.parse("2020-01-02")));
+            repoFacturas.insertar(new Factura(philips,"0001-00002558", 3000, LocalDate.parse("2020-01-03")));
+            repoFacturas.insertar(new Factura(philips,"0001-00002590", 4800, LocalDate.parse("2020-01-04")));
         }
 
         //Notas

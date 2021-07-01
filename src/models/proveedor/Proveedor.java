@@ -43,6 +43,11 @@ public class Proveedor implements DDLeable, Identificable {
         this.nombre = nombre;
     }
 
+    public Proveedor(String nombre, String cuit) {
+        this.nombre = nombre;
+        this.cuit = cuit;
+    }
+
     public Proveedor(
             String nombre,
             String direccion,
