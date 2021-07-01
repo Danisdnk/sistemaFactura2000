@@ -87,7 +87,7 @@
                   <text value="    Proveedores"/>
                 </properties>
               </component>
-              <component id="cb88e" class="javax.swing.JButton" binding="itemsServiciosButton">
+              <component id="cb88e" class="javax.swing.JButton" binding="DocumentosButton">
                 <constraints/>
                 <properties>
                   <actionCommand value=""/>
@@ -100,8 +100,8 @@
                   <iconTextGap value="0"/>
                   <maximumSize width="200" height="80"/>
                   <minimumSize width="200" height="80"/>
-                  <text value="Prod y servicios"/>
-                  <toolTipText value="Productos y serv"/>
+                  <text value="Documentos"/>
+                  <toolTipText value="Documentos&#10;"/>
                 </properties>
               </component>
               <component id="51a3f" class="javax.swing.JButton" binding="ordenesDePagoButton">
@@ -142,12 +142,6 @@
               </component>
             </children>
           </toolbar>
-          <vspacer id="36f11">
-            <constraints>
-              <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
-              <gridbag weightx="0.0" weighty="0.0"/>
-            </constraints>
-          </vspacer>
         </children>
       </grid>
     </children>

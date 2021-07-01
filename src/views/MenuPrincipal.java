@@ -1,6 +1,7 @@
 package views;
 
 import views.consultasGenerales.ViewConsultasGenerales;
+import views.documentosRecibidos.DocumentosView;
 import views.ordenesDePago.OrdenesDePagoFrame;
 import views.proveedores.provedorView;
 
@@ -20,33 +21,40 @@ public class MenuPrincipal extends JFrame {
     private JToolBar barraNavegacion;
     private JButton consultasGeneralesButton;
     private JButton proveedoresButton;
-    private JButton itemsServiciosButton;
+    private JButton DocumentosButton;
 
     public MenuPrincipal(String title) {
-       super(title);
-       this.setDefaultCloseOperation(EXIT_ON_CLOSE);
-       this.setContentPane(mainPanel);
-       this.setSize(1000,900);
-       this.setLocationRelativeTo(null);
+        super(title);
+        this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+        this.setContentPane(mainPanel);
+        this.setSize(1000, 900);
+        this.setLocationRelativeTo(null);
 
-       ordenesDePagoButton.addActionListener(new ActionListener() {
-           @Override
-           public void actionPerformed(ActionEvent e) {
-               OrdenesDePagoFrame op = new OrdenesDePagoFrame();
-               op.setVisible(true);
-               //dispose();//esto cierra la ventana anterior
-           }
-       });
+        ordenesDePagoButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                OrdenesDePagoFrame op = new OrdenesDePagoFrame();
+                op.setVisible(true);
+                //dispose();//esto cierra la ventana anterior
+            }
+        });
 
-       usuariosButton.addActionListener(new ActionListener() {
-           @Override
-           public void actionPerformed(ActionEvent e) {
-               provedorView principal = new provedorView();
-               principal.setVisible(true);
-               dispose();//esto cierra la ventana anterior
-           }
-       });
+        usuariosButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                provedorView principal = new provedorView();
+                principal.setVisible(true);
+                dispose();//esto cierra la ventana anterior
+            }
+        });
+        DocumentosButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                DocumentosView docu = new DocumentosView();
+                docu.setVisible(true);
 
+            }
+        });
         consultasGeneralesButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -55,9 +63,16 @@ public class MenuPrincipal extends JFrame {
                 dispose();//esto cierra la ventana anterior
             }
         });
+
+    }
+
+
    }
 
-   public void agregarCiudad() {
+
+
+
+   //public void agregarCiudad() {
        /*Ciudad.CiudadDTO dto = new Ciudad.CiudadDTO();
        dto.nombre = "Buenos aires";
        try {
@@ -66,10 +81,11 @@ public class MenuPrincipal extends JFrame {
        catch (CiudadSinNombreException c) {
            //MUESTRO UN CARTEL DE ERROR
        }*/
-   }
+  // }
 
-   public void buscarCiudadConMasPasajeros(LocalDate unDia) {
+   //public void buscarCiudadConMasPasajeros(LocalDate unDia) {
        /*Ciudad.CiudadDTO dto = CiudadesController.getInstancia().ciudadQueMasPasajerosRecibio(unDia);
        this.nombreCiudad.setText(dto.nombre);*/
-   }
-}
+//   }
+//}
+

@@ -6,11 +6,21 @@ import models.dtos.DDLeable;
 import models.impuesto.IVA;
 
 
+
 public class Item implements DDLeable, Identificable {
+    public Item(Integer idItem,String nombre, Integer cantidad, Double precio) {
+        this.idItem = idItem;
+        this.nombre = nombre;
+        this.cantidad = cantidad;
+        this.precio = precio;
+    }
+
 
     private int idItem;
 
     private String nombre;
+    private Integer cantidad;
+    private Double precio;
     private TipoItem tipo;
     private IVA iva;
     private Unidad unidad;
@@ -87,5 +97,16 @@ public class Item implements DDLeable, Identificable {
 
     public void setPertenece(Rubro pertenece) {
         this.pertenece = pertenece;
+    }
+    public Integer getCantidad() {        return cantidad;
+    }
+
+    public void setCantidad(Integer cantidad) {        this.cantidad = cantidad;
+    }
+
+    public Double getPrecio() {        return precio;
+    }
+
+    public void setPrecio(Double precio) {        this.precio = precio;
     }
 }
