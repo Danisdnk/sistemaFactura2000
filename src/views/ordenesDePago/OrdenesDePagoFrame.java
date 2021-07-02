@@ -36,7 +36,8 @@ public class OrdenesDePagoFrame extends JFrame {
             OrdenDePagoDialog dialog = new OrdenDePagoDialog(opID);
             dialog.setModalityType(Dialog.ModalityType.APPLICATION_MODAL);
 
-            addRow(dialog.showDialog());
+            var op = dialog.showDialog();
+            addRow(op);
         } catch (Exception ex) {
             ex.printStackTrace();
         }
