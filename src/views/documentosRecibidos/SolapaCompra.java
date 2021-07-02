@@ -1,22 +1,30 @@
-package views;
+package views.documentosRecibidos;
 
 import views.consultasGenerales.ViewConsultasGenerales;
-import views.documentosRecibidos.DocumentosView;
 import views.login.loginView;
 import views.ordenesDePago.OrdenesDePagoFrame;
 import views.proveedores.provedorView;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.time.LocalDate;
 
-public class MenuPrincipal extends JFrame {
-    private JPanel mainPanel;
-    private JPanel panelCentral;
-
-    private JLabel titulo;
+public class SolapaCompra extends JDialog {
+    private JPanel prinicipalSolapaCompra;
+    private JPanel panelProveedor;
+    private JComboBox comboBox1;
+    private JTextField textField1;
+    private JComboBox comboBox2;
+    private JTextField textField2;
+    private JTextField textField3;
+    private JButton agregarButton;
+    private JButton quitarButton;
+    private JTable tablaItemsFactura;
+    private JButton cancelarButton;
+    private JButton guardarButton;
+    private JTextField textField4;
+    private JTextField textField5;
+    //botones nav
     private JButton usuariosButton;
     private JButton ordenesDePagoButton;
     private JToolBar barraNavegacion;
@@ -25,12 +33,13 @@ public class MenuPrincipal extends JFrame {
     private JButton DocumentosButton;
     private JButton hideButton;
 
-    public MenuPrincipal(String title) {
-        super(title);
-        this.setDefaultCloseOperation(EXIT_ON_CLOSE);
-        this.setContentPane(mainPanel);
+    public SolapaCompra(){
+        this.setContentPane(prinicipalSolapaCompra);
+        this.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
         this.setSize(1000, 1000);
+        this.setModal(true);
         this.setLocationRelativeTo(null);
+
         ordenesDePagoButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -74,4 +83,5 @@ public class MenuPrincipal extends JFrame {
         });
 
     }
+
 }

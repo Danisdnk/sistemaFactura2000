@@ -1,40 +1,61 @@
 package models.proveedor;
+
+import dal.Identificable;
+import models.dtos.DDLItemDTO;
+import models.dtos.DDLeable;
 import models.impuesto.IVA;
-public class Item {
 
 
-    public Item() {
+
+public class Item implements DDLeable, Identificable {
+    public Item(Integer idItem,String nombre, Integer cantidad, Double precio) {
+        this.idItem = idItem;
+        this.nombre = nombre;
+        this.cantidad = cantidad;
+        this.precio = precio;
     }
 
 
     private int idItem;
 
     private String nombre;
-
+    private Integer cantidad;
+    private Double precio;
     private TipoItem tipo;
     private IVA iva;
-
     private Unidad unidad;
-
     public Rubro pertenece;
 
 
 
+    public Item(String nombre, Unidad unidad,TipoItem tipo, Rubro pertenece) {
 
+        setNombre(nombre);
+        setUnidad(unidad);
+        setTipo(tipo);
+        setPertenece(pertenece);
 
+    }
 
-
-
+    @Override
+    public DDLItemDTO toDDL() {
+        return new DDLItemDTO() {
+            {
+                id = idItem;
+                descripcion = nombre;
+            }
+        };
+    }
 
     /**
-     * @param idItem 
+     * @param idItem
      * @return
      */
-    public int getIdItem() {
+    public int getID() {
         return idItem;
     }
 
-    public void setIdItem(int idItem) {
+    public void setID(int idItem) {
         this.idItem = idItem;
     }
 
@@ -76,5 +97,16 @@ public class Item {
 
     public void setPertenece(Rubro pertenece) {
         this.pertenece = pertenece;
+    }
+    public Integer getCantidad() {        return cantidad;
+    }
+
+    public void setCantidad(Integer cantidad) {        this.cantidad = cantidad;
+    }
+
+    public Double getPrecio() {        return precio;
+    }
+
+    public void setPrecio(Double precio) {        this.precio = precio;
     }
 }

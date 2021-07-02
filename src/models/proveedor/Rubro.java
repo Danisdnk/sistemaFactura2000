@@ -1,13 +1,37 @@
 package models.proveedor;
 
-public class Rubro {
+import dal.Identificable;
+import models.dtos.DDLItemDTO;
+import models.dtos.DDLeable;
 
+public class Rubro implements DDLeable, Identificable {
 
-    public Rubro() {
+    private int IDrubro;
+    private String nombre;
 
+    public Rubro(String nombre) {
+
+        setNombre(nombre);
     }
 
-    private String nombre;
+    @Override
+    public DDLItemDTO toDDL() {
+        return new DDLItemDTO() {
+            {
+                id = IDrubro;
+                descripcion = nombre;
+            }
+        };
+    }
+
+
+    public int getID() {
+        return IDrubro;
+    }
+
+    public void setID(int ID) {
+        this.IDrubro = ID;
+    }
 
     public String getNombre() {
         return nombre;
@@ -16,4 +40,5 @@ public class Rubro {
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
+
 }

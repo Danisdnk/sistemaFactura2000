@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="views.consultasGenerales.ViewCuentaCorriente">
+  <grid id="27dc6" binding="cuentaCorriente" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+    <margin top="0" left="0" bottom="0" right="0"/>
+    <constraints>
+      <xy x="20" y="20" width="912" height="521"/>
+    </constraints>
+    <properties/>
+    <border type="none"/>
+    <children>
+      <grid id="57d50" binding="panelCentral" layout-manager="GridLayoutManager" row-count="4" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+        <margin top="0" left="0" bottom="0" right="0"/>
+        <constraints>
+          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <background color="-12762549"/>
+          <foreground color="-14139535"/>
+        </properties>
+        <border type="none"/>
+        <children>
+          <toolbar id="d5632" binding="barraNavegacion">
+            <constraints>
+              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="9" fill="0" indent="0" use-parent-layout="false">
+                <minimum-size width="900" height="80"/>
+                <preferred-size width="900" height="80"/>
+                <maximum-size width="900" height="80"/>
+              </grid>
+            </constraints>
+            <properties>
+              <background color="-12762549"/>
+              <borderPainted value="false"/>
+              <floatable value="true"/>
+              <focusable value="false"/>
+              <foreground color="-3022030"/>
+              <inheritsPopupMenu value="true"/>
+              <maximumSize width="200" height="80"/>
+              <orientation value="0"/>
+            </properties>
+            <border type="none">
+              <font/>
+              <title-color color="-2829356"/>
+            </border>
+            <children>
+              <component id="394e8" class="javax.swing.JButton" binding="consultasGeneralesButton">
+                <constraints/>
+                <properties>
+                  <actionCommand value=""/>
+                  <background color="-12762549"/>
+                  <borderPainted value="false"/>
+                  <foreground color="-22507"/>
+                  <hideActionText value="true"/>
+                  <horizontalAlignment value="2"/>
+                  <icon value="img/search-folder-4237_4ecd7f14-6129-4006-835d-82ef11aed961.png"/>
+                  <iconTextGap value="0"/>
+                  <maximumSize width="150" height="80"/>
+                  <minimumSize width="200" height="80"/>
+                  <text value="consultas"/>
+                  <toolTipText value="consultas generales"/>
+                </properties>
+              </component>
+              <component id="aa6c0" class="javax.swing.JButton" binding="proveedoresButton">
+                <constraints/>
+                <properties>
+                  <actionCommand value=""/>
+                  <background color="-12762549"/>
+                  <borderPainted value="false"/>
+                  <foreground color="-22507"/>
+                  <hideActionText value="false"/>
+                  <horizontalAlignment value="2"/>
+                  <horizontalTextPosition value="11"/>
+                  <icon value="img/hand-truck-2675_b9c5f823-4adf-4534-a455-01aec8efdf30.png"/>
+                  <iconTextGap value="0"/>
+                  <maximumSize width="200" height="80"/>
+                  <minimumSize width="200" height="80"/>
+                  <text value="    Proveedores"/>
+                </properties>
+              </component>
+              <component id="4204" class="javax.swing.JButton" binding="itemsServiciosButton">
+                <constraints/>
+                <properties>
+                  <actionCommand value=""/>
+                  <background color="-12762549"/>
+                  <borderPainted value="false"/>
+                  <foreground color="-22507"/>
+                  <horizontalAlignment value="2"/>
+                  <horizontalTextPosition value="11"/>
+                  <icon value="img/shopping-cart-2522_2fb9aac0-8c8f-4b52-a0b0-42f248f55f8b.png"/>
+                  <iconTextGap value="0"/>
+                  <maximumSize width="200" height="80"/>
+                  <minimumSize width="200" height="80"/>
+                  <text value="Prod y servicios"/>
+                  <toolTipText value="Productos y serv"/>
+                </properties>
+              </component>
+              <component id="e2a0d" class="javax.swing.JButton" binding="ordenesDePagoButton">
+                <constraints/>
+                <properties>
+                  <actionCommand value=""/>
+                  <background color="-12762549"/>
+                  <borderPainted value="false"/>
+                  <foreground color="-22507"/>
+                  <hideActionText value="false"/>
+                  <horizontalAlignment value="2"/>
+                  <horizontalTextPosition value="11"/>
+                  <icon value="img/documents-4188_e4752169-7bd1-4f22-a20d-705d8ed475e7.png"/>
+                  <iconTextGap value="0"/>
+                  <maximumSize width="200" height="80"/>
+                  <minimumSize width="200" height="80"/>
+                  <text value="ordenes pago"/>
+                </properties>
+              </component>
+              <component id="31d9d" class="javax.swing.JButton" binding="usuariosButton">
+                <constraints/>
+                <properties>
+                  <actionCommand value=""/>
+                  <alignmentY value="0.5"/>
+                  <background color="-12762549"/>
+                  <borderPainted value="false"/>
+                  <enabled value="true"/>
+                  <foreground color="-22507"/>
+                  <horizontalAlignment value="10"/>
+                  <horizontalTextPosition value="4"/>
+                  <icon value="img/social-3088_bbbd1b6d-a330-437d-ac97-86da83af180a.png"/>
+                  <iconTextGap value="0"/>
+                  <maximumSize width="150" height="80"/>
+                  <minimumSize width="150" height="80"/>
+                  <text value="usuarios"/>
+                  <toolTipText value="usuarios"/>
+                </properties>
+              </component>
+            </children>
+          </toolbar>
+          <grid id="c0f65" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+            <margin top="0" left="0" bottom="0" right="0"/>
+            <constraints>
+              <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <background color="-12161083"/>
+              <foreground color="-12762549"/>
+            </properties>
+            <border type="none"/>
+            <children>
+              <component id="cf547" class="javax.swing.JLabel">
+                <constraints>
+                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false">
+                    <preferred-size width="106" height="27"/>
+                  </grid>
+                </constraints>
+                <properties>
+                  <font size="36"/>
+                  <foreground color="-22507"/>
+                  <text value="Cuenta Corriente"/>
+                </properties>
+              </component>
+            </children>
+          </grid>
+          <grid id="e42bd" layout-manager="GridLayoutManager" row-count="1" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+            <margin top="0" left="0" bottom="0" right="0"/>
+            <constraints>
+              <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <background color="-12161083"/>
+              <foreground color="-12161083"/>
+            </properties>
+            <border type="none"/>
+            <children>
+              <component id="34e59" class="javax.swing.JButton" binding="cancelarButton" default-binding="true">
+                <constraints>
+                  <grid row="0" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <background color="-3276800"/>
+                  <text value="Cancelar"/>
+                </properties>
+              </component>
+            </children>
+          </grid>
+          <grid id="66adb" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+            <margin top="0" left="0" bottom="0" right="0"/>
+            <constraints>
+              <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties/>
+            <border type="none"/>
+            <children>
+              <component id="8b032" class="javax.swing.JTable" binding="table1" default-binding="true">
+                <constraints>
+                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false">
+                    <preferred-size width="150" height="50"/>
+                  </grid>
+                </constraints>
+                <properties>
+                  <dropMode value="USE_SELECTION"/>
+                </properties>
+              </component>
+            </children>
+          </grid>
+        </children>
+      </grid>
+    </children>
+  </grid>
+</form>

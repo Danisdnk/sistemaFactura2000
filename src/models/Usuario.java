@@ -1,22 +1,32 @@
 package models;
-import java.util.Date;
 
-public class Usuario {
+import dal.Identificable;
+import models.dtos.DDLItemDTO;
+import models.dtos.DDLeable;
 
-    /**
-     * Default constructor
-     */
+public class Usuario implements DDLeable, Identificable {
+
     public Usuario() {
 
     }
 
-    private String nombre;
+    private String nombreUsuario;
 
-    private String apellido;
-
-    private Date fechaNacimiento;
-
-    private String idFirmante;
+    private String password;
 
 
+    @Override
+    public int getID() {
+        return 0;
+    }
+
+    @Override
+    public void setID(int id) {
+
+    }
+
+    @Override
+    public DDLItemDTO toDDL() {
+        return null;
+    }
 }

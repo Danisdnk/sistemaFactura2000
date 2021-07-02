@@ -1,62 +1,48 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="views.MenuPrincipal">
-  <grid id="27dc6" binding="mainPanel" layout-manager="GridLayoutManager" row-count="2" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="views.consultasGenerales.ViewOrdenesPago">
+  <grid id="27dc6" binding="ordenesPago" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
     <margin top="0" left="0" bottom="0" right="0"/>
     <constraints>
-      <xy x="20" y="20" width="1254" height="400"/>
+      <xy x="20" y="20" width="912" height="400"/>
     </constraints>
-    <properties>
-      <background color="-15194296"/>
-    </properties>
+    <properties/>
     <border type="none"/>
     <children>
-      <component id="3c24a" class="javax.swing.JLabel" binding="titulo">
+      <grid id="19c4b" binding="panelCentral" layout-manager="GridLayoutManager" row-count="3" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+        <margin top="0" left="0" bottom="0" right="0"/>
         <constraints>
-          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
-          <text value="Sistema Factura 2000"/>
-        </properties>
-      </component>
-      <grid id="7c7cb" binding="panelCentral" layout-manager="GridBagLayout">
-        <constraints>
-          <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
-        </constraints>
-        <properties>
-          <background color="-15194296"/>
+          <background color="-12762549"/>
           <foreground color="-14139535"/>
         </properties>
         <border type="none"/>
         <children>
-          <toolbar id="5ff82" binding="barraNavegacion">
+          <toolbar id="22036" binding="barraNavegacion">
             <constraints>
-              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="1" fill="1" indent="0" use-parent-layout="false">
+              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="9" fill="0" indent="0" use-parent-layout="false">
                 <minimum-size width="900" height="80"/>
                 <preferred-size width="900" height="80"/>
                 <maximum-size width="900" height="80"/>
               </grid>
-              <gridbag weightx="1.0" weighty="1.0"/>
             </constraints>
             <properties>
               <background color="-12762549"/>
               <borderPainted value="false"/>
               <floatable value="true"/>
-              <focusCycleRoot value="true"/>
-              <focusTraversalPolicyProvider value="true"/>
-              <focusable value="true"/>
+              <focusable value="false"/>
               <foreground color="-3022030"/>
               <inheritsPopupMenu value="true"/>
               <maximumSize width="200" height="80"/>
-              <opaque value="true"/>
               <orientation value="0"/>
-              <requestFocusEnabled value="false"/>
             </properties>
             <border type="none">
               <font/>
               <title-color color="-2829356"/>
             </border>
             <children>
-              <component id="8808a" class="javax.swing.JButton" binding="consultasGeneralesButton">
+              <component id="db34c" class="javax.swing.JButton" binding="consultasGeneralesButton">
                 <constraints/>
                 <properties>
                   <actionCommand value=""/>
@@ -69,11 +55,11 @@
                   <iconTextGap value="0"/>
                   <maximumSize width="150" height="80"/>
                   <minimumSize width="200" height="80"/>
-                  <text value="Consultas"/>
+                  <text value="consultas"/>
                   <toolTipText value="consultas generales"/>
                 </properties>
               </component>
-              <component id="4e9c3" class="javax.swing.JButton" binding="proveedoresButton">
+              <component id="2f4fa" class="javax.swing.JButton" binding="proveedoresButton">
                 <constraints/>
                 <properties>
                   <actionCommand value=""/>
@@ -90,7 +76,7 @@
                   <text value="    Proveedores"/>
                 </properties>
               </component>
-              <component id="cb88e" class="javax.swing.JButton" binding="DocumentosButton">
+              <component id="ac68f" class="javax.swing.JButton" binding="itemsServiciosButton">
                 <constraints/>
                 <properties>
                   <actionCommand value=""/>
@@ -103,11 +89,11 @@
                   <iconTextGap value="0"/>
                   <maximumSize width="200" height="80"/>
                   <minimumSize width="200" height="80"/>
-                  <text value="Documentos"/>
-                  <toolTipText value="Documentos&#10;"/>
+                  <text value="Prod y servicios"/>
+                  <toolTipText value="Productos y serv"/>
                 </properties>
               </component>
-              <component id="51a3f" class="javax.swing.JButton" binding="ordenesDePagoButton">
+              <component id="b4d1c" class="javax.swing.JButton" binding="ordenesDePagoButton">
                 <constraints/>
                 <properties>
                   <actionCommand value=""/>
@@ -121,10 +107,10 @@
                   <iconTextGap value="0"/>
                   <maximumSize width="200" height="80"/>
                   <minimumSize width="200" height="80"/>
-                  <text value="Ordenes pago"/>
+                  <text value="ordenes pago"/>
                 </properties>
               </component>
-              <component id="a25a" class="javax.swing.JButton" binding="usuariosButton">
+              <component id="16f1c" class="javax.swing.JButton" binding="usuariosButton">
                 <constraints/>
                 <properties>
                   <actionCommand value=""/>
@@ -139,30 +125,72 @@
                   <iconTextGap value="0"/>
                   <maximumSize width="150" height="80"/>
                   <minimumSize width="150" height="80"/>
-                  <text value="Usuarios"/>
+                  <text value="usuarios"/>
                   <toolTipText value="usuarios"/>
-                </properties>
-              </component>
-              <component id="82463" class="javax.swing.JButton" binding="hideButton">
-                <constraints/>
-                <properties>
-                  <actionCommand value=""/>
-                  <alignmentY value="0.5"/>
-                  <background color="-12762549"/>
-                  <borderPainted value="false"/>
-                  <enabled value="true"/>
-                  <foreground color="-22507"/>
-                  <horizontalAlignment value="10"/>
-                  <horizontalTextPosition value="4"/>
-                  <iconTextGap value="0"/>
-                  <maximumSize width="150" height="80"/>
-                  <minimumSize width="150" height="80"/>
-                  <text value=""/>
-                  <toolTipText value="hidebutton"/>
                 </properties>
               </component>
             </children>
           </toolbar>
+          <grid id="a6a6d" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+            <margin top="0" left="0" bottom="0" right="0"/>
+            <constraints>
+              <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <background color="-12161083"/>
+              <foreground color="-12762549"/>
+            </properties>
+            <border type="none"/>
+            <children>
+              <component id="89d61" class="javax.swing.JLabel">
+                <constraints>
+                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false">
+                    <preferred-size width="106" height="27"/>
+                  </grid>
+                </constraints>
+                <properties>
+                  <font size="36"/>
+                  <foreground color="-22507"/>
+                  <text value="Ordenes de Pago Emitidas"/>
+                </properties>
+              </component>
+            </children>
+          </grid>
+          <grid id="b60d0" layout-manager="GridLayoutManager" row-count="2" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+            <margin top="0" left="0" bottom="0" right="0"/>
+            <constraints>
+              <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <background color="-12161083"/>
+              <foreground color="-12161083"/>
+            </properties>
+            <border type="none"/>
+            <children>
+              <component id="b7555" class="javax.swing.JButton" binding="cancelarButton" default-binding="true">
+                <constraints>
+                  <grid row="1" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <background color="-3276800"/>
+                  <text value="Cancelar"/>
+                </properties>
+              </component>
+              <scrollpane id="564c7">
+                <constraints>
+                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties/>
+                <border type="none"/>
+                <children>
+                  <component id="61d" class="javax.swing.JList" binding="list1" default-binding="true">
+                    <constraints/>
+                    <properties/>
+                  </component>
+                </children>
+              </scrollpane>
+            </children>
+          </grid>
         </children>
       </grid>
     </children>

@@ -1,7 +1,8 @@
-package views;
+package views.documentosRecibidos;
 
 import views.consultasGenerales.ViewConsultasGenerales;
-import views.documentosRecibidos.DocumentosView;
+import views.documentosRecibidos.SolapaFactura;
+import views.documentosRecibidos.SolapaCompra;
 import views.login.loginView;
 import views.ordenesDePago.OrdenesDePagoFrame;
 import views.proveedores.provedorView;
@@ -10,27 +11,42 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.time.LocalDate;
 
-public class MenuPrincipal extends JFrame {
-    private JPanel mainPanel;
-    private JPanel panelCentral;
-
+public class DocumentosView extends JDialog {
     private JLabel titulo;
     private JButton usuariosButton;
     private JButton ordenesDePagoButton;
-    private JToolBar barraNavegacion;
     private JButton consultasGeneralesButton;
     private JButton proveedoresButton;
     private JButton DocumentosButton;
+    private JPanel docuMain;
+    private JButton facturaButton;
+    private JButton ordenDeCompraButton;
+    private JToolBar barraNavegacion;
     private JButton hideButton;
+    private JDesktopPane desktopPaneFactura;
 
-    public MenuPrincipal(String title) {
-        super(title);
-        this.setDefaultCloseOperation(EXIT_ON_CLOSE);
-        this.setContentPane(mainPanel);
+    public DocumentosView(){
+        this.setContentPane(docuMain);
+        this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.setSize(1000, 1000);
+        this.setModal(true);
         this.setLocationRelativeTo(null);
+
+        facturaButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                SolapaFactura solapaF = new SolapaFactura();
+                solapaF.setVisible(true);
+            }
+        });
+        ordenDeCompraButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                SolapaCompra solapaC = new SolapaCompra();
+                solapaC.setVisible(true);
+            }
+        });
         ordenesDePagoButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
