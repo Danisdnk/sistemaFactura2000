@@ -13,13 +13,24 @@ public class OrdenPago extends Comprobante {
 
     private float totalRetenciones;
 
+    public OrdenPago(){}
+
+    public OrdenPago(Proveedor prov) {
+        this.proveedor = prov;
+    }
+
     public List<ItemOrdenPago> getItems() {
         return items;
     }
 
     public void setItems(List<ItemOrdenPago> items) {
         this.items = items;
-        this.total = (float)this.items.stream().mapToDouble(ItemOrdenPago::getTotal).sum();
+        calcularTotal();
+    }
+
+    public void addItem(ItemOrdenPago item) {
+        this.items.add(item);
+        calcularTotal();
     }
 
     public Proveedor getProveedor() {
@@ -44,5 +55,9 @@ public class OrdenPago extends Comprobante {
 
     public void setTotalRetenciones(float totalRetenciones) {
         this.totalRetenciones = totalRetenciones;
+    }
+
+    private void calcularTotal() {
+        this.total = (float)this.items.stream().mapToDouble(ItemOrdenPago::getTotal).sum();
     }
 }

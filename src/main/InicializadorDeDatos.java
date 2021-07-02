@@ -1,19 +1,20 @@
 package main;
 
+import controllers.ControladorComprobantes;
 import controllers.ControladorItem;
 import controllers.ControladorProveedor;
 import dal.RepoFactory;
-import models.documento.Factura;
-import models.documento.Nota;
-import models.documento.TipoDeNota;
+import models.documento.*;
 import models.mediopago.TipoPago;
 import models.proveedor.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 public class InicializadorDeDatos {
     public static void iniciar() {
         var repoProveedores = RepoFactory.getRepoProveedores();
         var repoTiposDePago = RepoFactory.getRepoTiposDePago();
+        var repoOrdenesDePago = RepoFactory.getRepoOrdenesPago();
         var repoFacturas = RepoFactory.getRepoFacturas();
         var repoNotas = RepoFactory.getRepoNotas();
         var repoItems = RepoFactory.getRepoItems();
@@ -33,6 +34,7 @@ public class InicializadorDeDatos {
             repoProveedores.insertar(new Proveedor("Philips", "21"));
         }
 
+        // ---- NO MODIFICAR LOS NROS DE IDENTIFICACION DE LOS COMPROBANTES ----
         //Facturas
         if(repoFacturas.getTodos().size() == 0) {
             var coto = ControladorProveedor.getInstancia().getProveedorByNombre("Coto");
@@ -41,6 +43,7 @@ public class InicializadorDeDatos {
             repoFacturas.insertar(new Factura(coto, "0001-00002555", 5000, LocalDate.parse("2020-01-01")));
             repoFacturas.insertar(new Factura(coto,"0001-00002556", 2500, LocalDate.parse("2020-01-01")));
             repoFacturas.insertar(new Factura(coto,"0001-00002557", 1250, LocalDate.parse("2020-01-02")));
+
             repoFacturas.insertar(new Factura(philips,"0001-00002558", 3000, LocalDate.parse("2020-01-03")));
             repoFacturas.insertar(new Factura(philips,"0001-00002590", 4800, LocalDate.parse("2020-01-04")));
         }
@@ -48,10 +51,63 @@ public class InicializadorDeDatos {
         //Notas
         if(repoNotas.getTodos().size() == 0) {
             var coto = ControladorProveedor.getInstancia().getProveedorByNombre("Coto");
+            var philips = ControladorProveedor.getInstancia().getProveedorByNombre("Philips");
+
             //Debito
             repoNotas.insertar(new Nota(TipoDeNota.DEBITO, coto, "0001-00003000", 1000));
+            repoNotas.insertar(new Nota(TipoDeNota.DEBITO, coto, "0001-00003010", 4500));
+            repoNotas.insertar(new Nota(TipoDeNota.DEBITO, coto, "0001-00003030", 2000));
+            repoNotas.insertar(new Nota(TipoDeNota.DEBITO, coto, "0001-00003099", 1350));
+
+            repoNotas.insertar(new Nota(TipoDeNota.DEBITO, philips, "0001-00008888", 2000));
+            repoNotas.insertar(new Nota(TipoDeNota.DEBITO, philips, "0001-00008750", 3000));
+            repoNotas.insertar(new Nota(TipoDeNota.DEBITO, philips, "0001-00008890", 2000));
+            repoNotas.insertar(new Nota(TipoDeNota.DEBITO, philips, "0001-00009940", 4000));
 
             //Credito
+            repoNotas.insertar(new Nota(TipoDeNota.CREDITO, coto, "0001-00003664", 2000));
+            repoNotas.insertar(new Nota(TipoDeNota.CREDITO, coto, "0001-00003555", 1350));
+
+            repoNotas.insertar(new Nota(TipoDeNota.CREDITO, philips, "0001-00008354", 2000));
+            repoNotas.insertar(new Nota(TipoDeNota.CREDITO, philips, "0001-00009159", 1350));
+        }
+
+        //Ordenes de Pago
+        if(repoOrdenesDePago.getTodos().size() == 0) {
+            var cheque = repoTiposDePago.getByID(1);
+            var efectivo = repoTiposDePago.getByID(2);
+
+            var contComp = ControladorComprobantes.getInstancia();
+
+            // ---- COTO ----
+            var coto = ControladorProveedor.getInstancia().getProveedorByNombre("Coto");
+
+            // orden de pago coto.
+            var op1 = new OrdenPago(coto);
+            var op1Cheque = new ItemOrdenPago(cheque);
+            var op1Efectivo = new ItemOrdenPago(efectivo);
+
+            // FAC + ND
+            var comprobantesChequeOp1 = new String[]{ "0001-00002555", "0001-00003000" };
+
+            // ND + NC
+            var comprobantesEfectivoOp1 = new String[]{ "0001-00003010", "0001-00003555" };
+
+            for (var comp:comprobantesChequeOp1) {
+                var comprobante = contComp.getComprobanteByProveedorYNro(coto.getID(), comp);
+                op1Cheque.addComprobante(comprobante);
+            }
+
+            for (var comp:comprobantesEfectivoOp1) {
+                var comprobante = contComp.getComprobanteByProveedorYNro(coto.getID(), comp);
+                op1Efectivo.addComprobante(comprobante);
+            }
+
+            op1.setFecha(LocalDate.now().plusDays(15));
+            op1.addItem(op1Cheque);
+            op1.addItem(op1Efectivo);
+
+            repoOrdenesDePago.insertar(op1);
         }
 
         //Rubros

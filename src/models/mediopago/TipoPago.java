@@ -24,7 +24,7 @@ public class TipoPago implements DDLeable, Identificable {
     }
 
     public String getType() {
-        return type;
+        return this.type;
     }
 
     @Override

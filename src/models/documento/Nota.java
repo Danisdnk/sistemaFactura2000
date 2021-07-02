@@ -20,6 +20,12 @@ public class Nota extends Comprobante {
         return "NOTA " + this.tipo.name();
     }
 
+    @Override
+    public float getTotal() {
+        //debito suma, credito resta
+        return this.tipo == TipoDeNota.DEBITO ? this.total : this.total*-1;
+    }
+
     public TipoDeNota getTipo() {
         return tipo;
     }
