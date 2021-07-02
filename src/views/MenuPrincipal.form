@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="views.MenuPrincipal">
-  <grid id="27dc6" binding="mainPanel" layout-manager="GridBagLayout">
+  <grid id="27dc6" binding="mainPanel" layout-manager="GridLayoutManager" row-count="2" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+    <margin top="0" left="0" bottom="0" right="0"/>
     <constraints>
       <xy x="20" y="20" width="1254" height="400"/>
     </constraints>
@@ -12,7 +13,6 @@
       <component id="3c24a" class="javax.swing.JLabel" binding="titulo">
         <constraints>
           <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
-          <gridbag weightx="1.0" weighty="0.0"/>
         </constraints>
         <properties>
           <text value="Sistema Factura 2000"/>
@@ -21,7 +21,6 @@
       <grid id="7c7cb" binding="panelCentral" layout-manager="GridBagLayout">
         <constraints>
           <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
-          <gridbag weightx="0.0" weighty="1.0"/>
         </constraints>
         <properties>
           <background color="-15194296"/>
@@ -42,11 +41,15 @@
               <background color="-12762549"/>
               <borderPainted value="false"/>
               <floatable value="true"/>
-              <focusable value="false"/>
+              <focusCycleRoot value="true"/>
+              <focusTraversalPolicyProvider value="true"/>
+              <focusable value="true"/>
               <foreground color="-3022030"/>
               <inheritsPopupMenu value="true"/>
               <maximumSize width="200" height="80"/>
+              <opaque value="true"/>
               <orientation value="0"/>
+              <requestFocusEnabled value="false"/>
             </properties>
             <border type="none">
               <font/>
@@ -66,7 +69,7 @@
                   <iconTextGap value="0"/>
                   <maximumSize width="150" height="80"/>
                   <minimumSize width="200" height="80"/>
-                  <text value="consultas"/>
+                  <text value="Consultas"/>
                   <toolTipText value="consultas generales"/>
                 </properties>
               </component>
@@ -118,7 +121,7 @@
                   <iconTextGap value="0"/>
                   <maximumSize width="200" height="80"/>
                   <minimumSize width="200" height="80"/>
-                  <text value="ordenes pago"/>
+                  <text value="Ordenes pago"/>
                 </properties>
               </component>
               <component id="a25a" class="javax.swing.JButton" binding="usuariosButton">
@@ -136,8 +139,26 @@
                   <iconTextGap value="0"/>
                   <maximumSize width="150" height="80"/>
                   <minimumSize width="150" height="80"/>
-                  <text value="usuarios"/>
+                  <text value="Usuarios"/>
                   <toolTipText value="usuarios"/>
+                </properties>
+              </component>
+              <component id="82463" class="javax.swing.JButton" binding="hideButton">
+                <constraints/>
+                <properties>
+                  <actionCommand value=""/>
+                  <alignmentY value="0.5"/>
+                  <background color="-12762549"/>
+                  <borderPainted value="false"/>
+                  <enabled value="true"/>
+                  <foreground color="-22507"/>
+                  <horizontalAlignment value="10"/>
+                  <horizontalTextPosition value="4"/>
+                  <iconTextGap value="0"/>
+                  <maximumSize width="150" height="80"/>
+                  <minimumSize width="150" height="80"/>
+                  <text value=""/>
+                  <toolTipText value="hidebutton"/>
                 </properties>
               </component>
             </children>

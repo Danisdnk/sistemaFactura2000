@@ -11,21 +11,28 @@ import controllers.ControladorComprobantes;
 import controllers.ControladorProveedor;
 import models.documento.Comprobante;
 import models.dtos.DDLItemDTO;
+import views.consultasGenerales.ViewConsultasGenerales;
+import views.documentosRecibidos.DocumentosView;
+import views.login.loginView;
 import views.ordenesDePago.OrdenesDePagoFrame;
 import models.proveedor.Proveedor;
 
-import static java.util.stream.Collectors.toList;
+
 
 public class provedorView extends JFrame {
-    private JPanel vistaProv;
+    private JPanel mainPanel;
+    private JLabel titulo;
+    private JPanel panelCentral;
+    private JButton usuariosButton;
     private JButton ordenesDePagoButton;
-    private JPanel panelProveedores;
-    private JButton addProveedor;
     private JToolBar barraNavegacion;
     private JButton consultasGeneralesButton;
     private JButton proveedoresButton;
-    private JButton itemsServiciosButton;
-    private JButton usuariosButton;
+    private JButton DocumentosButton;
+    private JButton hideButton;
+    private JPanel vistaProv;
+    private JPanel panelProveedores;
+    private JButton addProveedor;
     private JLabel labelProveedor;
     private JComboBox<DDLItemDTO> dropListaProveedores;
     private JTextField txtNombreFantasia;
@@ -48,23 +55,53 @@ public class provedorView extends JFrame {
     private Proveedor itemSeleccionado;
 
     public provedorView() {
-
-        this.setDefaultCloseOperation(EXIT_ON_CLOSE);
-        this.setSize(900, 1000);
-        this.setContentPane(vistaProv);
-        this.setLocationRelativeTo(null);
         this.controlador = ControladorProveedor.getInstancia();
         this.setDDLProveedores();
+        this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+        this.setContentPane(vistaProv);
+        this.setSize(1000, 1000);
+        this.setLocationRelativeTo(null);
         ordenesDePagoButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 OrdenesDePagoFrame op = new OrdenesDePagoFrame();
                 op.setVisible(true);
-                //dispose();//esto cierra la ventana anterior
+                dispose();
             }
         });
-        //dropdown proveedor seleccionar opcion
-        ;
+        proveedoresButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                provedorView prov = new provedorView();
+                prov.setVisible(true);
+                dispose();
+            }
+        });
+        usuariosButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                loginView login = new loginView();
+                login.setVisible(true);
+                dispose();
+            }
+        });
+        DocumentosButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                DocumentosView docu = new DocumentosView();
+                docu.setVisible(true);
+                dispose();
+            }
+        });
+        consultasGeneralesButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                ViewConsultasGenerales cons = new ViewConsultasGenerales();
+                cons.setVisible(true);
+                dispose();
+            }
+        });
+
         this.dropListaProveedores.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
