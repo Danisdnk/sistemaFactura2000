@@ -7,6 +7,7 @@ import models.dtos.DDLeable;
 // TODO agregar a diagrama clases
 public class TipoPago implements DDLeable, Identificable {
     private int ID;
+
     private String type;
 
     public TipoPago(String type) {
@@ -20,6 +21,10 @@ public class TipoPago implements DDLeable, Identificable {
                 descripcion = type;
             }
         };
+    }
+
+    public String getType() {
+        return type;
     }
 
     @Override
