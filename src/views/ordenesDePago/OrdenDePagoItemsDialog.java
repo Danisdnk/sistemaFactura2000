@@ -3,6 +3,7 @@ package views.ordenesDePago;
 import controllers.ControladorComprobantes;
 import models.documento.Comprobante;
 import models.documento.ItemOrdenPago;
+import views.utils.MultiLineTableCell;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -90,13 +91,17 @@ public class OrdenDePagoItemsDialog extends JDialog implements ActionListener  {
 
     private void createTable(){
         var model = new DefaultTableModel(getHeaderTabla(), 1);
-        this.tbPagos = new JTable();
+        this.tbPagos = new JTable(model);
+        //comprobantes uno por linea
+        //var renderer = new MultiLineTableCell();
+        //tbPagos.setDefaultRenderer(String[].class, renderer);
+        //tbPagos.getColumnModel().getColumn(3).setCellRenderer(renderer);
     }
 
     private void setTable(){
         var pagos = this.itemsOP;
 
-        DefaultTableModel dm = new DefaultTableModel();
+        DefaultTableModel dm = (DefaultTableModel) this.tbPagos.getModel();
 
         var dataVector = new Object[pagos.size()][2];
         for (int i = 0; i < pagos.size(); i++) {
@@ -115,6 +120,9 @@ public class OrdenDePagoItemsDialog extends JDialog implements ActionListener  {
                 .stream()
                 .map(Comprobante::toString)
                 .collect(Collectors.joining(",\n"));
+                // TODO para multi line cell. Muestra direccion de memoria en vez de valor
+                //.toList()
+                //.toArray(String[]::new);
 
         return new Object[]{ pago.getTipoDePago().getType(), "11111", total, comprobantes};
     }

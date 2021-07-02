@@ -31,13 +31,6 @@ public class ControladorComprobantes {
                 .collect(Collectors.toList());
     }
 
-    public List<Comprobante> getComprobantesByProveedorYNro(int provID, String nro) {
-        return Stream.of(this.repoFacturas.getTodos(), this.repoNotas.getTodos())
-                .flatMap(Collection::stream)
-                .filter(c -> c.getProveedor().getID() == provID && c.getNro() == nro)
-                .collect(Collectors.toList());
-    }
-
     public Comprobante getComprobanteByProveedorYNro(int provID, String nro) {
         return Stream.of(this.repoFacturas.getTodos(), this.repoNotas.getTodos())
                 .flatMap(Collection::stream)

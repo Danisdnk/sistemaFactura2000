@@ -39,7 +39,7 @@ public class OrdenesDePagoFrame extends JFrame {
 
             var op = dialog.showDialog();
 
-            if (op.getID() != opID) {
+            if (opID != null && op.getID() != opID) {
                 addRow(op);
             }
         } catch (Exception ex) {

@@ -90,8 +90,11 @@ public class OrdenDePagoDialog extends JDialog implements ActionListener{
 
     private void setupForm(Integer opID) {
         this.op = this.controlador.getOPByID(opID);
+        this.proveedorID = this.op.getProveedor().getID();
 
         this.ddlProveedores.setSelectedItem(this.op.getProveedor().toDDL());
+        this.ddlProveedores.setEditable(false);
+        this.ddlProveedores.setEnabled(false);
         this.txtFechaPago.setText(DateParse.unparse(this.op.getFecha()));
         this.txtTotalComprobantes.setText(String.valueOf(this.op.getTotal()));
         this.txtTotalACancelar.setText(String.valueOf(this.op.getTotal()));

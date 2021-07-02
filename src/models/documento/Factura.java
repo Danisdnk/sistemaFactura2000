@@ -8,7 +8,6 @@ import java.util.*;
 
 
 public class Factura extends Comprobante {
-
     private List<Retencion> retencion;
     private List<ItemFactura> itemFactura;
 
@@ -17,11 +16,7 @@ public class Factura extends Comprobante {
         this.nro = nroFactura;
         this.total = monto;
         this.fecha = fecha;
-    }
-
-    @Override
-    protected String tipo() {
-        return "FAC";
+        this.tipo = "FAC";
     }
 
     public void devolverFacturaDeUnaFecha(Date fecha) {

@@ -9,7 +9,7 @@ import models.proveedor.Proveedor;
 import java.time.LocalDate;
 
 // TODO agregar a diagrama clases nroFactura
-public class Comprobante implements DDLeable, Identificable {
+public class Comprobante implements IComprobante, DDLeable, Identificable {
     protected int ID;
 
     protected Proveedor proveedor;
@@ -19,6 +19,8 @@ public class Comprobante implements DDLeable, Identificable {
     protected String nro;
 
     protected float total;
+
+    protected String tipo;
 
     public ComprobanteDTO toCompDTO() {
         return new ComprobanteDTO(
@@ -41,8 +43,8 @@ public class Comprobante implements DDLeable, Identificable {
         };
     }
 
-    protected String tipo() {
-        return "";
+    public String tipo() {
+        return this.tipo;
     }
 
     public int getID() {
