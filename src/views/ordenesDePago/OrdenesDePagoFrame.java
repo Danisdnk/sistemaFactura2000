@@ -3,7 +3,8 @@ package views.ordenesDePago;
 import controllers.ControladorOrdenesDePagos;
 import models.documento.OrdenPago;
 import models.dtos.ComprobanteDTO;
-import views.utils.ButtonRenderer;
+import views.utils.TableButton;
+import views.utils.TableButtonListener;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -37,7 +38,10 @@ public class OrdenesDePagoFrame extends JFrame {
             dialog.setModalityType(Dialog.ModalityType.APPLICATION_MODAL);
 
             var op = dialog.showDialog();
-            addRow(op);
+
+            if (op.getID() != opID) {
+                addRow(op);
+            }
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -65,26 +69,22 @@ public class OrdenesDePagoFrame extends JFrame {
 
         this.tbOPs = new JTable(dm);
 
-        var btnEdit = new ButtonRenderer();
-
-        btnEdit.addActionListener(new ActionListener() {
+        var btnEdit = new TableButton("Editar");
+        btnEdit.addTableButtonListener(new TableButtonListener() {
             @Override
-            public void actionPerformed(ActionEvent e) {
-                JTable table = (JTable)e.getSource();
-                var row = table.getSelectedRow();
-
-                // Columna 1 posee el id de la op.
-                var opID = (int)table.getValueAt(row, 1);
-
+            public void tableButtonClicked(int row, int col) {
+                var opID = (int)tbOPs.getValueAt(row, 1);
                 abrirModalOP(opID);
             }
         });
 
-        this.tbOPs.getColumn("").setCellRenderer(btnEdit);
+        var column = this.tbOPs.getColumn("");
+        column.setCellRenderer(btnEdit);
+        column.setCellEditor(btnEdit);
     }
 
     private  Object[] crearObjTabla(OrdenPago op){
-        return new Object[]{ "Editar", op.getID() };
+        return new Object[]{ "", op.getID() };
     }
 
     private Object[] getHeaderTabla() {
