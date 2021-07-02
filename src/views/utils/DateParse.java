@@ -16,4 +16,12 @@ public class DateParse {
             return null;
         }
     }
+
+    public static String unparse(LocalDate date) {
+        try {
+            return date.getDayOfMonth() + "/" + date.getMonthValue() + "/" + date.getYear();
+        } catch (DateTimeParseException ex) {
+            return null;
+        }
+    }
 }
