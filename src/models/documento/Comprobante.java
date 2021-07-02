@@ -20,6 +20,8 @@ public class Comprobante implements DDLeable, Identificable {
 
     protected float total;
 
+    protected boolean estaPago;
+
     public ComprobanteDTO toCompDTO() {
         return new ComprobanteDTO(
                 ID,
@@ -39,6 +41,14 @@ public class Comprobante implements DDLeable, Identificable {
                 descripcion = desc;
             }
         };
+    }
+
+    public boolean isEstaPago() {
+        return estaPago;
+    }
+
+    public void setEstaPago(boolean estaPago) {
+        this.estaPago = estaPago;
     }
 
     protected String tipo() {

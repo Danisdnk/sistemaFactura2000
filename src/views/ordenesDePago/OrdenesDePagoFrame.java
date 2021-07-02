@@ -43,8 +43,10 @@ public class OrdenesDePagoFrame extends JFrame {
     }
 
     private void addRow(OrdenPago op) {
-        DefaultTableModel model = (DefaultTableModel) this.tbOPs.getModel();
-        model.addRow(crearObjTabla(op));
+        if (op != null) {
+            DefaultTableModel model = (DefaultTableModel) this.tbOPs.getModel();
+            model.addRow(crearObjTabla(op));
+        }
     }
 
     private void createUIComponents() {

@@ -1,6 +1,5 @@
 package views.ordenesDePago;
 
-import controllers.ControladorComprobantes;
 import controllers.ControladorOrdenesDePagos;
 import controllers.ControladorProveedor;
 import models.documento.Comprobante;
@@ -18,11 +17,13 @@ public class OrdenDePagoDialog extends JDialog implements ActionListener{
     private JPanel opMain;
     private JComboBox<DDLItemDTO> ddlFormasPago;
     private JComboBox<DDLItemDTO> ddlProveedores;
-    private JTextField txtTotalPagar;
+    private JTextField txtTotalComprobantes;
     private JButton btnGuardar;
     private JTextField txtFechaPago;
     private JButton btnAgregarComprobante;
     private JButton btnAgregarPago;
+    private JTextField txtTotalACancelar;
+    private JTextField txtDeuda;
 
     private ControladorOrdenesDePagos controlador;
     private OrdenPago op;
@@ -79,7 +80,7 @@ public class OrdenDePagoDialog extends JDialog implements ActionListener{
                         .mapToDouble(Comprobante::getTotal)
                         .sum();
 
-                this.txtTotalPagar.setText(String.valueOf(total));
+                this.txtTotalComprobantes.setText(String.valueOf(total));
             }
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -101,7 +102,7 @@ public class OrdenDePagoDialog extends JDialog implements ActionListener{
 
         this.ddlFormasPago.setSelectedItem(this.op.getFormaPago().toDDL());
         this.ddlProveedores.setSelectedItem(this.op.getProveedor().toDDL());
-        this.txtTotalPagar.setText(String.valueOf(this.op.getTotal()));
+        this.txtTotalComprobantes.setText(String.valueOf(this.op.getTotal()));
     }
 
     // Guardar
@@ -113,7 +114,7 @@ public class OrdenDePagoDialog extends JDialog implements ActionListener{
         var tipoPago = (DDLItemDTO)this.ddlFormasPago.getSelectedItem();
 
         var fechaPago = DateParse.parse(this.txtFechaPago.getText());
-        var total = this.txtTotalPagar.getText();
+        var total = this.txtTotalComprobantes.getText();
 
         var op = new OrdenPago();
         op.setProveedor(ControladorProveedor.getInstancia().getProveedorByID(prov.id));
