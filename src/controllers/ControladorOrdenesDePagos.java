@@ -40,6 +40,10 @@ public class ControladorOrdenesDePagos {
                 .toList();
     }
 
+    public TipoPago getTipoDePagoPorID(int id) {
+        return this.repoTiposDePago.getByID(id);
+    }
+
     // TODO agregar a diagrama clases
     public OrdenPago getOPByID(int opID) {
         return this.repoOPs.getByID(opID);
