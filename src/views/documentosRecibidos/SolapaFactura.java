@@ -3,6 +3,10 @@ package views.documentosRecibidos;
 import models.dtos.DDLItemDTO;
 import controllers.ControladorProveedor;
 import models.proveedor.Proveedor;
+import views.consultasGenerales.ViewConsultasGenerales;
+import views.login.loginView;
+import views.ordenesDePago.OrdenesDePagoFrame;
+import views.proveedores.provedorView;
 import views.utils.MiTableModelFactura;
 import controllers.ControladorComprobantes;
 import controllers.ControladorOrdenesDePagos;
@@ -40,15 +44,22 @@ public class SolapaFactura extends JDialog {
     private ControladorProveedor controlador;
     private Proveedor itemSeleccionado;
     private MiTableModelFactura miModeloFactura = new MiTableModelFactura();
+    //botones nav
+    private JButton usuariosButton;
+    private JButton ordenesDePagoButton;
+    private JToolBar barraNavegacion;
+    private JButton consultasGeneralesButton;
+    private JButton proveedoresButton;
+    private JButton DocumentosButton;
+    private JButton hideButton;
 
     public SolapaFactura() {
 
         this.setContentPane(prinicipalSolapaFactura);
         this.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-        this.setLocationRelativeTo(null);
-        this.setSize(800, 600);
+        this.setSize(1000, 1000);
         this.setModal(true);
-
+        this.setLocationRelativeTo(null);
         tablaItemsFactura.setModel(miModeloFactura);
 
         miModeloFactura.add(1, "Bananas", 8, 20.0);
@@ -63,7 +74,7 @@ public class SolapaFactura extends JDialog {
             public void actionPerformed(ActionEvent e) {
                 var sel = (DDLItemDTO) comboBox1.getSelectedItem();
 
-                if (sel != null) {  //si la seleccion es distinta de nulo hacemos varias cosas
+                if ( sel != null ) {  //si la seleccion es distinta de nulo hacemos varias cosas
                     itemSeleccionado = controlador.getProveedorByID(sel.id);
                     proveedorID = sel.id;
 
@@ -75,7 +86,7 @@ public class SolapaFactura extends JDialog {
                 }
 
                 assert sel != null;
-                if (((sel.descripcion).equals("Nuevo Proveedor"))) {
+                if ( ( ( sel.descripcion ).equals("Nuevo Proveedor") ) ) {
 
                     txtCUIT.setVisible(true);
                 /*
@@ -103,7 +114,54 @@ public class SolapaFactura extends JDialog {
                 }
             }
         });
-    }
+
+
+        ordenesDePagoButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                OrdenesDePagoFrame op = new OrdenesDePagoFrame();
+                op.setVisible(true);
+                dispose();
+            }
+        });
+
+        proveedoresButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                provedorView prov = new provedorView();
+                prov.setVisible(true);
+                dispose();
+            }
+        });
+        usuariosButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                loginView login = new loginView();
+                login.setVisible(true);
+                dispose();
+            }
+        });
+        DocumentosButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                DocumentosView docu = new DocumentosView();
+                docu.setVisible(true);
+                dispose();
+            }
+        });
+        consultasGeneralesButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                ViewConsultasGenerales cons = new ViewConsultasGenerales();
+                cons.setVisible(true);
+                dispose();
+            }
+        });
+
+
+
+
+}
     private void setDDLProveedores() {
         var model = ControladorProveedor.getInstancia().getOpcionesDDLProveedores();
         this.comboBox1.setModel(new DefaultComboBoxModel(model.toArray()));

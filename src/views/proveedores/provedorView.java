@@ -17,8 +17,6 @@ import views.login.loginView;
 import views.ordenesDePago.OrdenesDePagoFrame;
 import models.proveedor.Proveedor;
 
-
-
 public class provedorView extends JFrame {
     private JPanel mainPanel;
     private JLabel titulo;

@@ -14,8 +14,9 @@ import java.time.LocalDate;
 
 public class MenuPrincipal extends JFrame {
     private JPanel mainPanel;
-    private JLabel titulo;
     private JPanel panelCentral;
+
+    private JLabel titulo;
     private JButton usuariosButton;
     private JButton ordenesDePagoButton;
     private JToolBar barraNavegacion;
