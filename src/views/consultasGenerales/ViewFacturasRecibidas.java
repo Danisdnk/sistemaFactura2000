@@ -179,6 +179,14 @@ public class ViewFacturasRecibidas extends JFrame {
 
             }
         });
+        DocumentosButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                DocumentosView principal = new DocumentosView();
+                principal.setVisible(true);
+                dispose();
+            }
+        });
 
 
     }

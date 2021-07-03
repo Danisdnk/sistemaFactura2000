@@ -2,6 +2,8 @@ package views.consultasGenerales;
 
 import controllers.ControladorComprobantes;
 import models.dtos.ComprobanteDTO;
+import views.documentosRecibidos.DocumentosView;
+import views.login.loginView;
 import views.ordenesDePago.OrdenesDePagoFrame;
 import views.proveedores.provedorView;
 
@@ -24,7 +26,7 @@ public class ViewTotalDeDeuda extends JFrame{
     private JToolBar barraNavegacion;
     private JButton consultasGeneralesButton;
     private JButton proveedoresButton;
-    private JButton itemsServiciosButton;
+    private JButton DocumentosButton;
     private JButton ordenesDePagoButton;
     private JButton usuariosButton;
     private JButton consultarDeudaButton;
@@ -81,7 +83,7 @@ public class ViewTotalDeDeuda extends JFrame{
             public void actionPerformed(ActionEvent e) {
                 OrdenesDePagoFrame op = new OrdenesDePagoFrame();
                 op.setVisible(true);
-                //dispose();//esto cierra la ventana anterior
+                //dispose();
             }
         });
 
@@ -90,16 +92,33 @@ public class ViewTotalDeDeuda extends JFrame{
             public void actionPerformed(ActionEvent e) {
                 ViewConsultasGenerales cons = new ViewConsultasGenerales();
                 cons.setVisible(true);
-                dispose();//esto cierra la ventana anterior
+                dispose();
             }
         });
 
         usuariosButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                loginView principal = new loginView();
+                principal.setVisible(true);
+                dispose();
+            }
+        });
+
+        proveedoresButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
                 provedorView principal = new provedorView();
                 principal.setVisible(true);
-                dispose();//esto cierra la ventana anterior
+                dispose();
+            }
+        });
+        DocumentosButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                DocumentosView principal = new DocumentosView();
+                principal.setVisible(true);
+                dispose();
             }
         });
 

@@ -76,7 +76,7 @@
                   <text value="    Proveedores"/>
                 </properties>
               </component>
-              <component id="541d9" class="javax.swing.JButton" binding="itemsServiciosButton">
+              <component id="541d9" class="javax.swing.JButton" binding="DocumentosButton">
                 <constraints/>
                 <properties>
                   <actionCommand value=""/>
@@ -89,7 +89,7 @@
                   <iconTextGap value="0"/>
                   <maximumSize width="200" height="80"/>
                   <minimumSize width="200" height="80"/>
-                  <text value="Prod y servicios"/>
+                  <text value="Documentos"/>
                   <toolTipText value="Productos y serv"/>
                 </properties>
               </component>
