@@ -1,18 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="views.documentosRecibidos.SolapaCompra">
-  <grid id="27dc6" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
-    <margin top="0" left="0" bottom="0" right="0"/>
+  <grid id="27dc6" binding="principalSolapaCompra" layout-manager="BorderLayout" hgap="0" vgap="0">
     <constraints>
-      <xy x="20" y="20" width="804" height="604"/>
+      <xy x="20" y="20" width="1000" height="1000"/>
     </constraints>
-    <properties/>
+    <properties>
+      <maximumSize width="1000" height="1000"/>
+      <minimumSize width="1000" height="1000"/>
+      <preferredSize width="1000" height="1000"/>
+      <requestFocusEnabled value="false"/>
+    </properties>
     <border type="none"/>
     <children>
       <grid id="b556c" binding="prinicipalSolapaCompra" layout-manager="GridLayoutManager" row-count="6" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
         <margin top="0" left="0" bottom="0" right="0"/>
-        <constraints>
-          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
-        </constraints>
+        <constraints border-constraint="Center"/>
         <properties>
           <background color="-12762549"/>
           <maximumSize width="800" height="600"/>
@@ -78,7 +80,7 @@
                   <title-color color="-2829356"/>
                 </border>
                 <children>
-                  <component id="e90f8" class="javax.swing.JTextField" binding="textField1" default-binding="true">
+                  <component id="e90f8" class="javax.swing.JTextField" binding="txtCUIT">
                     <constraints>
                       <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                         <preferred-size width="150" height="-1"/>
@@ -156,10 +158,10 @@
                     <properties>
                       <background color="-12762549"/>
                       <foreground color="-2829356"/>
-                      <text value="NOMBRE"/>
+                      <text value="ID"/>
                     </properties>
                   </component>
-                  <component id="11106" class="javax.swing.JTextField" binding="textField2" default-binding="true">
+                  <component id="11106" class="javax.swing.JTextField" binding="txtIDItem">
                     <constraints>
                       <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="9" fill="1" indent="0" use-parent-layout="false">
                         <preferred-size width="150" height="-1"/>
@@ -181,7 +183,7 @@
                 </properties>
                 <border type="none"/>
                 <children>
-                  <component id="760b5" class="javax.swing.JTextField" binding="textField3" default-binding="true">
+                  <component id="760b5" class="javax.swing.JTextField" binding="textCant">
                     <constraints>
                       <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="9" fill="1" indent="0" use-parent-layout="false">
                         <preferred-size width="150" height="-1"/>
@@ -337,7 +339,7 @@
                   <text value="Fecha"/>
                 </properties>
               </component>
-              <component id="b2f0e" class="javax.swing.JTextField" binding="textField5" default-binding="true">
+              <component id="b2f0e" class="javax.swing.JTextField" binding="textDate">
                 <constraints>
                   <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                     <preferred-size width="150" height="-1"/>
