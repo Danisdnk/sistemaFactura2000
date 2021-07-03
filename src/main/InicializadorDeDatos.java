@@ -113,30 +113,75 @@ public class InicializadorDeDatos {
         //Rubros
         if(repoRubros.getTodos().size() == 0){
 
-            repoRubros.insertar(new Rubro("Materias Prima"));
-            repoRubros.insertar(new Rubro("Comida"));
+            repoRubros.insertar(new Rubro("Alimentos"));
+            repoRubros.insertar(new Rubro("Computacion"));
+            repoRubros.insertar(new Rubro("Electrodomesticos"));
+            repoRubros.insertar(new Rubro("Materias Primas"));
         }
 
         //Items
         if(repoItems.getTodos().size() == 0){
-            var materiasPrimas = ControladorItem.getInstancia().getRubroByNombre("Materias Prima");
+            var alimentos = ControladorItem.getInstancia().getRubroByNombre("Alimentos");
+            var computacion = ControladorItem.getInstancia().getRubroByNombre("Computacion");
+            var electrodomesticos = ControladorItem.getInstancia().getRubroByNombre("Electrodomesticos");
+            var materiasPrimas = ControladorItem.getInstancia().getRubroByNombre("Materias Primas");
 
 
 
-            repoItems.insertar(new Item("Madera", Unidad.PESO, TipoItem.PRODUCTO,materiasPrimas));
-            repoItems.insertar(new Item("Acero", Unidad.PESO,TipoItem.PRODUCTO,materiasPrimas));
+            repoItems.insertar(new Item("Acero", Unidad.PESO,TipoItem.PRODUCTO, 4D, materiasPrimas));
+            repoItems.insertar(new Item("Cobre", Unidad.PESO,TipoItem.PRODUCTO, 4D, materiasPrimas));
+            repoItems.insertar(new Item("Hierro", Unidad.PESO,TipoItem.PRODUCTO, 4D, materiasPrimas));
+            repoItems.insertar(new Item("Madera", Unidad.PESO, TipoItem.PRODUCTO,  4D,materiasPrimas));
+            repoItems.insertar(new Item("Oro", Unidad.PESO,TipoItem.PRODUCTO, 4D, materiasPrimas));
+
+            repoItems.insertar(new Item("Carne", Unidad.PESO,TipoItem.PRODUCTO, 10D, alimentos));
+            repoItems.insertar(new Item("Pollo", Unidad.PESO,TipoItem.PRODUCTO, 10D, alimentos));
+            repoItems.insertar(new Item("Arroz", Unidad.PESO,TipoItem.PRODUCTO, 10D, alimentos));
+            repoItems.insertar(new Item("Asado", Unidad.PESO,TipoItem.PRODUCTO, 10D, alimentos));
+
+            repoItems.insertar(new Item("Computadora", Unidad.UNIDAD,TipoItem.PRODUCTO, 21D, computacion));
+            repoItems.insertar(new Item("Laptop", Unidad.UNIDAD,TipoItem.PRODUCTO, 21D, computacion));
+            repoItems.insertar(new Item("Monitor", Unidad.UNIDAD,TipoItem.PRODUCTO, 21D, computacion));
+            repoItems.insertar(new Item("Router", Unidad.UNIDAD,TipoItem.PRODUCTO, 21D, computacion));
+
+            repoItems.insertar(new Item("Aire Acondicionado", Unidad.UNIDAD,TipoItem.PRODUCTO, 15D, electrodomesticos));
+            repoItems.insertar(new Item("Heladera", Unidad.UNIDAD,TipoItem.PRODUCTO, 15D, electrodomesticos));
+            repoItems.insertar(new Item("Lavaropa", Unidad.UNIDAD,TipoItem.PRODUCTO, 15D, electrodomesticos));
+            repoItems.insertar(new Item("Microondas", Unidad.UNIDAD,TipoItem.PRODUCTO, 15D, electrodomesticos));
+
+
+
+
+
+
+
+
         }
 
         //ProvedoorItems
         if(repoProveedorItem.getTodos().size() == 0){
 
-            var item = ControladorItem.getInstancia().getItemByNombre("Madera");
-            var proveedor1 = ControladorProveedor.getInstancia().getProveedorByNombre("Coto");
-            var proveedor2 = ControladorProveedor.getInstancia().getProveedorByNombre("Philips");
+            var acero = ControladorItem.getInstancia().getItemByNombre("Acero");
+            var cobre = ControladorItem.getInstancia().getItemByNombre("Cobre");
+            var hierro = ControladorItem.getInstancia().getItemByNombre("Hierro");
+            var madera = ControladorItem.getInstancia().getItemByNombre("Madera");
+            var oro = ControladorItem.getInstancia().getItemByNombre("Oro");
+
+            var coto = ControladorProveedor.getInstancia().getProveedorByNombre("Coto");
+            var philips = ControladorProveedor.getInstancia().getProveedorByNombre("Philips");
 
 
-            repoProveedorItem.insertar(new ProveedorItem(10F, item, proveedor1) );
-            repoProveedorItem.insertar(new ProveedorItem(20F,item,proveedor2));
+            repoProveedorItem.insertar(new ProveedorItem(2000D, acero, coto));
+            repoProveedorItem.insertar(new ProveedorItem(700D, cobre, coto));
+            repoProveedorItem.insertar(new ProveedorItem(1000D, hierro, coto));
+            repoProveedorItem.insertar(new ProveedorItem(500D, madera, coto));
+            repoProveedorItem.insertar(new ProveedorItem(50000D, oro, coto));
+
+            repoProveedorItem.insertar(new ProveedorItem(2200D,acero,philips));
+            repoProveedorItem.insertar(new ProveedorItem(900D,cobre,philips));
+            repoProveedorItem.insertar(new ProveedorItem(1300D,hierro,philips));
+            repoProveedorItem.insertar(new ProveedorItem(700D,madera,philips));
+            repoProveedorItem.insertar(new ProveedorItem(40000D,oro,philips));
 
         }
 

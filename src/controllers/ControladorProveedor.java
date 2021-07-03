@@ -44,6 +44,17 @@ public class ControladorProveedor {
                 .toList();
     }
 
+    /**
+     * Metodo que verfica si existe un Proveedor segun un cuit
+     * @param cuit
+     * @return boolean
+     */
+    public boolean existsProveedor(String cuit) {
+        return this.RepoProveedores.getTodos()
+                .stream()
+                .anyMatch(p -> p.getCuit().equals(cuit));
+    }
+
     public static ControladorProveedor getInstancia() {
         if (instancia == null) {
             instancia = new ControladorProveedor();

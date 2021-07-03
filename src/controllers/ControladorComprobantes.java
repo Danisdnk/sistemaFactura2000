@@ -56,24 +56,53 @@ public class ControladorComprobantes {
                 .get();
     }
 
-    public List<Factura> getFacturasByProveedor(String cuit) { //metodo para traer facturas por ID -> facturas recibidas(cuit)
+
+    /**
+     * metodo para traer facturas por CUIT -> Usado en CG facturas recibidas(cuit)
+     * @param cuit
+     * @return List<Factura>
+     */
+    public List<Factura> getFacturasByProveedor(String cuit) {
         return Stream.of(this.repoFacturas.getTodos())
                 .flatMap(Collection::stream)
                 .filter(c -> c.getProveedor().getCuit().equals(cuit) )
                 .collect(Collectors.toList());
     }
 
-    public List<Factura> getFacturasByFecha(LocalDate fecha) {  //metodo para traer facturas por fecha -> facturas recibidas(fecha)
+    /**
+     * //metodo para traer facturas por fecha -> Usado en CG facturas recibidas(fecha)
+     * @param fecha
+     * @return List<Factura>
+     */
+    public List<Factura> getFacturasByFecha(LocalDate fecha) {
         return Stream.of(this.repoFacturas.getTodos())
                 .flatMap(Collection::stream)
                 .filter(c -> c.getFecha().equals(fecha))
                 .collect(Collectors.toList());
     }
 
-    public List<Factura> getFacturasByFechaYProveedor(String cuit, LocalDate fecha) {  //metodo para traer facturas por fecha y proveedor -> facturas recibidas(cuit, fecha)
+    /**
+     * metodo para traer facturas por fecha y proveedor -> CG facturas recibidas(cuit, fecha)
+     * @param cuit
+     * @param fecha
+     * @return List<Factura>
+     */
+    public List<Factura> getFacturasByFechaYProveedor(String cuit, LocalDate fecha) {
         return Stream.of(this.repoFacturas.getTodos())
                 .flatMap(Collection::stream)
                 .filter(c -> c.getProveedor().getCuit().equals(cuit) && c.getFecha().equals(fecha) )
+                .collect(Collectors.toList());
+    }
+
+    /**
+     * metodo para traer(facturas y notas) Comprobantes por CUIT -> CG calculo deuda?
+     * @param cuit
+     * @return List<Factura>
+     */
+    public List<Comprobante> getComprobantesByCuit(String cuit) {
+        return Stream.of(this.repoFacturas.getTodos(), this.repoNotas.getTodos())
+                .flatMap(Collection::stream)
+                .filter(c -> c.getProveedor().getCuit().equals(cuit) )
                 .collect(Collectors.toList());
     }
 
@@ -84,6 +113,12 @@ public class ControladorComprobantes {
                 .toList();
     }
 
+
+    /**
+     * metodo que devuelve Facturas(cuit) convertidas a ComprobanteDTO
+     * @param cuit
+     * @return List<ComprobanteDTO>
+     */
     public List<ComprobanteDTO> getFacturasDTOsByProveedor(String cuit) {
         return getFacturasByProveedor(cuit)
                 .stream()
@@ -91,6 +126,11 @@ public class ControladorComprobantes {
                 .toList();
     }
 
+    /**
+     * metodo que devuelve Facturas(Fecha) convertidas a ComprobanteDTO
+     * @param fecha
+     * @return List<ComprobanteDTO>
+     */
     public List<ComprobanteDTO> getFacturasDTOsByFecha(LocalDate fecha) {
         return getFacturasByFecha(fecha)
                 .stream()
@@ -98,8 +138,27 @@ public class ControladorComprobantes {
                 .toList();
     }
 
+    /**
+     * metodo que devuelve Facturas(CUITyFecha) convertidas a ComprobanteDTO
+     * @param cuit
+     * @param fecha
+     * @return List<ComprobanteDTO>
+     */
     public List<ComprobanteDTO> getFacturasDTOByFechaYProveedor(String cuit, LocalDate fecha) {
         return getFacturasByFechaYProveedor(cuit,fecha)
+                .stream()
+                .map(Comprobante::toCompDTO)
+                .toList();
+    }
+
+    /**
+     * metodo para que devuelve (facturas y notas) Comprobantes  convertidas en ComprobanteDTO -> CG calculo deuda?
+     * @param cuit
+     * @return List<ComprobanteDTO>
+     */
+    public List<ComprobanteDTO> getComprobantesByCuitDTO(String cuit) {
+
+        return getComprobantesByCuit(cuit)
                 .stream()
                 .map(Comprobante::toCompDTO)
                 .toList();

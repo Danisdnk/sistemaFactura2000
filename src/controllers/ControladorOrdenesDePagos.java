@@ -35,6 +35,20 @@ public class ControladorOrdenesDePagos {
         return this.repoOPs.getTodos().stream().filter(x -> x.getProveedor().getID() == provId).toList();
     }
 
+
+    /**
+     * Temporal devuelve ordenes de pago segun un cuit
+     * @param cuit
+     * @return List<OrdenPago>
+     */
+    public List<OrdenPago> getOPsByCuit(String cuit) {
+        return this.repoOPs.getTodos()
+                .stream()
+                .filter(o -> o.getProveedor().getCuit().equals(cuit))
+                .toList();
+
+    }
+
     // TODO agregar a diagrama clases
     public List<DDLItemDTO> getOpcionesDDLFormasDePago() {
         return this.repoTiposDePago

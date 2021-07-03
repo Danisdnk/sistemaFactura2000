@@ -22,17 +22,18 @@ public class Item implements DDLeable, Identificable {
     private Integer cantidad;
     private Double precio;
     private TipoItem tipo;
-    private IVA iva;
+    private Double iva;
     private Unidad unidad;
     public Rubro pertenece;
 
 
 
-    public Item(String nombre, Unidad unidad,TipoItem tipo, Rubro pertenece) {
+    public Item(String nombre, Unidad unidad,TipoItem tipo,  Double iva, Rubro pertenece) {
 
         setNombre(nombre);
         setUnidad(unidad);
         setTipo(tipo);
+        setIva(iva);
         setPertenece(pertenece);
 
     }
@@ -75,11 +76,11 @@ public class Item implements DDLeable, Identificable {
         this.tipo = tipo;
     }
 
-    public IVA getIva() {
+    public Double getIva() {
         return iva;
     }
 
-    public void setIva(IVA iva) {
+    public void setIva(Double iva) {
         this.iva = iva;
     }
 

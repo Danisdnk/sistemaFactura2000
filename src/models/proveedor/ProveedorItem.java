@@ -9,7 +9,7 @@ public class ProveedorItem implements DDLeable, Identificable {
 
     private int IDProveedorItem;
 
-    public ProveedorItem(Float precioUnitario, Item item, Proveedor proveedor) {
+    public ProveedorItem(Double precioUnitario, Item item, Proveedor proveedor) {
         this.setPrecioUnitario(precioUnitario);
         this.setItem(item);
         this.setProveedor(proveedor);
@@ -17,7 +17,8 @@ public class ProveedorItem implements DDLeable, Identificable {
     private Proveedor proveedor;
 
     private Item item;
-    private Float precioUnitario;
+    private Double precioUnitario;
+
 
 
     //@return
@@ -26,11 +27,11 @@ public class ProveedorItem implements DDLeable, Identificable {
         return 0.0f;
     }
 
-    public Float getPrecioUnitario() {
+    public Double getPrecioUnitario() {
         return precioUnitario;
     }
 
-    public void setPrecioUnitario(Float precioUnitario) {
+    public void setPrecioUnitario(Double precioUnitario) {
         this.precioUnitario = precioUnitario;
     }
 
@@ -48,8 +49,9 @@ public class ProveedorItem implements DDLeable, Identificable {
     public DDlProveedorItemDTO toDDL() {
         return new DDlProveedorItemDTO(){
             {
-                id =IDProveedorItem;
+                id = IDProveedorItem;
                 precio = precioUnitario;
+                tipo = item.getTipo().toString();
                 descripcion = proveedor.getNombre();
             }
         };

@@ -1,14 +1,13 @@
 package views.consultasGenerales;
 
 import controllers.ControladorComprobantes;
-import controllers.ControladorItem;
-import models.documento.Factura;
 import models.dtos.ComprobanteDTO;
 import views.documentosRecibidos.DocumentosView;
 import views.ordenesDePago.OrdenesDePagoFrame;
 import views.proveedores.provedorView;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.time.LocalDate;
@@ -33,7 +32,12 @@ public class ViewFacturasRecibidas extends JFrame {
     private JButton DocumentosButton;
     private JButton ordenesDePagoButton;
     private JButton usuariosButton;
+    private JTabbedPane tabbedPane1;
+    private JTable table1;
     private JTextArea textAreaResultado;
+    private JTable JTabbedPane1;
+
+    private DefaultTableModel model;
 
 
     public ViewFacturasRecibidas() {
@@ -45,6 +49,12 @@ public class ViewFacturasRecibidas extends JFrame {
         this.setVisible(true);
         this.setLocationRelativeTo(null);
 
+        model = new DefaultTableModel();
+        model.addColumn("Proveedor");
+        model.addColumn("Nro Factura");
+        model.addColumn("Fecha");
+        model.addColumn("Monto Total");
+        table1.setModel(model);
 
 
         consultarButton.addActionListener(new ActionListener() {
@@ -85,22 +95,26 @@ public class ViewFacturasRecibidas extends JFrame {
                         System.out.println("CUIT Y FECHA");
                         var facturas = ControladorComprobantes.getInstancia().getFacturasDTOByFechaYProveedor(cuit, fecha);
                         setJtextArea(facturas);
-                        System.out.println(facturas);
+                        setTableFacturas(facturas);
+                        System.out.println(1);
 
                     }else{
-                        if (cuit != null && fecha == null) {           //solo cuit
+                        if (cuit != null) {           //solo cuit
 
                             System.out.println("CUIT");
                             var facturas = ControladorComprobantes.getInstancia().getFacturasDTOsByProveedor(cuit);
                             setJtextArea(facturas);
-                            System.out.println(facturas);
+                            setTableFacturas(facturas);
+                            System.out.println(2);
 
                         }else{                                  //solo fecha
 
                             System.out.println("FECHA");
                             var facturas = ControladorComprobantes.getInstancia().getFacturasDTOsByFecha(fecha);
                             setJtextArea2(facturas);
-                            System.out.println(facturas);
+                            setTableFacturas(facturas);
+                            System.out.println(3);
+
 
                         }
 
@@ -109,7 +123,7 @@ public class ViewFacturasRecibidas extends JFrame {
                 }else{
                     JOptionPane.showMessageDialog(
                             consultarButton,
-                            "Seleccione al menos un proveedor o fecha para continuar",
+                            "Ingrese al menos un proveedor o fecha para continuar",
                             "Error",
                             JOptionPane.ERROR_MESSAGE);
                 }
@@ -181,10 +195,10 @@ public class ViewFacturasRecibidas extends JFrame {
 
             String text = "El proveedor " + facturas.get(0).getProveedor().getNombre()+ " tiene las facturas: \n";
 
-            for (int i=0; i<facturas.size(); i++ ){
+            for (ComprobanteDTO factura : facturas) {  //int i=0; i<facturas.size(); i++
                 System.out.println(text);
 
-                text = text +("La factura numero ")+ facturas.get(i).getNro()+(" con fecha ")+ facturas.get(i).getFecha() +(" con un monto total de ")+(facturas.get(i).getTotal())+ ("$\n");
+                text = text + ("La factura numero ") + factura.getNro() + (" con fecha ") + factura.getFecha() + (" con un monto total de ") + (factura.getTotal()) + ("$\n");
 
             }
             this.textAreaResultado.setText(text);
@@ -202,14 +216,28 @@ public class ViewFacturasRecibidas extends JFrame {
 
             String text = "En la fecha " + facturas.get(0).getFecha()+ " se encuentran las siguientes facturas: \n";
 
-            for (int i=0; i<facturas.size(); i++ ){
+            for (ComprobanteDTO factura : facturas) { //int i=0; i<facturas.size(); i++
                 System.out.println(text);
 
-                text = text +("La factura del proveedor ") +facturas.get(i).getProveedor().getNombre() +(" con el numero ")+ facturas.get(i).getNro()+(" con un monto total de ")+(facturas.get(i).getTotal())+ ("$\n");
+                text = text + ("La factura del proveedor ") + factura.getProveedor().getNombre() + (" con el numero ") + factura.getNro() + (" con un monto total de ") + (factura.getTotal()) + ("$\n");
 
             }
             this.textAreaResultado.setText(text);
         }
         System.out.println("END2");
+    }
+
+    private void setTableFacturas(List<ComprobanteDTO> descripcion ) {
+
+        model.getDataVector().removeAllElements();
+        for(ComprobanteDTO factura : descripcion){
+            model.addRow(new Object[]{
+                    factura.getProveedor().getNombre(),
+                    factura.getNro(),
+                    factura.getFecha(),
+                    factura.getTotal()
+            });
+        }
+        model.fireTableDataChanged();
     }
 }
