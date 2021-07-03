@@ -31,6 +31,23 @@ public class ControladorComprobantes {
                 .collect(Collectors.toList());
     }
 
+    public List<Comprobante> getComprobantesNoPagosByProveedor(int provID) {
+        //comprobantes pagos son aquellos asociados a ordenes de pago
+        var ordenesDePago = ControladorOrdenesDePagos.getInstancia().getOrdenesDePagoByProveedor(provID);
+        var comprobantesPagos = ordenesDePago
+                .stream()
+                .flatMap(x -> x.getItems().stream())
+                .flatMap(x -> x.getComprobantesAsociados().stream())
+                .toList();
+
+        return Stream.of(this.repoFacturas.getTodos(), this.repoNotas.getTodos())
+                .flatMap(Collection::stream)
+                .filter(c ->
+                        provID == c.getProveedor().getID() &&
+                        !comprobantesPagos.stream().anyMatch(x -> x.getID() == c.getID()))
+                .collect(Collectors.toList());
+    }
+
     public Comprobante getComprobanteByProveedorYNro(int provID, String nro) {
         return Stream.of(this.repoFacturas.getTodos(), this.repoNotas.getTodos())
                 .flatMap(Collection::stream)
