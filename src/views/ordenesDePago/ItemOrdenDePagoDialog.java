@@ -7,6 +7,10 @@ import models.documento.OrdenPago;
 import models.dtos.DDLItemDTO;
 import models.documento.ItemOrdenPago;
 import models.mediopago.TipoPago;
+import views.consultasGenerales.ViewConsultasGenerales;
+import views.documentosRecibidos.DocumentosView;
+import views.login.loginView;
+import views.proveedores.provedorView;
 import views.utils.DateParse;
 
 import javax.swing.*;
@@ -24,6 +28,13 @@ public class ItemOrdenDePagoDialog extends JDialog implements ActionListener  {
     private JComboBox ddlComprobantesSinAsoc;
     private JButton btnGuardar;
     private JComboBox ddlTiposPago;
+    private JToolBar barraNavegacion;
+    private JButton consultasGeneralesButton;
+    private JButton proveedoresButton;
+    private JButton DocumentosButton;
+    private JButton ordenesDePagoButton;
+    private JButton usuariosButton;
+    private JButton hideButton;
 
     private TipoPago tipoDePago;
     private List<Comprobante> comprobantesAsociados;
@@ -35,11 +46,54 @@ public class ItemOrdenDePagoDialog extends JDialog implements ActionListener  {
         super(owner);
         this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         this.setContentPane(main);
-        this.setSize(1500,400);
-        this.pack();
+        this.setSize(1000,1000);
+        this.setLocationRelativeTo(null);
 
         this.comprobantesAsociados = new ArrayList<>();
         this.comprobantesSinAsociar = comprobantes;
+
+        ordenesDePagoButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                OrdenesDePagoFrame op = new OrdenesDePagoFrame();
+                op.setVisible(true);
+                dispose();
+            }
+        });
+        proveedoresButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                provedorView prov = new provedorView();
+                prov.setVisible(true);
+                dispose();
+            }
+        });
+        usuariosButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                loginView login = new loginView();
+                login.setVisible(true);
+                dispose();
+            }
+        });
+        DocumentosButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                DocumentosView docu = new DocumentosView();
+                docu.setVisible(true);
+                dispose();
+            }
+        });
+        consultasGeneralesButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                ViewConsultasGenerales cons = new ViewConsultasGenerales();
+                cons.setVisible(true);
+                dispose();
+            }
+        });
+
+
 
         if (itemOrdenPago != null){
             this.comprobantesAsociados = itemOrdenPago.getComprobantesAsociados();

@@ -1,19 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="views.ordenesDePago.OrdenesDePagoFrame">
-  <grid id="27dc6" binding="opMain" layout-manager="GridLayoutManager" row-count="2" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+  <grid id="27dc6" binding="opMain" layout-manager="GridLayoutManager" row-count="3" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
     <margin top="0" left="0" bottom="0" right="0"/>
     <constraints>
-      <xy x="23" y="20" width="497" height="468"/>
+      <xy x="23" y="20" width="904" height="468"/>
     </constraints>
-    <properties/>
+    <properties>
+      <background color="-12762549"/>
+      <foreground color="-12762549"/>
+    </properties>
     <border type="none"/>
     <children>
       <grid id="56782" layout-manager="GridLayoutManager" row-count="1" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
         <margin top="0" left="0" bottom="0" right="0"/>
         <constraints>
-          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="1" fill="1" indent="0" use-parent-layout="false"/>
+          <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="1" fill="1" indent="0" use-parent-layout="false"/>
         </constraints>
-        <properties/>
+        <properties>
+          <background color="-12762549"/>
+        </properties>
         <border type="none"/>
         <children>
           <component id="2a52d" class="javax.swing.JLabel">
@@ -21,6 +26,9 @@
               <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
+              <font size="22"/>
+              <foreground color="-2829356"/>
+              <opaque value="false"/>
               <text value="Ordenes de Pago"/>
             </properties>
           </component>
@@ -29,6 +37,8 @@
               <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
+              <background color="-10854290"/>
+              <foreground color="-2829356"/>
               <text value="Agregar OP"/>
             </properties>
           </component>
@@ -36,17 +46,168 @@
       </grid>
       <scrollpane id="b650f">
         <constraints>
-          <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+          <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
         </constraints>
-        <properties/>
-        <border type="none"/>
+        <properties>
+          <background color="-12762549"/>
+          <foreground color="-10854290"/>
+          <inheritsPopupMenu value="false"/>
+        </properties>
+        <border type="none">
+          <font/>
+          <title-color color="-2829356"/>
+        </border>
         <children>
           <component id="ab9b7" class="javax.swing.JTable" binding="tbOPs" custom-create="true">
             <constraints/>
-            <properties/>
+            <properties>
+              <autoCreateRowSorter value="false"/>
+              <background color="-10854290"/>
+              <fillsViewportHeight value="true"/>
+              <foreground color="-2829356"/>
+              <gridColor color="-12762549"/>
+              <inheritsPopupMenu value="true"/>
+              <rowHeight value="50"/>
+              <selectionBackground color="-22507"/>
+              <selectionForeground color="-2829356"/>
+            </properties>
           </component>
         </children>
       </scrollpane>
+      <toolbar id="dc250" binding="barraNavegacion">
+        <constraints>
+          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="1" fill="1" indent="0" use-parent-layout="false">
+            <minimum-size width="900" height="80"/>
+            <preferred-size width="900" height="80"/>
+            <maximum-size width="900" height="80"/>
+          </grid>
+        </constraints>
+        <properties>
+          <background color="-12762549"/>
+          <borderPainted value="false"/>
+          <floatable value="true"/>
+          <focusCycleRoot value="true"/>
+          <focusTraversalPolicyProvider value="true"/>
+          <focusable value="true"/>
+          <foreground color="-3022030"/>
+          <inheritsPopupMenu value="true"/>
+          <maximumSize width="200" height="80"/>
+          <opaque value="true"/>
+          <orientation value="0"/>
+          <requestFocusEnabled value="false"/>
+        </properties>
+        <border type="none">
+          <font/>
+          <title-color color="-2829356"/>
+        </border>
+        <children>
+          <component id="9196" class="javax.swing.JButton" binding="consultasGeneralesButton">
+            <constraints/>
+            <properties>
+              <actionCommand value=""/>
+              <background color="-12762549"/>
+              <borderPainted value="false"/>
+              <foreground color="-22507"/>
+              <hideActionText value="true"/>
+              <horizontalAlignment value="2"/>
+              <icon value="img/search-folder-4237_4ecd7f14-6129-4006-835d-82ef11aed961.png"/>
+              <iconTextGap value="0"/>
+              <maximumSize width="150" height="80"/>
+              <minimumSize width="200" height="80"/>
+              <text value="Consultas"/>
+              <toolTipText value="consultas generales"/>
+            </properties>
+          </component>
+          <component id="889cb" class="javax.swing.JButton" binding="proveedoresButton">
+            <constraints/>
+            <properties>
+              <actionCommand value=""/>
+              <background color="-12762549"/>
+              <borderPainted value="false"/>
+              <foreground color="-22507"/>
+              <hideActionText value="false"/>
+              <horizontalAlignment value="2"/>
+              <horizontalTextPosition value="11"/>
+              <icon value="img/hand-truck-2675_b9c5f823-4adf-4534-a455-01aec8efdf30.png"/>
+              <iconTextGap value="0"/>
+              <maximumSize width="200" height="80"/>
+              <minimumSize width="200" height="80"/>
+              <text value="    Proveedores"/>
+            </properties>
+          </component>
+          <component id="1b3b2" class="javax.swing.JButton" binding="DocumentosButton">
+            <constraints/>
+            <properties>
+              <actionCommand value=""/>
+              <background color="-12762549"/>
+              <borderPainted value="false"/>
+              <foreground color="-22507"/>
+              <horizontalAlignment value="2"/>
+              <horizontalTextPosition value="11"/>
+              <icon value="img/shopping-cart-2522_2fb9aac0-8c8f-4b52-a0b0-42f248f55f8b.png"/>
+              <iconTextGap value="0"/>
+              <maximumSize width="200" height="80"/>
+              <minimumSize width="200" height="80"/>
+              <text value="Documentos"/>
+              <toolTipText value="Documentos&#10;"/>
+            </properties>
+          </component>
+          <component id="d9c76" class="javax.swing.JButton" binding="ordenesDePagoButton">
+            <constraints/>
+            <properties>
+              <actionCommand value=""/>
+              <background color="-12762549"/>
+              <borderPainted value="false"/>
+              <foreground color="-22507"/>
+              <hideActionText value="false"/>
+              <horizontalAlignment value="2"/>
+              <horizontalTextPosition value="11"/>
+              <icon value="img/documents-4188_e4752169-7bd1-4f22-a20d-705d8ed475e7.png"/>
+              <iconTextGap value="0"/>
+              <maximumSize width="200" height="80"/>
+              <minimumSize width="200" height="80"/>
+              <text value="Ordenes pago"/>
+            </properties>
+          </component>
+          <component id="f5cd4" class="javax.swing.JButton" binding="usuariosButton">
+            <constraints/>
+            <properties>
+              <actionCommand value=""/>
+              <alignmentY value="0.5"/>
+              <background color="-12762549"/>
+              <borderPainted value="false"/>
+              <enabled value="true"/>
+              <foreground color="-22507"/>
+              <horizontalAlignment value="10"/>
+              <horizontalTextPosition value="4"/>
+              <icon value="img/social-3088_bbbd1b6d-a330-437d-ac97-86da83af180a.png"/>
+              <iconTextGap value="0"/>
+              <maximumSize width="150" height="80"/>
+              <minimumSize width="150" height="80"/>
+              <text value="Usuarios"/>
+              <toolTipText value="usuarios"/>
+            </properties>
+          </component>
+          <component id="22405" class="javax.swing.JButton" binding="hideButton">
+            <constraints/>
+            <properties>
+              <actionCommand value=""/>
+              <alignmentY value="0.5"/>
+              <background color="-12762549"/>
+              <borderPainted value="false"/>
+              <enabled value="true"/>
+              <foreground color="-22507"/>
+              <horizontalAlignment value="10"/>
+              <horizontalTextPosition value="4"/>
+              <iconTextGap value="0"/>
+              <maximumSize width="150" height="80"/>
+              <minimumSize width="150" height="80"/>
+              <text value=""/>
+              <toolTipText value="hidebutton"/>
+            </properties>
+          </component>
+        </children>
+      </toolbar>
     </children>
   </grid>
 </form>

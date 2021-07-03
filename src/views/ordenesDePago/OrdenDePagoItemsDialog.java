@@ -3,6 +3,10 @@ package views.ordenesDePago;
 import controllers.ControladorComprobantes;
 import models.documento.Comprobante;
 import models.documento.ItemOrdenPago;
+import views.consultasGenerales.ViewConsultasGenerales;
+import views.documentosRecibidos.DocumentosView;
+import views.login.loginView;
+import views.proveedores.provedorView;
 import views.utils.MultiLineTableCell;
 
 import javax.swing.*;
@@ -18,6 +22,13 @@ public class OrdenDePagoItemsDialog extends JDialog implements ActionListener  {
     private JButton btnAgregarPago;
     private JButton btnGuardar;
     private JPanel main;
+    private JToolBar barraNavegacion;
+    private JButton consultasGeneralesButton;
+    private JButton proveedoresButton;
+    private JButton DocumentosButton;
+    private JButton ordenesDePagoButton;
+    private JButton usuariosButton;
+    private JButton hideButton;
 
     private List<ItemOrdenPago> itemsOP;
 
@@ -25,10 +36,50 @@ public class OrdenDePagoItemsDialog extends JDialog implements ActionListener  {
         super(owner);
         this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         this.setContentPane(main);
-        this.setSize(400,400);
-        this.pack();
+        this.setSize(1000,1000);
+        this.setLocationRelativeTo(null);
 
         this.itemsOP = itemsOP;
+        ordenesDePagoButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                OrdenesDePagoFrame op = new OrdenesDePagoFrame();
+                op.setVisible(true);
+                dispose();
+            }
+        });
+        proveedoresButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                provedorView prov = new provedorView();
+                prov.setVisible(true);
+                dispose();
+            }
+        });
+        usuariosButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                loginView login = new loginView();
+                login.setVisible(true);
+                dispose();
+            }
+        });
+        DocumentosButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                DocumentosView docu = new DocumentosView();
+                docu.setVisible(true);
+                dispose();
+            }
+        });
+        consultasGeneralesButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                ViewConsultasGenerales cons = new ViewConsultasGenerales();
+                cons.setVisible(true);
+                dispose();
+            }
+        });
 
         btnAgregarPago.addActionListener(new ActionListener() {
             @Override
