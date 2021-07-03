@@ -30,7 +30,7 @@ public class SolapaFactura extends JDialog {
     private JPanel panelProveedor;
     private JComboBox comboBox2;
     private JTextField textField2;
-    private JTextField textField3;
+    private JTextField textCant;
     private JButton cancelarButton;
     private JButton guardarButton;
     private JTextField textField4;
@@ -159,9 +159,15 @@ public class SolapaFactura extends JDialog {
         });
 
 
-
-
-}
+        agregarButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                var sel = (DDLItemDTO)comboBox2.getSelectedItem() ;
+                miModeloFactura.add(sel.id,sel.descripcion,Integer.parseInt(textCant.getText()),28.00);
+                miModeloFactura.fireTableDataChanged();
+            }
+        });
+    }
     private void setDDLProveedores() {
         var model = ControladorProveedor.getInstancia().getOpcionesDDLProveedores();
         this.comboBox1.setModel(new DefaultComboBoxModel(model.toArray()));
