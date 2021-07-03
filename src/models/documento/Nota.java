@@ -1,6 +1,8 @@
 package models.documento;
 import models.proveedor.Proveedor;
 
+import java.time.LocalDate;
+
 public class Nota extends Comprobante {
     private TipoDeNota nota;
 
@@ -8,12 +10,14 @@ public class Nota extends Comprobante {
             TipoDeNota tipo,
             Proveedor p,
             String nro,
-            float monto) {
+            float total,
+            LocalDate fecha) {
         this.nota = tipo;
         this.proveedor = p;
         this.nro = nro;
-        this.total = monto;
+        this.total = total;
         this.tipo = "NOTA " + this.nota.name();
+        this.fecha = fecha;
     }
 
     @Override

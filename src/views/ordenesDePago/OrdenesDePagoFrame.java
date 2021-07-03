@@ -3,6 +3,7 @@ package views.ordenesDePago;
 import controllers.ControladorOrdenesDePagos;
 import models.documento.OrdenPago;
 import models.dtos.ComprobanteDTO;
+import views.utils.DateParse;
 import views.utils.TableButton;
 import views.utils.TableButtonListener;
 
@@ -39,7 +40,8 @@ public class OrdenesDePagoFrame extends JFrame {
 
             var op = dialog.showDialog();
 
-            if (opID != null && op.getID() != opID) {
+            //solo los nuevos se agregan a la tabla.
+            if (opID == null) {
                 addRow(op);
             }
         } catch (Exception ex) {
@@ -73,7 +75,7 @@ public class OrdenesDePagoFrame extends JFrame {
         btnEdit.addTableButtonListener(new TableButtonListener() {
             @Override
             public void tableButtonClicked(int row, int col) {
-                var opID = (int)tbOPs.getValueAt(row, 1);
+                var opID = (int)tbOPs.getValueAt(row, col);
                 abrirModalOP(opID);
             }
         });
@@ -84,10 +86,10 @@ public class OrdenesDePagoFrame extends JFrame {
     }
 
     private  Object[] crearObjTabla(OrdenPago op){
-        return new Object[]{ "", op.getID() };
+        return new Object[]{ op.getID(), op.getNro(), op.getTotal(), DateParse.unparse(op.getFecha())};
     }
 
     private Object[] getHeaderTabla() {
-        return new Object[] { "", "Nro" };
+        return new Object[] { "", "Nro", "Total", "Fecha pago" };
     }
 }

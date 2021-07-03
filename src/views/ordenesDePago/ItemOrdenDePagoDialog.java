@@ -7,6 +7,7 @@ import models.documento.OrdenPago;
 import models.dtos.DDLItemDTO;
 import models.documento.ItemOrdenPago;
 import models.mediopago.TipoPago;
+import views.utils.DateParse;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -145,7 +146,7 @@ public class ItemOrdenDePagoDialog extends JDialog implements ActionListener  {
     }
 
     private  Object[] crearObjTabla(Comprobante comp){
-        return new Object[]{comp.getFecha(), comp.toString(), comp.getTotal()};
+        return new Object[]{DateParse.unparse(comp.getFecha()), comp.toString(), comp.getTotal()};
     }
 
     private Object[] getHeaderTabla() {
