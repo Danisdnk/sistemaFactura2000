@@ -31,6 +31,10 @@ public class ControladorOrdenesDePagos {
         return this.repoOPs.getTodos();
     }
 
+    public List<OrdenPago> getOrdenesDePagoByProveedor(int provId) {
+        return this.repoOPs.getTodos().stream().filter(x -> x.getProveedor().getID() == provId).toList();
+    }
+
     // TODO agregar a diagrama clases
     public List<DDLItemDTO> getOpcionesDDLFormasDePago() {
         return this.repoTiposDePago
