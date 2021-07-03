@@ -54,22 +54,22 @@ public class InicializadorDeDatos {
             var philips = ControladorProveedor.getInstancia().getProveedorByNombre("Philips");
 
             //Debito
-            repoNotas.insertar(new Nota(TipoDeNota.DEBITO, coto, "0001-00003000", 1000));
-            repoNotas.insertar(new Nota(TipoDeNota.DEBITO, coto, "0001-00003010", 4500));
-            repoNotas.insertar(new Nota(TipoDeNota.DEBITO, coto, "0001-00003030", 2000));
-            repoNotas.insertar(new Nota(TipoDeNota.DEBITO, coto, "0001-00003099", 1350));
+            repoNotas.insertar(new Nota(TipoDeNota.DEBITO, coto, "0001-00003000", 1000, LocalDate.parse("2020-01-02")));
+            repoNotas.insertar(new Nota(TipoDeNota.DEBITO, coto, "0001-00003010", 4500, LocalDate.parse("2020-01-02")));
+            repoNotas.insertar(new Nota(TipoDeNota.DEBITO, coto, "0001-00003030", 2000, LocalDate.parse("2020-01-02")));
+            repoNotas.insertar(new Nota(TipoDeNota.DEBITO, coto, "0001-00003099", 1350, LocalDate.parse("2020-01-02")));
 
-            repoNotas.insertar(new Nota(TipoDeNota.DEBITO, philips, "0001-00008888", 2000));
-            repoNotas.insertar(new Nota(TipoDeNota.DEBITO, philips, "0001-00008750", 3000));
-            repoNotas.insertar(new Nota(TipoDeNota.DEBITO, philips, "0001-00008890", 2000));
-            repoNotas.insertar(new Nota(TipoDeNota.DEBITO, philips, "0001-00009940", 4000));
+            repoNotas.insertar(new Nota(TipoDeNota.DEBITO, philips, "0001-00008888", 2000, LocalDate.parse("2020-01-04")));
+            repoNotas.insertar(new Nota(TipoDeNota.DEBITO, philips, "0001-00008750", 3000, LocalDate.parse("2020-01-04")));
+            repoNotas.insertar(new Nota(TipoDeNota.DEBITO, philips, "0001-00008890", 2000, LocalDate.parse("2020-01-04")));
+            repoNotas.insertar(new Nota(TipoDeNota.DEBITO, philips, "0001-00009940", 4000, LocalDate.parse("2020-01-04")));
 
             //Credito
-            repoNotas.insertar(new Nota(TipoDeNota.CREDITO, coto, "0001-00003664", 2000));
-            repoNotas.insertar(new Nota(TipoDeNota.CREDITO, coto, "0001-00003555", 1350));
+            repoNotas.insertar(new Nota(TipoDeNota.CREDITO, coto, "0001-00003664", 2000, LocalDate.parse("2020-01-02")));
+            repoNotas.insertar(new Nota(TipoDeNota.CREDITO, coto, "0001-00003555", 1350, LocalDate.parse("2020-01-02")));
 
-            repoNotas.insertar(new Nota(TipoDeNota.CREDITO, philips, "0001-00008354", 2000));
-            repoNotas.insertar(new Nota(TipoDeNota.CREDITO, philips, "0001-00009159", 1350));
+            repoNotas.insertar(new Nota(TipoDeNota.CREDITO, philips, "0001-00008354", 2000, LocalDate.parse("2020-01-02")));
+            repoNotas.insertar(new Nota(TipoDeNota.CREDITO, philips, "0001-00009159", 1350, LocalDate.parse("2020-01-02")));
         }
 
         //Ordenes de Pago
