@@ -35,13 +35,13 @@ public class OrdenDePagoDialog extends JDialog implements ActionListener{
 
         this.controlador = ControladorOrdenesDePagos.getInstancia();
 
+        this.setDDLProveedores();
+
         if (opID != null) {
             this.setupForm(opID);
         } else {
             this.op = new OrdenPago();
         }
-
-        this.setDDLProveedores();
 
         this.ddlProveedores.addActionListener(new ActionListener() {
             @Override

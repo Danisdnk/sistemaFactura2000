@@ -39,6 +39,7 @@ public class ItemOrdenDePagoDialog extends JDialog implements ActionListener  {
         this.pack();
 
         this.comprobantesAsociados = new ArrayList<>();
+        this.comprobantesSinAsociar = comprobantes;
 
         if (itemOrdenPago != null){
             this.comprobantesAsociados = itemOrdenPago.getComprobantesAsociados();
@@ -47,7 +48,7 @@ public class ItemOrdenDePagoDialog extends JDialog implements ActionListener  {
 
         this.setTable();
 
-        this.setDDLComprobantesSinAsoc(comprobantes);
+        this.setDDLComprobantesSinAsoc();
         this.setDDLFormasPago();
 
         this.ddlComprobantesSinAsoc.addActionListener(new ActionListener() {
@@ -102,12 +103,7 @@ public class ItemOrdenDePagoDialog extends JDialog implements ActionListener  {
         return this.tipoDePago != null ? new ItemOrdenPago(this.tipoDePago, this.comprobantesAsociados) : null;
     }
 
-    private void setDDLComprobantesSinAsoc(List<Comprobante> comprobantes) {
-        this.comprobantesSinAsociar = comprobantes
-                .stream()
-                .filter(comp -> !this.comprobantesAsociados.stream().anyMatch(asoc -> asoc.getNro() == comp.getNro()))
-                .toList();
-
+    private void setDDLComprobantesSinAsoc() {
         this.ddlComprobantesSinAsoc.setModel(new DefaultComboBoxModel(
                 this.comprobantesSinAsociar
                         .stream()

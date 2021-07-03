@@ -57,6 +57,7 @@ public class OrdenDePagoItemsDialog extends JDialog implements ActionListener  {
 
     private void abrirModalItemOrdenPago(int provId, ItemOrdenPago item) {
         try {
+            //comprobantes asociados a la op
             var asociados = this.itemsOP
                     .stream()
                     .flatMap(x -> x.getComprobantesAsociados().stream())
@@ -65,7 +66,7 @@ public class OrdenDePagoItemsDialog extends JDialog implements ActionListener  {
             //todos los del proveedor que aun no esten asociados
             var comprobantesSinAsociar = ControladorComprobantes
                     .getInstancia()
-                    .getComprobantesByProveedor(provId)
+                    .getComprobantesNoPagosByProveedor(provId)
                     .stream()
                     .filter(x -> !asociados.stream().anyMatch(y -> x.getID() == y.getID()))
                     .toList();

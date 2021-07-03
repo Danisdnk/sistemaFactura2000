@@ -169,11 +169,17 @@ public class Proveedor implements DDLeable, Identificable {
     }
 
     @Override
+    public String toString() {
+        return nombre + " - " + cuit;
+    }
+
+    @Override
     public DDLItemDTO toDDL() {
+        var desc = toString();
         return new DDLItemDTO() {
             {
                 id = ID;
-                descripcion = nombre;
+                descripcion = desc;
             }
         };
     }

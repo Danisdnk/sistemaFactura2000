@@ -50,7 +50,7 @@ public class OrdenesDePagoFrame extends JFrame {
     }
 
     private void addRow(OrdenPago op) {
-        if (op != null) {
+        if (op != null && op.getProveedor() != null) {
             DefaultTableModel model = (DefaultTableModel) this.tbOPs.getModel();
             model.addRow(crearObjTabla(op));
         }
@@ -86,10 +86,10 @@ public class OrdenesDePagoFrame extends JFrame {
     }
 
     private  Object[] crearObjTabla(OrdenPago op){
-        return new Object[]{ op.getID(), op.getNro(), op.getTotal(), DateParse.unparse(op.getFecha())};
+        return new Object[]{ op.getID(), op.getProveedor().toString(), op.getNro(), op.getTotal(), DateParse.unparse(op.getFecha())};
     }
 
     private Object[] getHeaderTabla() {
-        return new Object[] { "", "Nro", "Total", "Fecha pago" };
+        return new Object[] { "", "Proveedor", "Nro", "Total", "Fecha pago" };
     }
 }
