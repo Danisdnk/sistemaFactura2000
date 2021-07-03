@@ -53,6 +53,11 @@ public class Comprobante implements IComprobante, DDLeable, Identificable {
 
     public void setID(int ID) {
         this.ID = ID;
+
+        if (this.nro == null) {
+            var stringID = String.valueOf(ID);
+            this.nro = "0001-" + "0".repeat(getDigitosNro()-stringID.length()) + stringID;
+        }
     }
 
     public Proveedor getProveedor() {
@@ -90,5 +95,10 @@ public class Comprobante implements IComprobante, DDLeable, Identificable {
     @Override
     public String toString() {
         return tipo() + " " + nro;
+    }
+
+    private int getDigitosNro() {
+        //no usamos una constante dado que es serializada por JSON.
+        return 8;
     }
 }
