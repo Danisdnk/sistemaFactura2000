@@ -1,11 +1,16 @@
 package views.consultasGenerales;
 
+import controllers.ControladorComprobantes;
+import models.dtos.ComprobanteDTO;
+import views.documentosRecibidos.DocumentosView;
+import views.login.loginView;
 import views.ordenesDePago.OrdenesDePagoFrame;
 import views.proveedores.provedorView;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
 
 public class ViewTotalDeDeuda extends JFrame{
 
@@ -21,7 +26,7 @@ public class ViewTotalDeDeuda extends JFrame{
     private JToolBar barraNavegacion;
     private JButton consultasGeneralesButton;
     private JButton proveedoresButton;
-    private JButton itemsServiciosButton;
+    private JButton DocumentosButton;
     private JButton ordenesDePagoButton;
     private JButton usuariosButton;
     private JButton consultarDeudaButton;
@@ -36,7 +41,27 @@ public class ViewTotalDeDeuda extends JFrame{
         this.setVisible(true);
         this.setLocationRelativeTo(null);
 
+        consultarDeudaButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
 
+                String cuit = null;
+
+
+                if (!textCUIT.getText().isEmpty()){
+                    cuit = textCUIT.getText();
+                    var comprobantes = ControladorComprobantes.getInstancia().getComprobantesByCuitDTO(cuit);
+                    setJtextArea(comprobantes);
+                }else{
+                    JOptionPane.showMessageDialog(
+                            consultarButton,
+                            "Ingrese un CUIT para continuar",
+                            "Error",
+                            JOptionPane.ERROR_MESSAGE);
+
+                }
+            }
+        });
 
 
         cancelarButton.addActionListener(new ActionListener() {
@@ -58,7 +83,7 @@ public class ViewTotalDeDeuda extends JFrame{
             public void actionPerformed(ActionEvent e) {
                 OrdenesDePagoFrame op = new OrdenesDePagoFrame();
                 op.setVisible(true);
-                //dispose();//esto cierra la ventana anterior
+                //dispose();
             }
         });
 
@@ -67,18 +92,68 @@ public class ViewTotalDeDeuda extends JFrame{
             public void actionPerformed(ActionEvent e) {
                 ViewConsultasGenerales cons = new ViewConsultasGenerales();
                 cons.setVisible(true);
-                dispose();//esto cierra la ventana anterior
+                dispose();
             }
         });
 
         usuariosButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                provedorView principal = new provedorView();
+                loginView principal = new loginView();
                 principal.setVisible(true);
-                dispose();//esto cierra la ventana anterior
+                dispose();
             }
         });
 
+        proveedoresButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                provedorView principal = new provedorView();
+                principal.setVisible(true);
+                dispose();
+            }
+        });
+        DocumentosButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                DocumentosView principal = new DocumentosView();
+                principal.setVisible(true);
+                dispose();
+            }
+        });
+
+    }
+
+    private void setJtextArea(List<ComprobanteDTO> comprobantes) {
+
+        if (comprobantes.isEmpty()){
+            this.textMonto.setText(" El proveedor correspondiente al cuit ingresado no posee deuda alguna o no existe ");
+        }else{
+            String text = "" ;
+            calculodeDeuda(comprobantes);
+        }
+
+
+    }
+
+    private Integer calculodeDeuda(List<ComprobanteDTO> comprobantes) {
+
+        Float pagado = 0F;
+        Float debitado = 0F;
+        Float acreditado = 0F;
+
+        for (int i=0; i<comprobantes.size(); i++){
+
+            if (comprobantes.get(i).getTipo() == "FAC"){
+                pagado = pagado + comprobantes.get(i).getTotal();
+            }else{
+                if (comprobantes.get(i).getTipo() == "NOTA "){
+
+                }
+            }
+
+
+        }
+        return null;
     }
 }

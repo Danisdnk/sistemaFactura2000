@@ -8,7 +8,7 @@
     <properties/>
     <border type="none"/>
     <children>
-      <grid id="19c4b" binding="panelCentral" layout-manager="GridLayoutManager" row-count="3" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+      <grid id="19c4b" binding="panelCentral" layout-manager="GridLayoutManager" row-count="4" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
         <margin top="0" left="0" bottom="0" right="0"/>
         <constraints>
           <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
@@ -76,7 +76,7 @@
                   <text value="    Proveedores"/>
                 </properties>
               </component>
-              <component id="ac68f" class="javax.swing.JButton" binding="itemsServiciosButton">
+              <component id="ac68f" class="javax.swing.JButton" binding="DocumentosButton">
                 <constraints/>
                 <properties>
                   <actionCommand value=""/>
@@ -89,7 +89,7 @@
                   <iconTextGap value="0"/>
                   <maximumSize width="200" height="80"/>
                   <minimumSize width="200" height="80"/>
-                  <text value="Prod y servicios"/>
+                  <text value="Documentos"/>
                   <toolTipText value="Productos y serv"/>
                 </properties>
               </component>
@@ -156,10 +156,10 @@
               </component>
             </children>
           </grid>
-          <grid id="b60d0" layout-manager="GridLayoutManager" row-count="2" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+          <grid id="b60d0" layout-manager="GridLayoutManager" row-count="2" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
             <margin top="0" left="0" bottom="0" right="0"/>
             <constraints>
-              <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+              <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
               <background color="-12161083"/>
@@ -169,26 +169,97 @@
             <children>
               <component id="b7555" class="javax.swing.JButton" binding="cancelarButton" default-binding="true">
                 <constraints>
-                  <grid row="1" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                  <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties>
                   <background color="-3276800"/>
                   <text value="Cancelar"/>
                 </properties>
               </component>
-              <scrollpane id="564c7">
+              <tabbedpane id="5f51" binding="tabbedPane1" default-binding="true">
                 <constraints>
-                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false">
+                    <preferred-size width="200" height="200"/>
+                  </grid>
                 </constraints>
                 <properties/>
                 <border type="none"/>
                 <children>
-                  <component id="61d" class="javax.swing.JList" binding="list1" default-binding="true">
-                    <constraints/>
+                  <grid id="3cc53" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+                    <margin top="0" left="0" bottom="0" right="0"/>
+                    <constraints>
+                      <tabbedpane title="Table"/>
+                    </constraints>
                     <properties/>
-                  </component>
+                    <border type="none"/>
+                    <children>
+                      <scrollpane id="f5065">
+                        <constraints>
+                          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                        </constraints>
+                        <properties/>
+                        <border type="none"/>
+                        <children>
+                          <component id="8df25" class="javax.swing.JTable" binding="table1" default-binding="true">
+                            <constraints/>
+                            <properties/>
+                          </component>
+                        </children>
+                      </scrollpane>
+                    </children>
+                  </grid>
+                  <scrollpane id="564c7">
+                    <constraints>
+                      <tabbedpane title="TXT"/>
+                    </constraints>
+                    <properties/>
+                    <border type="none"/>
+                    <children>
+                      <component id="1cbc2" class="javax.swing.JTextArea" binding="textAreaResultado" default-binding="true">
+                        <constraints/>
+                        <properties/>
+                      </component>
+                    </children>
+                  </scrollpane>
                 </children>
-              </scrollpane>
+              </tabbedpane>
+            </children>
+          </grid>
+          <grid id="f7e52" layout-manager="GridLayoutManager" row-count="2" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+            <margin top="0" left="0" bottom="0" right="0"/>
+            <constraints>
+              <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <background color="-12161083"/>
+            </properties>
+            <border type="none"/>
+            <children>
+              <component id="5383d" class="javax.swing.JLabel">
+                <constraints>
+                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <foreground color="-22507"/>
+                  <text value="CUIT"/>
+                </properties>
+              </component>
+              <component id="6054f" class="javax.swing.JTextField" binding="textCuit">
+                <constraints>
+                  <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                    <preferred-size width="150" height="-1"/>
+                  </grid>
+                </constraints>
+                <properties/>
+              </component>
+              <component id="80ea" class="javax.swing.JButton" binding="consultarButton" default-binding="true">
+                <constraints>
+                  <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <text value="Consultar"/>
+                </properties>
+              </component>
             </children>
           </grid>
         </children>

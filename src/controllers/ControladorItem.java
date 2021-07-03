@@ -11,6 +11,9 @@ import models.proveedor.Rubro;
 
 import java.util.List;
 
+/**
+ * Este Contolador se opcupa de los Items (Productos y servicios), Rubros y ProveedorItem (Item con precio de un proveedor )
+ */
 public class ControladorItem {
 
     private static ControladorItem instancia;
@@ -29,13 +32,16 @@ public class ControladorItem {
         return this.RepoItems.getTodos();
     }
 
-    // TODO agregar a diagrama clases
     public Item getItemByID(int id) {
         return this.RepoItems.getByID(id);
     }
 
-    // TODO agregar a diagrama clases
-    public Item getItemByNombre(String nombre) {            //metodo para buscar item por el nombre -> compulsaPrecos(Item)
+    /**
+     * metodo para traer item  por nombre -> Usado en inicializacion de datos
+     * @param nombre
+     * @return Item
+     */
+    public Item getItemByNombre(String nombre) {
         return this.RepoItems.getTodos()
                 .stream()
                 .filter(p -> p.getNombre().equals(nombre))
@@ -43,7 +49,12 @@ public class ControladorItem {
                 .get();
     }
 
-    public Rubro getRubroByNombre(String nombre) {         //metodo para buscar rubros por el nombre -> compulsaPrecos(Rubro)
+    /**
+     * metodo para buscar rubro por el nombre -> Usado en inicializacion de datos
+     * @param  nombre
+     * @return Rubro
+     */
+    public Rubro getRubroByNombre(String nombre) {
         return this.RepoRubros.getTodos()
                 .stream()
                 .filter(p -> p.getNombre().equals(nombre))
@@ -51,13 +62,37 @@ public class ControladorItem {
                 .get();
     }
 
-    // TODO agregar a diagrama clases
+    /**
+     * metodo que devuelve una DropDownList de Items, convertida a DDLItemDTO
+     * Usado en CompulsaPrecios y SolapaCompras
+     * @return List<DDLItemDTO>
+     */
     public List<DDLItemDTO> getOpcionesDDLItems() {
         return this.RepoItems.getTodos()
                 .stream()
                 .map(Item::toDDL)
                 .toList();
     }
+
+    /**
+     * metodo que devuelve una DropDownList de Items segun un Rubro, convertida a DDLItemDTO
+     * Usado en CompulsaPrecios y SolapaCompras
+     * @param descripcion
+     * @return List<DDLItemDTO>
+     */
+    public List<DDLItemDTO> getOpcionesDDLItems(String descripcion) {
+        return this.RepoItems.getTodos()
+                .stream()
+                .filter(p -> p.getPertenece().getNombre().equals(descripcion))
+                .map(Item::toDDL)
+                .toList();
+    }
+
+    /**
+     * metodo que devuelve una DropDownList de Rubros, convertida a DDLItemDTO
+     * Usado en CompulsaPrecios
+     * @return List<DDLItemDTO>
+     */
 
     public List<DDLItemDTO> getOpcionesDDLRubros() {
         return this.RepoRubros.getTodos()
@@ -67,15 +102,12 @@ public class ControladorItem {
 
     }
 
-    public List<DDLItemDTO> getOpcionesDDLRubros(String descripcion) {
-        return this.RepoItems.getTodos()
-                .stream()
-                .filter(p -> p.getPertenece().getNombre().equals(descripcion))
-                .map(Item::toDDL)
-                .toList();
-
-    }
-
+    /**
+     * metodo que devuelve un ProveedorItem segun un Item (sirve para obtener el precio de un item de todos los proveedores)
+     * Usada en CompulsaPrecios
+     * @param descripcion
+     * @return List<DDlProveedorItemDTO>
+     */
     public List<DDlProveedorItemDTO> getProveedorItemByItem(String descripcion){
         return this.RepoProveedorItem.getTodos()
                 .stream()

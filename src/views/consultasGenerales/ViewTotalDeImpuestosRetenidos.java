@@ -1,5 +1,10 @@
 package views.consultasGenerales;
 
+import views.documentosRecibidos.DocumentosView;
+import views.login.loginView;
+import views.ordenesDePago.OrdenesDePagoFrame;
+import views.proveedores.provedorView;
+
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -14,7 +19,7 @@ public class ViewTotalDeImpuestosRetenidos extends JFrame{
     private JToolBar barraNavegacion;
     private JButton consultasGeneralesButton;
     private JButton proveedoresButton;
-    private JButton itemsServiciosButton;
+    private JButton DocumentosButton;
     private JButton ordenesDePagoButton;
     private JButton usuariosButton;
 
@@ -27,14 +32,49 @@ public class ViewTotalDeImpuestosRetenidos extends JFrame{
         this.setLocationRelativeTo(null);
 
 
-        volverButton.addActionListener(new ActionListener() {
+        ordenesDePagoButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-               var ViewConsultasGenerales = new ViewConsultasGenerales();
-                ViewConsultasGenerales.setVisible(true);
+                OrdenesDePagoFrame principal = new OrdenesDePagoFrame();
+                principal.setVisible(true);
+                //dispose();
+            }
+        });
 
+        consultasGeneralesButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                ViewConsultasGenerales principal = new ViewConsultasGenerales();
+                principal.setVisible(true);
                 dispose();
             }
         });
+
+        usuariosButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                loginView principal = new loginView();
+                principal.setVisible(true);
+                dispose();
+            }
+        });
+
+        proveedoresButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                provedorView principal = new provedorView();
+                principal.setVisible(true);
+                dispose();
+            }
+        });
+        DocumentosButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                DocumentosView principal = new DocumentosView();
+                principal.setVisible(true);
+                dispose();
+            }
+        });
+
     }
 }
