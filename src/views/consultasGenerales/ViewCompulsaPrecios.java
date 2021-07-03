@@ -201,7 +201,7 @@ public class ViewCompulsaPrecios extends JFrame{
     }
 
     private void setJtextArea(String descripcion) {
-        var itemPorProveedor = ControladorItem.getInstancia().getProveedorItemByItem(descripcion);
+        var itemPorProveedor = ControladorItem.getInstancia().getProveedorItemsByItem(descripcion);
         if (itemPorProveedor.isEmpty()){
             this.TextResultado.setText("Este producto no posee precio fijados por vendedores actualmente ");
         }
@@ -227,7 +227,7 @@ public class ViewCompulsaPrecios extends JFrame{
     private void setTablePrecios(String descripcion) {
 
         model.getDataVector().removeAllElements();
-        for(DDlProveedorItemDTO itemPorProveedor : ControladorItem.getInstancia().getProveedorItemByItem(descripcion)){
+        for(DDlProveedorItemDTO itemPorProveedor : ControladorItem.getInstancia().getProveedorItemsByItem(descripcion)){
             model.addRow(new Object[]{
                     itemPorProveedor.descripcion,
                     itemPorProveedor.precio,

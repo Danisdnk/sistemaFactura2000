@@ -22,14 +22,20 @@ public class Comprobante implements IComprobante, DDLeable, Identificable {
 
     protected String tipo;
 
+    protected float montoIva;
+    protected double iva;
+
     public ComprobanteDTO toCompDTO() {
+
         return new ComprobanteDTO(
                 ID,
                 this.tipo(),
                 proveedor,
                 fecha,
                 nro,
-                total
+                total,
+                montoIva,
+                iva
         );
     }
 

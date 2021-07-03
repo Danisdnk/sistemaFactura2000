@@ -180,6 +180,28 @@ public class ControladorComprobantes {
         return this.repoFacturas.getByID(facID);
     }
 
+
+    /**
+     * metodo que devuelve todos los comprobantes convertidos en ComprobantesDTO  (facturas y notas de credito y debito)
+     * @return List<ComprobanteDTO>
+     */
+    public List<ComprobanteDTO> getAllComprobantesDTO() {
+        return  getAllComprobantes()
+                .stream()
+                .map(Comprobante::toCompDTO)
+                .toList();
+    }
+
+    /**
+     * metodo que devuelve todos los comprobantes (facturas y notas de credito y debito)
+     * @return
+     */
+    public List<Comprobante> getAllComprobantes() {
+        return Stream.of(this.repoFacturas.getTodos(), this.repoNotas.getTodos())
+                .flatMap(Collection::stream)
+                .collect(Collectors.toList());
+    }
+
     public static ControladorComprobantes getInstancia() {
         if (instancia == null) {
             instancia = new ControladorComprobantes();

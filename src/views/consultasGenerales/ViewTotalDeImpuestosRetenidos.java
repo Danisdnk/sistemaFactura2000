@@ -32,6 +32,16 @@ public class ViewTotalDeImpuestosRetenidos extends JFrame{
         this.setLocationRelativeTo(null);
 
 
+
+        volverButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                ViewConsultasGenerales principal = new ViewConsultasGenerales();
+                principal.setVisible(true);
+                dispose();
+            }
+        });
+
         ordenesDePagoButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

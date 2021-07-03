@@ -8,7 +8,7 @@ import models.documento.*;
 import models.mediopago.TipoPago;
 import models.proveedor.*;
 import java.time.LocalDate;
-import java.util.ArrayList;
+
 
 public class InicializadorDeDatos {
     public static void iniciar() {
@@ -40,12 +40,12 @@ public class InicializadorDeDatos {
             var coto = ControladorProveedor.getInstancia().getProveedorByNombre("Coto");
             var philips = ControladorProveedor.getInstancia().getProveedorByNombre("Philips");
 
-            repoFacturas.insertar(new Factura(coto, "0001-00002555", 5000, LocalDate.parse("2020-01-01")));
-            repoFacturas.insertar(new Factura(coto,"0001-00002556", 2500, LocalDate.parse("2020-01-01")));
-            repoFacturas.insertar(new Factura(coto,"0001-00002557", 1250, LocalDate.parse("2020-01-02")));
+            repoFacturas.insertar(new Factura(coto, "0001-00002555", 5000, 1050 , 21, LocalDate.parse("2020-01-01")));
+            repoFacturas.insertar(new Factura(coto,"0001-00002556", 2500, 562.50F, 10.5 ,LocalDate.parse("2020-01-01")));
+            repoFacturas.insertar(new Factura(coto,"0001-00002557", 1250, 1250 ,0 ,LocalDate.parse("2020-01-02")));
 
-            repoFacturas.insertar(new Factura(philips,"0001-00002558", 3000, LocalDate.parse("2020-01-03")));
-            repoFacturas.insertar(new Factura(philips,"0001-00002590", 4800, LocalDate.parse("2020-01-04")));
+            repoFacturas.insertar(new Factura(philips,"0001-00002558", 3000, 630,21 ,LocalDate.parse("2020-01-03")));
+            repoFacturas.insertar(new Factura(philips,"0001-00002590", 4800, 1296, 27,LocalDate.parse("2020-01-04")));
         }
 
         //Notas
@@ -128,26 +128,26 @@ public class InicializadorDeDatos {
 
 
 
-            repoItems.insertar(new Item("Acero", Unidad.PESO,TipoItem.PRODUCTO, 4D, materiasPrimas));
-            repoItems.insertar(new Item("Cobre", Unidad.PESO,TipoItem.PRODUCTO, 4D, materiasPrimas));
-            repoItems.insertar(new Item("Hierro", Unidad.PESO,TipoItem.PRODUCTO, 4D, materiasPrimas));
-            repoItems.insertar(new Item("Madera", Unidad.PESO, TipoItem.PRODUCTO,  4D,materiasPrimas));
-            repoItems.insertar(new Item("Oro", Unidad.PESO,TipoItem.PRODUCTO, 4D, materiasPrimas));
+            repoItems.insertar(new Item("Acero", Unidad.PESO,TipoItem.PRODUCTO, 10.5D, materiasPrimas));
+            repoItems.insertar(new Item("Cobre", Unidad.PESO,TipoItem.PRODUCTO, 10.5D, materiasPrimas));
+            repoItems.insertar(new Item("Hierro", Unidad.PESO,TipoItem.PRODUCTO, 10.5D, materiasPrimas));
+            repoItems.insertar(new Item("Madera", Unidad.PESO, TipoItem.PRODUCTO,  10.5D,materiasPrimas));
+            repoItems.insertar(new Item("Oro", Unidad.PESO,TipoItem.PRODUCTO, 10.5D, materiasPrimas));
 
-            repoItems.insertar(new Item("Carne", Unidad.PESO,TipoItem.PRODUCTO, 10D, alimentos));
-            repoItems.insertar(new Item("Pollo", Unidad.PESO,TipoItem.PRODUCTO, 10D, alimentos));
-            repoItems.insertar(new Item("Arroz", Unidad.PESO,TipoItem.PRODUCTO, 10D, alimentos));
-            repoItems.insertar(new Item("Asado", Unidad.PESO,TipoItem.PRODUCTO, 10D, alimentos));
+            repoItems.insertar(new Item("Carne", Unidad.PESO,TipoItem.PRODUCTO, 10.5D, alimentos));
+            repoItems.insertar(new Item("Pollo", Unidad.PESO,TipoItem.PRODUCTO, 10.5D, alimentos));
+            repoItems.insertar(new Item("Arroz", Unidad.PESO,TipoItem.PRODUCTO, 10.5D, alimentos));
+            repoItems.insertar(new Item("Asado", Unidad.PESO,TipoItem.PRODUCTO, 10.5D, alimentos));
 
             repoItems.insertar(new Item("Computadora", Unidad.UNIDAD,TipoItem.PRODUCTO, 21D, computacion));
             repoItems.insertar(new Item("Laptop", Unidad.UNIDAD,TipoItem.PRODUCTO, 21D, computacion));
             repoItems.insertar(new Item("Monitor", Unidad.UNIDAD,TipoItem.PRODUCTO, 21D, computacion));
             repoItems.insertar(new Item("Router", Unidad.UNIDAD,TipoItem.PRODUCTO, 21D, computacion));
 
-            repoItems.insertar(new Item("Aire Acondicionado", Unidad.UNIDAD,TipoItem.PRODUCTO, 15D, electrodomesticos));
-            repoItems.insertar(new Item("Heladera", Unidad.UNIDAD,TipoItem.PRODUCTO, 15D, electrodomesticos));
-            repoItems.insertar(new Item("Lavaropa", Unidad.UNIDAD,TipoItem.PRODUCTO, 15D, electrodomesticos));
-            repoItems.insertar(new Item("Microondas", Unidad.UNIDAD,TipoItem.PRODUCTO, 15D, electrodomesticos));
+            repoItems.insertar(new Item("Aire Acondicionado", Unidad.UNIDAD,TipoItem.PRODUCTO, 27D, electrodomesticos));
+            repoItems.insertar(new Item("Heladera", Unidad.UNIDAD,TipoItem.PRODUCTO, 27D, electrodomesticos));
+            repoItems.insertar(new Item("Lavaropa", Unidad.UNIDAD,TipoItem.PRODUCTO, 27D, electrodomesticos));
+            repoItems.insertar(new Item("Microondas", Unidad.UNIDAD,TipoItem.PRODUCTO, 27D, electrodomesticos));
 
 
 
