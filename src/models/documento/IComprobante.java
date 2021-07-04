@@ -25,7 +25,7 @@ public interface IComprobante {
 
    float getMontoTotal();
 
-    void setMontoTotal(float total);
+    void setMontoTotal(float montoNeto, float total);
 
     @Override
     String toString();

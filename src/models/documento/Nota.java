@@ -19,6 +19,26 @@ public class Nota extends Comprobante {
         this.tipo = "NOTA " + this.nota.name();
         this.fecha = fecha;
     }
+    /**Este deberia ser el constructor por default pero falta implementar
+     * en la vista que se pueda ingresar las notas de credito/debito con estos datos
+     * */
+    public Nota(
+            TipoDeNota tipo,
+            Proveedor p,
+            String nro,
+            float montoNeto,
+            float iva,
+            LocalDate fecha) {
+        this.nota = tipo;
+        this.proveedor = p;
+        this.nro = nro;
+        this.montoNeto = montoNeto;
+        this.iva = iva;
+        this.tipo = "NOTA " + this.nota.name();
+        this.fecha = fecha;
+        setMontoIva(iva, montoNeto);
+        setMontoTotal(montoNeto, montoIva);
+    }
 
     @Override
     public String tipo() {

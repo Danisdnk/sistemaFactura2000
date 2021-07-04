@@ -5,6 +5,7 @@ import dal.Repository;
 import models.documento.*;
 import models.dtos.ComprobanteDTO;
 import models.dtos.DDLItemDTO;
+import models.impuesto.IVA;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -18,6 +19,7 @@ public class ControladorComprobantes {
 
     private Repository<Factura> repoFacturas;
     private Repository<Nota> repoNotas;
+    private Repository<IVA> repoIVA;
 
     private ControladorComprobantes() {
         this.repoFacturas = RepoFactory.getRepoFacturas();

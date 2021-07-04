@@ -115,11 +115,11 @@ public class ViewConsultaLibroIVACompras extends JFrame{
 
     private void setTablePrecios() {
 
-        double textiva25 = 0;
-        double textiva5 = 0;
-        double textiva105 = 0;
-        double textiva21 = 0;
-        double textiva27 = 0;
+        double textiva25 = 0F;
+        double textiva5 = 0F;
+        double textiva105 = 0F;
+        double textiva21 = 0F;
+        double textiva27 = 0F;
 
         model.getDataVector().removeAllElements();
         for(ComprobanteDTO Comprobante : ControladorComprobantes.getInstancia().getAllComprobantesDTO()){

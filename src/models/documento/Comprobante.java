@@ -21,7 +21,7 @@ public class Comprobante implements IComprobante, DDLeable, Identificable {
     protected String tipo;
 
     protected float montoNeto;
-    protected double iva;
+    protected float iva;
     protected float montoIva;
     protected float montoTotal;
 
@@ -105,7 +105,7 @@ public class Comprobante implements IComprobante, DDLeable, Identificable {
         return iva;
     }
 
-    public void setIva(double iva) {
+    public void setIva(float iva) {
         this.iva = iva;
     }
 
@@ -113,16 +113,16 @@ public class Comprobante implements IComprobante, DDLeable, Identificable {
         return montoIva;
     }
 
-    public void setMontoIva(float montoIva) {
-        this.montoIva = montoIva;
+    public void setMontoIva(float iva, float montoNeto) {
+        this.montoIva =  montoNeto * (iva/100);
+    }
+
+    public void setMontoTotal(float montoNeto, float montoIva) {
+        this.montoTotal = montoIva + montoNeto;
     }
 
     public float getMontoTotal() {
         return montoTotal;
-    }
-
-    public void setMontoTotal(float montoTotal) {
-        this.montoTotal = montoTotal;
     }
 
     @Override
