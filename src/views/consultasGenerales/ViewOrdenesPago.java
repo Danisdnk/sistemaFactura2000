@@ -47,11 +47,13 @@ public class ViewOrdenesPago extends JFrame{
         //setJtextAreaResultado(op);
 
         model = new DefaultTableModel();
-        model.addColumn("ID");
+        model.addColumn("Orden De Pago ID");
         model.addColumn("Proveedor");
         model.addColumn("Fecha");
         model.addColumn("Monto Total");
-        model.addColumn("Monto retenido");
+        model.addColumn("Total de Retencion");
+        model.addColumn("Pago en Cheque");
+        model.addColumn("Pago en Efectivo");
         table1.setModel(model);
 
 
@@ -69,15 +71,49 @@ public class ViewOrdenesPago extends JFrame{
                         model.getDataVector().removeAllElements();
                         setJtextAreaResultado(ControladorOrdenesDePagos.getInstancia().getOPsByCuit(cuit));
                         for (OrdenPago op : ControladorOrdenesDePagos.getInstancia().getOPsByCuit(cuit)) {
-                            model.addRow(new Object[]{
 
-                                    op.getID(),
-                                    op.getProveedor().getNombre(),
-                                    op.getFecha(),
-                                    op.getTotal(),
-                                    op.getTotalRetenciones()
+                            boolean ch = op.getItems().stream().anyMatch(u -> u.getTipoDePago().getType().equals("Cheque"));
+                            boolean ef = op.getItems().stream().anyMatch(u -> u.getTipoDePago().getType().equals("Efectivo"));
 
-                            });
+                            if (ch || ef) {
+                                if(ef){
+                                    model.addRow(new Object[]{
+                                            op.getID(),
+                                            op.getProveedor().getNombre(),
+                                            op.getFecha(),
+                                            op.getMontoTotal(),
+                                            op.getTotalRetenciones(),
+                                            "Si",
+                                            "Si"
+                                  });
+
+                                } else {
+                                    model.addRow(new Object[]{
+                                            op.getID(),
+                                            op.getProveedor().getNombre(),
+                                            op.getFecha(),
+                                            op.getMontoTotal(),
+                                            op.getTotalRetenciones(),
+                                            "Si",
+                                            "No"
+                                    });
+                                }
+
+
+                            }else{
+                                model.addRow(new Object[]{
+
+                                        op.getID(),
+                                        op.getProveedor().getNombre(),
+                                        op.getFecha(),
+                                        op.getMontoTotal(),
+                                        op.getTotalRetenciones(),
+                                        "No",
+                                        "No"
+
+                                });
+                            }
+
 
                         }
                         model.fireTableDataChanged();
@@ -178,8 +214,10 @@ public class ViewOrdenesPago extends JFrame{
                         +op.get(i).getProveedor().getNombre()
                         +(" con el numero ")
                         + op.get(i).getNro()
-                        +(" tiene un monto total de ")
-                        +(op.get(i).getTotal())
+                        +(" con un monto neto de ")
+                        +(op.get(i).getMontoNeto())
+                        +(" y un monto total de ")
+                        +(op.get(i).getMontoTotal())
                         +("$\n");
 
             }

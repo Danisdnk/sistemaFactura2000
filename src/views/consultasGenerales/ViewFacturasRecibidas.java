@@ -206,7 +206,9 @@ public class ViewFacturasRecibidas extends JFrame {
             for (ComprobanteDTO factura : facturas) {  //int i=0; i<facturas.size(); i++
                 System.out.println(text);
 
-                text = text + ("La factura numero ") + factura.getNro() + (" con fecha ") + factura.getFecha() + (" con un monto total de ") + (factura.getTotal()) + ("$\n");
+                text = text + ("La factura numero ")
+                        + factura.getNro() + (" con fecha ") + factura.getFecha()
+                        + (" con un monto total de ") + (factura.getMontoTotal()) + ("$\n");
 
             }
             this.textAreaResultado.setText(text);
@@ -227,7 +229,9 @@ public class ViewFacturasRecibidas extends JFrame {
             for (ComprobanteDTO factura : facturas) { //int i=0; i<facturas.size(); i++
                 System.out.println(text);
 
-                text = text + ("La factura del proveedor ") + factura.getProveedor().getNombre() + (" con el numero ") + factura.getNro() + (" con un monto total de ") + (factura.getTotal()) + ("$\n");
+                text = text + ("La factura del proveedor ")
+                        + factura.getProveedor().getNombre() + (" con el numero ")
+                        + factura.getNro() + (" con un monto total de ") + (factura.getMontoTotal()) + ("$\n");
 
             }
             this.textAreaResultado.setText(text);
@@ -243,7 +247,7 @@ public class ViewFacturasRecibidas extends JFrame {
                     factura.getProveedor().getNombre(),
                     factura.getNro(),
                     factura.getFecha(),
-                    factura.getTotal()
+                    factura.getMontoTotal()
             });
         }
         model.fireTableDataChanged();

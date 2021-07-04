@@ -35,6 +35,6 @@ public class ItemOrdenPago {
     }
 
     public double getTotal() {
-        return getComprobantesAsociados().stream().mapToDouble(Comprobante::getTotal).sum();
+        return getComprobantesAsociados().stream().mapToDouble(Comprobante::getMontoTotal).sum();
     }
 }

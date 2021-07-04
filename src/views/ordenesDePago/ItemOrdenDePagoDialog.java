@@ -196,7 +196,7 @@ public class ItemOrdenDePagoDialog extends JDialog implements ActionListener  {
     }
 
     private  Object[] crearObjTabla(Comprobante comp){
-        return new Object[]{DateParse.unparse(comp.getFecha()), comp.toString(), comp.getTotal()};
+        return new Object[]{DateParse.unparse(comp.getFecha()), comp.toString(), comp.getMontoTotal()};
     }
 
     private Object[] getHeaderTabla() {

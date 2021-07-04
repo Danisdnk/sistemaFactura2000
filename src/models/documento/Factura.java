@@ -11,12 +11,17 @@ public class Factura extends Comprobante {
     private List<Retencion> retencion;
     private List<ItemFactura> itemFactura;
 
-    public Factura(Proveedor prov, String nroFactura, float monto, LocalDate fecha) {
+
+
+    public Factura(Proveedor prov, String nroFactura, float montoNeto, float iva, LocalDate fecha) {
         this.proveedor = prov;
         this.nro = nroFactura;
-        this.total = monto;
+        this.montoNeto = montoNeto;
+        this.iva = iva;
         this.fecha = fecha;
         this.tipo = "FAC";
+        setMontoIva(iva, montoNeto);
+        setMontoTotal(montoNeto, montoIva);
     }
 
     public void devolverFacturaDeUnaFecha(Date fecha) {
@@ -37,5 +42,13 @@ public class Factura extends Comprobante {
 
     public void setProveedor(Proveedor proveedor) {
         this.proveedor = proveedor;
+    }
+
+    public float getMontoIva() {
+        return montoIva;
+    }
+
+    public double getIva() {
+        return iva;
     }
 }

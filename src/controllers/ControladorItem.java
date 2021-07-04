@@ -88,6 +88,16 @@ public class ControladorItem {
                 .toList();
     }
 
+    public List<DDlProveedorItemDTO> getOpcionesDDLItemsByProveedor(String cuit) {
+        return this.RepoProveedorItem.getTodos()
+                .stream()
+                .filter(p -> p.getProveedor().getCuit().equals(cuit))
+                .map(ProveedorItem::toDDL)
+                .toList();
+    }
+
+
+
     /**
      * metodo que devuelve una DropDownList de Rubros, convertida a DDLItemDTO
      * Usado en CompulsaPrecios
@@ -103,17 +113,32 @@ public class ControladorItem {
     }
 
     /**
-     * metodo que devuelve un ProveedorItem segun un Item (sirve para obtener el precio de un item de todos los proveedores)
+     * metodo que devuelve una lista de ProveedorItems segun un Item (sirve para obtener el precio de un item de todos los proveedores)
      * Usada en CompulsaPrecios
      * @param descripcion
      * @return List<DDlProveedorItemDTO>
      */
-    public List<DDlProveedorItemDTO> getProveedorItemByItem(String descripcion){
+    public List<DDlProveedorItemDTO> getProveedorItemsByItem(String descripcion){
         return this.RepoProveedorItem.getTodos()
                 .stream()
                 .filter(p -> p.getItem().getNombre().equals(descripcion))
                 .map(ProveedorItem::toDDL)
                 .toList();
+    }
+
+    /**
+     * metodo que devuelve un ProveedorItem segun un Proveedor (sirve para obtener el precio de un item de un proveedor)
+     * @param cuit
+     * @return DDlProveedorItemDTO
+     */
+    public DDlProveedorItemDTO getProveedorItemByProveedor(String cuit){
+        return this.RepoProveedorItem.getTodos()
+                .stream()
+                .filter(p -> p.getProveedor().getCuit().equals(cuit))
+                .map(ProveedorItem:: toDDL)
+                .findFirst()
+                .get();
+
     }
 
     public static ControladorItem getInstancia() {

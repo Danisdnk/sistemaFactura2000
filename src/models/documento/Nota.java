@@ -15,9 +15,29 @@ public class Nota extends Comprobante {
         this.nota = tipo;
         this.proveedor = p;
         this.nro = nro;
-        this.total = total;
+        this.montoTotal = total;
         this.tipo = "NOTA " + this.nota.name();
         this.fecha = fecha;
+    }
+    /**Este deberia ser el constructor por default pero falta implementar
+     * en la vista que se pueda ingresar las notas de credito/debito con estos datos
+     * */
+    public Nota(
+            TipoDeNota tipo,
+            Proveedor p,
+            String nro,
+            float montoNeto,
+            float iva,
+            LocalDate fecha) {
+        this.nota = tipo;
+        this.proveedor = p;
+        this.nro = nro;
+        this.montoNeto = montoNeto;
+        this.iva = iva;
+        this.tipo = "NOTA " + this.nota.name();
+        this.fecha = fecha;
+        setMontoIva(iva, montoNeto);
+        setMontoTotal(montoNeto, montoIva);
     }
 
     @Override
@@ -26,8 +46,8 @@ public class Nota extends Comprobante {
     }
 
     @Override
-    public float getTotal() {
+    public float getMontoTotal() {
         //debito suma, credito resta
-        return this.nota == TipoDeNota.DEBITO ? this.total : this.total*-1;
+        return this.nota == TipoDeNota.DEBITO ? this.montoTotal : this.montoTotal*-1;
     }
 }

@@ -16,6 +16,7 @@ import views.consultasGenerales.ViewConsultasGenerales;
 import views.login.loginView;
 import views.ordenesDePago.OrdenesDePagoFrame;
 import views.proveedores.provedorView;
+import views.utils.MiTableModelCompra;
 import views.utils.MiTableModelFactura;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -24,6 +25,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import views.utils.DateParse;
 import java.awt.event.ActionListener;
+
 import java.sql.Date;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -47,7 +49,7 @@ public class SolapaCompra extends JDialog {
     private Integer proveedorID;
     private ControladorProveedor controlador;
     private Proveedor itemSeleccionado;
-    private MiTableModelFactura miModeloCompra = new MiTableModelFactura();
+    private MiTableModelCompra miModeloCompra = new MiTableModelCompra();
     private Integer rubroID;
 
     //botones nav
@@ -59,6 +61,7 @@ public class SolapaCompra extends JDialog {
     private JButton DocumentosButton;
     private JButton hideButton;
     private JPanel principalSolapaCompra;
+    private JScrollPane scrollPane;
 
 
     public SolapaCompra(){
@@ -68,12 +71,17 @@ public class SolapaCompra extends JDialog {
         this.setSize(1000, 1000);
         this.setModal(true);
         this.setLocationRelativeTo(null);
-        tablaItemsFactura.setModel(miModeloCompra);
+
         this.controlador = ControladorProveedor.getInstancia();
         this.setDDLProveedores();
         this.setDDLProductos();
         LocalDate dateTime = LocalDate.now();
         this.textDate.setText(DateParse.unparse(dateTime));
+        tablaItemsFactura.setModel(miModeloCompra);
+
+
+
+
 
         miModeloCompra.add(1, "Bananas", 8, 20.0);
         miModeloCompra.add(2, "Bananas", 5, 27.5);
@@ -199,7 +207,7 @@ public class SolapaCompra extends JDialog {
         quitarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                miModeloCompra.removeRowAt(miModeloCompra.getRowCount()-1);
             }
         });
     }
