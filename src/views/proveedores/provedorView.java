@@ -66,7 +66,8 @@ public class provedorView extends JFrame {
         this.setSize(1000, 1000);
         this.setLocationRelativeTo(null);
         this.setDDLResponsableIva();
-
+        this.validate() ;// for JFrame up to Java7 is there only validate()
+        this.repaint();
         ordenesDePagoButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -111,6 +112,9 @@ public class provedorView extends JFrame {
         this.dropListaProveedores.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+
+                vistaProv.validate() ;// for JFrame up to Java7 is there only validate()
+                vistaProv.repaint();
                 var sel = (DDLItemDTO) dropListaProveedores.getSelectedItem();
 
                 if ( sel != null ) {  //si la seleccion es distinta de nulo hacemos varias cosas
@@ -154,7 +158,8 @@ public class provedorView extends JFrame {
         addProveedor.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                vistaProv.validate() ;// for JFrame up to Java7 is there only validate()
+                vistaProv.repaint();
                 //  SimpleDateFormat formatter = new SimpleDateFormat("EEE d MMM yyyy", Locale.getDefault());
                 var patata = ControladorProveedor.getInstancia().getOpcionesDDLProveedores();
                 var sel = (DDLItemDTO) dropListaProveedores.getSelectedItem();
@@ -198,13 +203,29 @@ public class provedorView extends JFrame {
         removeProveedor.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                vistaProv.validate() ;// for JFrame up to Java7 is there only validate()
+                vistaProv.repaint();
 
                 var sel = (DDLItemDTO) dropListaProveedores.getSelectedItem();
 
 
                 if ( sel != null ) {
                  var provedor =controlador.getProveedorByID(sel.id);
-                    controlador.eliminarProveedor(provedor);
+                    boolean eliminado=controlador.eliminarProveedor(provedor);
+                    if ( eliminado ) {
+                        JOptionPane.showMessageDialog(
+                                removeProveedor,
+                                "El proveedor fue eliminado con exito",
+                                "Proveedor Eliminado",
+                                JOptionPane.INFORMATION_MESSAGE);
+
+                    } else {
+                        JOptionPane.showMessageDialog(
+                                removeProveedor,
+                                "No se pudo eliminar el proveedor",
+                                "Proveedor Eliminado",
+                                JOptionPane.ERROR_MESSAGE);
+                    }
                 }
             }
         });
@@ -213,11 +234,14 @@ public class provedorView extends JFrame {
         modifyProveedor.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                vistaProv.validate() ;// for JFrame up to Java7 is there only validate()
+                vistaProv.repaint();
                 //  SimpleDateFormat formatter = new SimpleDateFormat("EEE d MMM yyyy", Locale.getDefault());
                 var patata = ControladorProveedor.getInstancia().getOpcionesDDLProveedores();
                 var sel = (DDLItemDTO) dropListaProveedores.getSelectedItem();
+
                 assert sel != null;
+
                 Proveedor provModel = new Proveedor(
                         txtNombreFantasia.getText(),
                         txtDireccion.getText(),
@@ -231,6 +255,7 @@ public class provedorView extends JFrame {
                         dropResponsableIva.getSelectedItem().toString(),
                         sel.id
                 );
+
                 var isProvedorExiste=controlador.existsProveedor(txtCuit.getText());
 
                 if ( isProvedorExiste ) {
@@ -255,14 +280,21 @@ public class provedorView extends JFrame {
 
     private void setDDLProveedores() {
         var model = ControladorProveedor.getInstancia().getOpcionesDDLProveedores();
+        vistaProv.validate() ;// for JFrame up to Java7 is there only validate()
+        vistaProv.repaint();
         this.dropListaProveedores.setModel(new DefaultComboBoxModel(model.toArray()));
+
     }
     private void setDDLRubros() {
+        vistaProv.validate() ;// for JFrame up to Java7 is there only validate()
+        vistaProv.repaint();
         var controladorItem= ControladorItem.getInstancia().getOpcionesDDLRubros();
         this.dropRubro.setModel(new DefaultComboBoxModel(controladorItem.toArray()));
     }
 
     private void setDDLResponsableIva() {
+        vistaProv.validate() ;// for JFrame up to Java7 is there only validate()
+        vistaProv.repaint();
         var controladorProv= ControladorProveedor.getInstancia().getOpcionesDDLResponsableIva();
         this.dropResponsableIva.setModel(new DefaultComboBoxModel(controladorProv.toArray()));
     }
