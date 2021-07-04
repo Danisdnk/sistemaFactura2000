@@ -3,6 +3,7 @@ package dal;
 import models.documento.Factura;
 import models.documento.Nota;
 import models.documento.OrdenPago;
+import models.impuesto.ResponsableIva;
 import models.mediopago.TipoPago;
 import models.proveedor.Item;
 import models.proveedor.Proveedor;
@@ -18,6 +19,7 @@ public class RepoFactory {
     private static Repository<Item> itemRepository;
     private static Repository<Rubro> rubroRepository;
     private static Repository<ProveedorItem> ProveedorItemRepository;
+    private static Repository<ResponsableIva> ResponsableIvaRepository;
 
 
     public static Repository<OrdenPago> getRepoOrdenesPago(){
@@ -48,5 +50,6 @@ public class RepoFactory {
     public static Repository<Rubro> getRepoRubros(){  return new Repository<>(Rubro.class); }
 
     public static Repository<ProveedorItem> getProveedorItem(){  return new Repository<>(ProveedorItem.class); }
+    public static Repository<ResponsableIva> getResponsableIva(){  return new Repository<>(ResponsableIva.class); }
 
 }
