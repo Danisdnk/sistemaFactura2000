@@ -204,6 +204,40 @@ public class ControladorComprobantes {
                 .collect(Collectors.toList());
     }
 
+    /**
+     * Funcion que calcula la deuda de un proveedor agarrando todas los Comprobantes de un proveedor
+     * por cuit (facturas/notas credito y debito)  y tambien agarra todas las ordenes de pago por cuit
+     * y lace las sumatorias de ambos grupos y las resta entre si
+     * @param cuit
+     * @return
+     */
+    public float calcularDeudaDeProveedorByCuit(String cuit) {
+        var ordenesDePago = ControladorOrdenesDePagos.getInstancia().getOPsByCuit(cuit);
+        var comprobantesPagos = ordenesDePago
+                .stream()
+                .flatMap(x -> x.getItems().stream())
+                .flatMap(x -> x.getComprobantesAsociados().stream())
+                .toList();
+
+        var comprobantes = getComprobantesByCuit(cuit);
+
+        float sum1 = 0;
+        float sum2 = 0;
+        for (Comprobante comprobante : comprobantes)
+            sum1 = sum1  + comprobante.getMontoTotal();
+
+        for (Comprobante cp : comprobantesPagos)
+            sum2 = sum2  + cp.getMontoTotal();
+
+        return  sum1 - sum2;
+
+    }
+
+
+
+
+
+
     public static ControladorComprobantes getInstancia() {
         if (instancia == null) {
             instancia = new ControladorComprobantes();
