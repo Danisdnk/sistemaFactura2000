@@ -5,10 +5,11 @@ import controllers.ControladorItem;
 import controllers.ControladorProveedor;
 import dal.RepoFactory;
 import models.documento.*;
+import models.impuesto.EnumResponsableIva;
+import models.impuesto.ResponsableIva;
 import models.mediopago.TipoPago;
 import models.proveedor.*;
 import java.time.LocalDate;
-import java.util.ArrayList;
 
 public class InicializadorDeDatos {
     public static void iniciar() {
@@ -20,7 +21,7 @@ public class InicializadorDeDatos {
         var repoItems = RepoFactory.getRepoItems();
         var repoRubros = RepoFactory.getRepoRubros();
         var repoProveedorItem = RepoFactory.getProveedorItem();
-
+        var repoResponsableIva=RepoFactory.getResponsableIva();
 
         //Tipos de pago
         if (repoTiposDePago.getTodos().size() == 0) {
@@ -33,6 +34,15 @@ public class InicializadorDeDatos {
             repoProveedores.insertar(new Proveedor("Coto", "20"));
             repoProveedores.insertar(new Proveedor("Philips", "21"));
         }
+
+        if (repoResponsableIva.getTodos().size() == 0) {
+            var philips = ControladorProveedor.getInstancia();
+
+            repoResponsableIva.insertar(new ResponsableIva(EnumResponsableIva.MONOTRIBUTO.toString()));
+            repoResponsableIva.insertar(new ResponsableIva(EnumResponsableIva.RESPONSABLE_INSCRIPTO.toString()));
+
+        }
+
 
         // ---- NO MODIFICAR LOS NROS DE IDENTIFICACION DE LOS COMPROBANTES ----
         //Facturas
