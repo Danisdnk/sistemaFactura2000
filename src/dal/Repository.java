@@ -76,14 +76,25 @@ public class Repository<T extends Identificable> {
         return indice;
     }
 
+    public int restarIndice(T obj) {
+        var indice = getIndice();
+        var path = getPath(String.valueOf(indice));
+
+        ((Identificable)obj).setID(indice);
+        var previous = indice - 1;
+        escribirArchivo(getPath(INDICE_FILE), new Indice(previous));
+        escribirArchivo(path, obj);
+
+        return indice;
+    }
     public boolean updatear(T obj) {
         var indice = ((Identificable)obj).getID();
         var path = getPath(String.valueOf(indice));
         return this.escribirArchivo(path, obj);
     }
 
-    public boolean borrar(int id) {
-        return borrarArchivo(id);
+    public boolean borrar(T obj) {
+        return borrarArchivo(obj);
     }
 
     public int getIndice() {
@@ -137,9 +148,12 @@ public class Repository<T extends Identificable> {
         return false;
     }
 
-    private boolean borrarArchivo(int indice) {
-        var path = getPath(String.valueOf(indice));
+    private boolean borrarArchivo(T obj) {
+        var path = getPath(String.valueOf(obj.getID()));
         var file = new File(path);
+
+        restarIndice(obj);//TODO modificar
+        System.out.println(path);
 
         var resultado = file.delete();
 
