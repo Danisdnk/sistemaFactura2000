@@ -74,7 +74,7 @@ public class ViewOrdenesPago extends JFrame{
                                     op.getID(),
                                     op.getProveedor().getNombre(),
                                     op.getFecha(),
-                                    op.getTotal(),
+                                    op.getMontoTotal(),
                                     op.getTotalRetenciones()
 
                             });
@@ -179,7 +179,7 @@ public class ViewOrdenesPago extends JFrame{
                         +(" con el numero ")
                         + op.get(i).getNro()
                         +(" tiene un monto total de ")
-                        +(op.get(i).getTotal())
+                        +(op.get(i).getMontoTotal())
                         +("$\n");
 
             }

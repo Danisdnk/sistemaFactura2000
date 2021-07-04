@@ -137,7 +137,7 @@ public class OrdenesDePagoFrame extends JFrame {
     }
 
     private  Object[] crearObjTabla(OrdenPago op){
-        return new Object[]{ op.getID(), op.getProveedor().toString(), op.getNro(), op.getTotal(), DateParse.unparse(op.getFecha())};
+        return new Object[]{ op.getID(), op.getProveedor().toString(), op.getNro(), op.getMontoTotal(), DateParse.unparse(op.getFecha())};
     }
 
     private Object[] getHeaderTabla() {

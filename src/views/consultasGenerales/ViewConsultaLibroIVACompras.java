@@ -128,23 +128,23 @@ public class ViewConsultaLibroIVACompras extends JFrame{
                     Comprobante.getProveedor().getCuit(),
                     Comprobante.getFecha(),
                     Comprobante.getTipo() +(" ")+ Comprobante.getNro(),
-                    Comprobante.getTotal() - Comprobante.getMontoaIva(),
+                    Comprobante.getMontoTotal() - Comprobante.getMontoIva(),
                     Comprobante.getIva(),
-                    Comprobante.getTotal()
+                    Comprobante.getMontoTotal()
 
             });
 
             if (Comprobante.getIva() != 0){
                 if(Comprobante.getIva() == 2.5)
-                    textiva25 =  textiva25 + Comprobante.getMontoaIva();
+                    textiva25 =  textiva25 + Comprobante.getMontoIva();
                     if(Comprobante.getIva() == 5)
-                        textiva5 =  textiva5 + Comprobante.getMontoaIva();
+                        textiva5 =  textiva5 + Comprobante.getMontoIva();
                         if(Comprobante.getIva() == 10.5)
-                            textiva105 =  textiva105 + Comprobante.getMontoaIva();
+                            textiva105 =  textiva105 + Comprobante.getMontoIva();
                             if(Comprobante.getIva() == 21)
-                                textiva21 =  textiva21 + Comprobante.getMontoaIva();
+                                textiva21 =  textiva21 + Comprobante.getMontoIva();
                                 if(Comprobante.getIva() == 27)
-                                    textiva27 = textiva27 + Comprobante.getMontoaIva();
+                                    textiva27 = textiva27 + Comprobante.getMontoIva();
             }
         }
         model.fireTableDataChanged();

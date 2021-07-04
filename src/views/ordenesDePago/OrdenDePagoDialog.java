@@ -126,8 +126,8 @@ public class OrdenDePagoDialog extends JDialog implements ActionListener{
                 var items = dialog.showDialog();
                 this.op.setItems(items);
 
-                this.txtTotalComprobantes.setText(String.valueOf(this.op.getTotal()));
-                this.txtTotalACancelar.setText(String.valueOf(this.op.getTotal()));
+                this.txtTotalComprobantes.setText(String.valueOf(this.op.getMontoTotal()));
+                this.txtTotalACancelar.setText(String.valueOf(this.op.getMontoTotal()));
             }
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -147,8 +147,8 @@ public class OrdenDePagoDialog extends JDialog implements ActionListener{
         this.ddlProveedores.setEditable(false);
         this.ddlProveedores.setEnabled(false);
         this.txtFechaPago.setText(DateParse.unparse(this.op.getFecha()));
-        this.txtTotalComprobantes.setText(String.valueOf(this.op.getTotal()));
-        this.txtTotalACancelar.setText(String.valueOf(this.op.getTotal()));
+        this.txtTotalComprobantes.setText(String.valueOf(this.op.getMontoTotal()));
+        this.txtTotalACancelar.setText(String.valueOf(this.op.getMontoTotal()));
     }
 
     // Guardar

@@ -196,6 +196,7 @@
                   <component id="270a1" class="javax.swing.JTable" binding="tablaLibroIva">
                     <constraints/>
                     <properties>
+                      <autoCreateRowSorter value="true"/>
                       <dropMode value="USE_SELECTION"/>
                     </properties>
                   </component>

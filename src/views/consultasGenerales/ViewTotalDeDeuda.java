@@ -136,7 +136,7 @@ public class ViewTotalDeDeuda extends JFrame{
 
     }
 
-    private Integer calculodeDeuda(List<ComprobanteDTO> comprobantes) {
+    private void calculodeDeuda(List<ComprobanteDTO> comprobantes) {
 
         Float pagado = 0F;
         Float debitado = 0F;
@@ -145,7 +145,7 @@ public class ViewTotalDeDeuda extends JFrame{
         for (int i=0; i<comprobantes.size(); i++){
 
             if (comprobantes.get(i).getTipo() == "FAC"){
-                pagado = pagado + comprobantes.get(i).getTotal();
+                pagado = pagado + comprobantes.get(i).getMontoTotal();
             }else{
                 if (comprobantes.get(i).getTipo() == "NOTA "){
 
@@ -154,6 +154,5 @@ public class ViewTotalDeDeuda extends JFrame{
 
 
         }
-        return null;
     }
 }

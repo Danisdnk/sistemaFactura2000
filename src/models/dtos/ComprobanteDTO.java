@@ -5,33 +5,37 @@ import models.proveedor.Proveedor;
 import java.time.LocalDate;
 
 public class ComprobanteDTO {
+
     private int ID;
     private Proveedor proveedor;
     private LocalDate fecha;
     private String nro;
-    private float total;
     private String tipo;
-    private  float montoIva;
-    private  double iva;
 
-    public ComprobanteDTO(int id, String tipo, Proveedor prov, LocalDate fecha, String nro, float total) {
+    private  float montoNeto;
+    private  double iva;
+    private  float montoIva;
+    private float montoTotal;
+
+    public ComprobanteDTO(int id, String tipo, Proveedor prov, LocalDate fecha, String nro, float montoTotal) {
         this.ID = id;
         this.tipo = tipo;
         this.nro = nro;
         this.fecha = fecha;
         this.proveedor = prov;
-        this.total = total;
+        this.montoTotal = montoTotal;
     }
 
-    public ComprobanteDTO(int id, String tipo, Proveedor prov, LocalDate fecha, String nro, float total, float montoaIva, double iva) {
+    public ComprobanteDTO(int id, String tipo, Proveedor prov, LocalDate fecha, String nro, float montoaNeto, double iva, float montoIva, float montoTotal) {
         this.ID = id;
         this.tipo = tipo;
         this.nro = nro;
         this.fecha = fecha;
         this.proveedor = prov;
-        this.total = total;
-        this.montoIva = montoaIva;
+        this.montoNeto = montoNeto;
         this.iva = iva;
+        this.montoIva = montoIva;
+        this.montoTotal = montoTotal;
     }
 
 
@@ -55,12 +59,16 @@ public class ComprobanteDTO {
         return nro;
     }
 
-    public float getTotal() {
-        return total;
+    public float getMontoNeto() {
+        return montoNeto;
     }
 
-    public float getMontoaIva() {
+    public float getMontoIva() {
         return montoIva;
+    }
+
+    public float getMontoTotal() {
+        return montoTotal;
     }
 
     public double getIva() {

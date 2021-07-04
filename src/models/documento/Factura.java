@@ -16,7 +16,7 @@ public class Factura extends Comprobante {
     public Factura(Proveedor prov, String nroFactura, float montoTotal, float montoIva, double iva, LocalDate fecha) {
         this.proveedor = prov;
         this.nro = nroFactura;
-        this.total = montoTotal;
+        this.montoTotal = montoTotal;
         this.montoIva = montoIva;
         this.iva = iva;
         this.fecha = fecha;

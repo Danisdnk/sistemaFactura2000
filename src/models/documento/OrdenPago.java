@@ -61,6 +61,6 @@ public class OrdenPago extends Comprobante {
     }
 
     private void calcularTotal() {
-        this.total = (float) this.items.stream().mapToDouble(ItemOrdenPago::getTotal).sum();
+        this.montoTotal = (float) this.items.stream().mapToDouble(ItemOrdenPago::getTotal).sum();
     }
 }

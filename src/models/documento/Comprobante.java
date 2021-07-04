@@ -18,12 +18,12 @@ public class Comprobante implements IComprobante, DDLeable, Identificable {
 
     protected String nro;
 
-    protected float total;
-
     protected String tipo;
 
-    protected float montoIva;
+    protected float montoNeto;
     protected double iva;
+    protected float montoIva;
+    protected float montoTotal;
 
     public ComprobanteDTO toCompDTO() {
 
@@ -33,9 +33,12 @@ public class Comprobante implements IComprobante, DDLeable, Identificable {
                 proveedor,
                 fecha,
                 nro,
-                total,
+                montoNeto,
+                iva,
                 montoIva,
-                iva
+                montoTotal
+
+
         );
     }
 
@@ -90,12 +93,36 @@ public class Comprobante implements IComprobante, DDLeable, Identificable {
         this.nro = nro;
     }
 
-    public float getTotal() {
-        return total;
+    public float getMontoNeto() {
+        return montoNeto;
     }
 
-    public void setTotal(float total) {
-        this.total = total;
+    public void setMontoNeto(float montoNeto) {
+        this.montoNeto = montoNeto;
+    }
+
+    public double getIva() {
+        return iva;
+    }
+
+    public void setIva(double iva) {
+        this.iva = iva;
+    }
+
+    public float getMontoIva() {
+        return montoIva;
+    }
+
+    public void setMontoIva(float montoIva) {
+        this.montoIva = montoIva;
+    }
+
+    public float getMontoTotal() {
+        return montoTotal;
+    }
+
+    public void setMontoTotal(float montoTotal) {
+        this.montoTotal = montoTotal;
     }
 
     @Override

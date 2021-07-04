@@ -15,7 +15,7 @@ public class Nota extends Comprobante {
         this.nota = tipo;
         this.proveedor = p;
         this.nro = nro;
-        this.total = total;
+        this.montoTotal = total;
         this.tipo = "NOTA " + this.nota.name();
         this.fecha = fecha;
     }
@@ -26,8 +26,8 @@ public class Nota extends Comprobante {
     }
 
     @Override
-    public float getTotal() {
+    public float getMontoTotal() {
         //debito suma, credito resta
-        return this.nota == TipoDeNota.DEBITO ? this.total : this.total*-1;
+        return this.nota == TipoDeNota.DEBITO ? this.montoTotal : this.montoTotal*-1;
     }
 }

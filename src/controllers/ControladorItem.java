@@ -88,10 +88,10 @@ public class ControladorItem {
                 .toList();
     }
 
-    public List<DDlProveedorItemDTO> getOpcionesDDLItemsByProveedor(String descripcion) {
+    public List<DDlProveedorItemDTO> getOpcionesDDLItemsByProveedor(String cuit) {
         return this.RepoProveedorItem.getTodos()
                 .stream()
-                .filter(p -> p.getProveedor().getCuit().equals(descripcion))
+                .filter(p -> p.getProveedor().getCuit().equals(cuit))
                 .map(ProveedorItem::toDDL)
                 .toList();
     }
