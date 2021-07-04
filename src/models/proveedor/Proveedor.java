@@ -1,13 +1,8 @@
 package models.proveedor;
 
 import dal.Identificable;
-import models.documento.Factura;
 import models.dtos.*;
-import models.impuesto.ResponsableIva;
-import models.impuesto.CertificadoExento;
-
-import java.time.LocalDate;
-import java.util.*;
+import models.impuesto.EnumResponsableIva;
 
 public class Proveedor implements DDLeable, Identificable {
     // TODO agregar a diagrama clases
@@ -27,7 +22,7 @@ public class Proveedor implements DDLeable, Identificable {
 
     private String inicioActividades;
 
-    private String rubros; //List<Rubro>
+    private String rubros;
 
     private String responsableIva;
 
@@ -37,7 +32,7 @@ public class Proveedor implements DDLeable, Identificable {
 
     //private List<Factura> Factura;
 
-    private Float credito;
+    //private Float credito;
 
     public Proveedor(String nombre) {
         this.nombre = nombre;
@@ -55,22 +50,23 @@ public class Proveedor implements DDLeable, Identificable {
             String numeroIIBB,
             String inicioActividades,
             String rubros,
-            Float credito,
+          //  Float credito,
             String razonSocial,
-            String cuit)
+            String cuit,
+            String responsableIva,
+            int idProv)
     {
         setNombre(nombre);
         setDireccion(direccion);
         setEmail(email);
-        setCredito(credito);
-        setID(ID);
+        //setCredito(credito);
+        setID(idProv);
         setInicioActividades(inicioActividades);
-        setResponsableIva("RE");
         setNumeroIIBB(numeroIIBB);
         setRubros(rubros);
         setRazonSocial(razonSocial);
         setCuit(cuit);
-
+        setResponsableIva(responsableIva);
     }
 
     // public ControladorSistema ; //metodo para devolver algo al controlador???
@@ -156,13 +152,13 @@ public class Proveedor implements DDLeable, Identificable {
         this.responsableIva = responsableIva;
     }
 
-    public Float getCredito() {
-        return credito;
-    }
+   // public Float getCredito() {
+    //    return credito;
+    //}
 
-    public void setCredito(Float credito) {
-        this.credito = credito;
-    }
+ //   public void setCredito(Float credito) {
+    //    this.credito = credito;
+ //   }
 
     public void calcularDeudaDelProveedor(String cuit) {
         // TODO implement here
