@@ -10,7 +10,9 @@ public class Indice {
     public Indice(int indice) {
         this.indice = indice;
     }
-
+    public int restarIndice() { //TODO analizar
+        return this.indice-1;
+    }
     public int getIndice() {
         return indice;
     }

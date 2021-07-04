@@ -2,20 +2,32 @@ package controllers;
 import dal.RepoFactory;
 import dal.Repository;
 import models.dtos.DDLItemDTO;
+import models.impuesto.EnumResponsableIva;
+import models.impuesto.ResponsableIva;
 import models.proveedor.Proveedor;
 import java.util.List;
 
 public class ControladorProveedor {
     private static ControladorProveedor instancia;
-
     private Repository<Proveedor> RepoProveedores;
-
+    private  Repository<ResponsableIva> RepoResponsableIva;
     public ControladorProveedor() {
         this.RepoProveedores =  RepoFactory.getRepoProveedores();
     }
 
+    public void verificarIndice(Proveedor p){
+        this.RepoProveedores.restarIndice(p);
+    }
+
     public void agregarProveedor(Proveedor p){
         this.RepoProveedores.insertar(p);
+    }
+
+    public void eliminarProveedor(Proveedor p){
+        this.RepoProveedores.borrar(p);
+    }
+    public void actualizarProveedor(Proveedor p){
+        this.RepoProveedores.updatear(p);
     }
 
     public List<Proveedor> getProveedores() {
@@ -41,6 +53,14 @@ public class ControladorProveedor {
         return this.RepoProveedores.getTodos()
                 .stream()
                 .map(Proveedor::toDDL)
+                .toList();
+    }
+
+    public List<DDLItemDTO> getOpcionesDDLResponsableIva() {
+        this.RepoResponsableIva =  RepoFactory.getResponsableIva();
+        return this.RepoResponsableIva.getTodos()
+                .stream()
+                .map(ResponsableIva::toDDL)
                 .toList();
     }
 
