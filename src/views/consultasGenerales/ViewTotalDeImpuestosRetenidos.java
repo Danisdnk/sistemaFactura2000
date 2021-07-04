@@ -22,6 +22,7 @@ public class ViewTotalDeImpuestosRetenidos extends JFrame{
     private JButton DocumentosButton;
     private JButton ordenesDePagoButton;
     private JButton usuariosButton;
+    private JTextField textCuit;
 
     public ViewTotalDeImpuestosRetenidos() {
 

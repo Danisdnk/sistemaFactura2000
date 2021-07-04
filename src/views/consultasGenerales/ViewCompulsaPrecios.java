@@ -138,7 +138,6 @@ public class ViewCompulsaPrecios extends JFrame{
             public void actionPerformed(ActionEvent e) {
                 var ViewConsultasGenerales = new ViewConsultasGenerales();
                 ViewConsultasGenerales.setVisible(true);
-
                 dispose();
             }
         });
@@ -148,7 +147,7 @@ public class ViewCompulsaPrecios extends JFrame{
             public void actionPerformed(ActionEvent e) {
                 OrdenesDePagoFrame op = new OrdenesDePagoFrame();
                 op.setVisible(true);
-                //dispose();//esto cierra la ventana anterior
+                //dispose();
             }
         });
 
@@ -157,7 +156,7 @@ public class ViewCompulsaPrecios extends JFrame{
             public void actionPerformed(ActionEvent e) {
                 ViewConsultasGenerales cons = new ViewConsultasGenerales();
                 cons.setVisible(true);
-                dispose();//esto cierra la ventana anterior
+                dispose();
             }
         });
 
@@ -166,7 +165,7 @@ public class ViewCompulsaPrecios extends JFrame{
             public void actionPerformed(ActionEvent e) {
                 DocumentosView docu = new DocumentosView();
                 docu.setVisible(true);
-
+                dispose();
             }
         });
 

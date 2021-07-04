@@ -1,6 +1,7 @@
 package views.consultasGenerales;
 
 import controllers.ControladorComprobantes;
+import controllers.ControladorProveedor;
 import models.dtos.ComprobanteDTO;
 import views.documentosRecibidos.DocumentosView;
 import views.login.loginView;
@@ -31,6 +32,7 @@ public class ViewTotalDeDeuda extends JFrame{
     private JButton usuariosButton;
     private JButton consultarDeudaButton;
     private JButton cancelarButton;
+    private JTextField labelMonto;
 
     public ViewTotalDeDeuda() {
 
@@ -41,6 +43,7 @@ public class ViewTotalDeDeuda extends JFrame{
         this.setVisible(true);
         this.setLocationRelativeTo(null);
 
+
         consultarDeudaButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -50,8 +53,7 @@ public class ViewTotalDeDeuda extends JFrame{
 
                 if (!textCUIT.getText().isEmpty()){
                     cuit = textCUIT.getText();
-                    var comprobantes = ControladorComprobantes.getInstancia().getComprobantesByCuitDTO(cuit);
-                    setJtextArea(comprobantes);
+                    setJtextArea(cuit);
                 }else{
                     JOptionPane.showMessageDialog(
                             consultarButton,
@@ -124,35 +126,15 @@ public class ViewTotalDeDeuda extends JFrame{
 
     }
 
-    private void setJtextArea(List<ComprobanteDTO> comprobantes) {
+    private void setJtextArea(String cuit) {
 
-        if (comprobantes.isEmpty()){
-            this.textMonto.setText(" El proveedor correspondiente al cuit ingresado no posee deuda alguna o no existe ");
+        if (!ControladorProveedor.getInstancia().existsProveedor(cuit)){
+
+            this.labelMonto.setText(" El proveedor correspondiente al cuit ingresado no existe ");
         }else{
-            String text = "" ;
-            calculodeDeuda(comprobantes);
-        }
-
-
-    }
-
-    private void calculodeDeuda(List<ComprobanteDTO> comprobantes) {
-
-        Float pagado = 0F;
-        Float debitado = 0F;
-        Float acreditado = 0F;
-
-        for (int i=0; i<comprobantes.size(); i++){
-
-            if (comprobantes.get(i).getTipo() == "FAC"){
-                pagado = pagado + comprobantes.get(i).getMontoTotal();
-            }else{
-                if (comprobantes.get(i).getTipo() == "NOTA "){
-
-                }
-            }
-
-
+            this.labelMonto.setText(String.valueOf(ControladorComprobantes.getInstancia().calcularDeudaDeProveedorByCuit(cuit)));
         }
     }
+
+
 }
