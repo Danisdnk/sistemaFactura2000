@@ -6,10 +6,12 @@ import javax.swing.table.DefaultTableModel;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MiTableModelCompra extends DefaultTableModel {
+public class MiTableModelCompra extends AbstractTableModel {
+    private List<Item> lista = new ArrayList<Item>();
     protected String[] columnNames = new String[] {"Id","Articulo ", "Cantidad","Precio"};
     protected Class[] columnClasses = new Class[] {Integer.class,String.class, Float.class, Float.class };
-    private List<Item> lista = new ArrayList<Item>();
+
+
 
     public String getColumName(int col) { return columnNames[col];}
     public Class getColumnClass(int col) {return columnClasses[col];}
@@ -39,5 +41,15 @@ public class MiTableModelCompra extends DefaultTableModel {
     public int add(Integer id,String nombre, Integer cantidad, Double precio){
         lista.add(new Item(id,nombre,cantidad,precio));
         return lista.size();
+
     }
+
+    public void removeRowAt(int row) {
+        lista.remove(row);
+        //fireTableDataChanged();
+        fireTableRowsDeleted(row - 1, lista.size() - 1);
+    }
+
+
+
 }
