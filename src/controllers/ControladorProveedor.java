@@ -23,8 +23,8 @@ public class ControladorProveedor {
         this.RepoProveedores.insertar(p);
     }
 
-    public void eliminarProveedor(Proveedor p){
-        this.RepoProveedores.borrar(p);
+    public boolean eliminarProveedor(Proveedor p){
+     return this.RepoProveedores.borrar(p);
     }
     public void actualizarProveedor(Proveedor p){
         this.RepoProveedores.updatear(p);
