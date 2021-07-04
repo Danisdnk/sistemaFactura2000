@@ -2,6 +2,10 @@ package dal;
 
 import java.io.*;
 import java.lang.reflect.Type;
+import java.nio.file.DirectoryNotEmptyException;
+import java.nio.file.Files;
+import java.nio.file.NoSuchFileException;
+import java.nio.file.Path;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -36,15 +40,17 @@ public class Repository<T extends Identificable> {
     }
 
     public List<T> getTodos() {
-        if (this.updateCache | this.cache == null) {
+        if ( this.updateCache | this.cache == null ) {
             var indice = getIndice();
 
             var list = new ArrayList<T>();
 
             for (int i = 1; i < indice; i++) {
-                var obj = this.leerArchivo(this.tipo, getPath(String.valueOf(i)));
 
-                list.add(obj);
+                var obj = this.leerArchivo(this.tipo, getPath(String.valueOf(i)));
+                if ( obj != null ) {
+                    list.add(obj);
+                }
             }
 
             this.cache = list;
@@ -76,13 +82,11 @@ public class Repository<T extends Identificable> {
         return indice;
     }
 
-    public int restarIndice(T obj) {
-        var indice = getIndice();
+    public int restarIndice(T obj) { //TODO revisar si esta demas
+        var indice = getIndice() - 1;
         var path = getPath(String.valueOf(indice));
-
-        ((Identificable)obj).setID(indice);
-        var previous = indice - 1;
-        escribirArchivo(getPath(INDICE_FILE), new Indice(previous));
+        ( (Identificable) obj ).setID(indice);
+        escribirArchivo(getPath(INDICE_FILE), new Indice(indice));
         escribirArchivo(path, obj);
 
         return indice;
@@ -94,7 +98,7 @@ public class Repository<T extends Identificable> {
     }
 
     public boolean borrar(T obj) {
-        return borrarArchivo(obj);
+        return borrarConFileIo(obj);
     }
 
     public int getIndice() {
@@ -108,6 +112,7 @@ public class Repository<T extends Identificable> {
         if (!directory.exists()){
             directory.mkdirs();
         }
+
     }
 
     private void crearIndice(){
@@ -118,15 +123,20 @@ public class Repository<T extends Identificable> {
     }
 
     private <R> R leerArchivo(Class<R> type, String path) {
-        try {
-            var fr = new FileReader(path);
-            var reader = new JsonReader(new FileReader(path));
-            R result = this.serializer.fromJson(reader, type);
+        var Existe = Files.exists(( Path.of(path) )); //verificamos que existe el path
 
-            fr.close();
-            return result;
-        } catch (Exception e) {
-            e.printStackTrace();
+        if ( Existe ) {
+            try {
+                var fr = new FileReader(path);
+                var reader = new JsonReader(new FileReader(path));
+
+                R result = this.serializer.fromJson(reader, type);
+                fr.close();
+                reader.close();
+                return result;
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
 
         return null;
@@ -139,8 +149,12 @@ public class Repository<T extends Identificable> {
             var bw = new BufferedWriter(fileWriter);
             bw.write(json);
             bw.close();
+
+            fileWriter.close();
             setUpdateCache();
+
             return true;
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -148,20 +162,23 @@ public class Repository<T extends Identificable> {
         return false;
     }
 
-    private boolean borrarArchivo(T obj) {
+
+    private boolean borrarConFileIo(T obj) {
         var path = getPath(String.valueOf(obj.getID()));
-        var file = new File(path);
 
-        restarIndice(obj);//TODO modificar
-        System.out.println(path);
-
-        var resultado = file.delete();
-
-        if(resultado) {
-            setUpdateCache();
+        try {
+            Files.delete(Path.of(path));
+            return true;
         }
+        catch (NoSuchFileException x) {
+            System.err.format("%s: no such" + " file or directory%n", path);
+        } catch (DirectoryNotEmptyException x) {
+            System.err.format("%s not empty%n", path);
+        } catch (IOException x) {
+            System.err.println(x);
+        }
+        return false;
 
-        return resultado;
     }
 
     private <R> String toJSON(R obj) {
