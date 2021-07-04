@@ -8,9 +8,11 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 import controllers.ControladorComprobantes;
+import controllers.ControladorItem;
 import controllers.ControladorProveedor;
 import models.documento.Comprobante;
 import models.dtos.DDLItemDTO;
+import models.proveedor.Rubro;
 import views.consultasGenerales.ViewConsultasGenerales;
 import views.documentosRecibidos.DocumentosView;
 import views.login.loginView;
@@ -32,19 +34,22 @@ public class provedorView extends JFrame {
     private JPanel panelProveedores;
     private JButton addProveedor;
     private JLabel labelProveedor;
-    private JComboBox<DDLItemDTO> dropListaProveedores;
+    private JComboBox<List> dropListaProveedores;
     private JTextField txtNombreFantasia;
     private JTextField txtRazonSocial;
     private JTextField txtCuit;
     private JTextField txtDireccion;
-    private JTextField txtResponsabilidadIva;
+    private JComboBox<DDLItemDTO> dropResponsableIva;
     private JTextField txtTelefono;
     private JTextField txtEmail;
     private JTextField txtIngresosBrutos;
     private JTextField txtInicioActividades;
-    private JTextField txtRubro;
-    private JButton RemoveProveedor;
+    private JComboBox <DDLItemDTO>dropRubro;
+    private JButton removeProveedor;
     private JSpinner DateActividades;
+    private JButton modifyProveedor;
+    private JComboBox ddlCertificadoRetencion;
+    private JButton addRubroProveedor;
     private JButton borrarButton;
     private JButton modificarButton;
     private ControladorProveedor controlador;
@@ -55,10 +60,13 @@ public class provedorView extends JFrame {
     public provedorView() {
         this.controlador = ControladorProveedor.getInstancia();
         this.setDDLProveedores();
-        this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+        this.setDDLRubros();
+        this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         this.setContentPane(vistaProv);
         this.setSize(1000, 1000);
         this.setLocationRelativeTo(null);
+        this.setDDLResponsableIva();
+
         ordenesDePagoButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -107,95 +115,41 @@ public class provedorView extends JFrame {
 
                 if ( sel != null ) {  //si la seleccion es distinta de nulo hacemos varias cosas
                     proveedorID = sel.id;
-
                     itemSeleccionado = controlador.getProveedorByID(sel.id); //hacemos un get del objeto seleccionda
                     txtNombreFantasia.setText(  //hacemos un setText para asignar valor al dropdown
                             !itemSeleccionado.getNombre() //hacemos esta condicion "ternaria"
-                                    .isEmpty() ? //con isEmpty verificamos que no sea vacio desde ( hasta el "?" es
-                                    // la condicion
+                                    .isEmpty() ?
                                     itemSeleccionado.getNombre() //si se cumple cargamos el item
                                     : ""); //si no se cumple porque el dato no se completo cargamos el dato como
                     // string vacio.asi almenos no pincha. ternario es (condicion? caso true : caso false )
-                    txtDireccion.setText(
-                            !itemSeleccionado.getDireccion()
-                                    .isEmpty() ?
-                                    itemSeleccionado.getDireccion()
-                                    : "");
-
-                    txtEmail.setText(
-                            !itemSeleccionado.getEmail()
-                                    .isEmpty() ?
-                                    itemSeleccionado.getEmail()
-                                    : "");
-
-                    txtIngresosBrutos.setText(
-                            !itemSeleccionado.getNumeroIIBB()
-                                    .isEmpty() ?
-                                    itemSeleccionado.getNumeroIIBB()
-                                    : "");
-                    txtRubro.setText(
-                            !itemSeleccionado.getRubros()
-                                    .isEmpty() ?
-                                    itemSeleccionado.getRubros()
-                                    : "");
-                    txtRazonSocial.setText(
-                            !itemSeleccionado.getRazonSocial()
-                                    .isEmpty() ?
-                                    itemSeleccionado.getRazonSocial()
-                                    : "");
-                    txtCuit.setText(
-                            !itemSeleccionado.getCuit()
-                                    .isEmpty() ?
-                                    itemSeleccionado.getCuit()
-                                    : "");
-                }
-
-                assert sel != null;
-                if ( ( ( sel.descripcion ).equals("Nuevo Proveedor") ) ) {
-
-                    txtNombreFantasia.setVisible(true);
-                    txtDireccion.setVisible(true);
-                    txtEmail.setVisible(true);
-                    txtIngresosBrutos.setVisible(true);
-                    DateActividades.setVisible(true);
-                    txtRubro.setVisible(true);
-                    txtRazonSocial.setVisible(true);
-                    txtCuit.setVisible(true);
-
-                } else {
+                    txtDireccion.setText(!itemSeleccionado.getDireccion().isEmpty() ? itemSeleccionado.getDireccion() : "");
+                    txtEmail.setText(!itemSeleccionado.getEmail().isEmpty() ? itemSeleccionado.getEmail() : "");
+                    txtIngresosBrutos.setText(!itemSeleccionado.getNumeroIIBB().isEmpty() ? itemSeleccionado.getNumeroIIBB() : "");
+                   // txtRubro.setText(!itemSeleccionado.getRubros().isEmpty() ? itemSeleccionado.getRubros() : "");
+                    txtRazonSocial.setText(!itemSeleccionado.getRazonSocial().isEmpty() ? itemSeleccionado.getRazonSocial() : "");
+                    txtCuit.setText(!itemSeleccionado.getCuit().isEmpty() ? itemSeleccionado.getCuit() : "");
+                    dropResponsableIva.setSelectedItem(itemSeleccionado.getResponsableIva());
+         } else {
 
                     proveedorID = null;
-                    // txtNombreFantasia.setText(sel.descripcion);
-                    // txtDireccion.setVisible(false);
-                    // txtEmail.setVisible(false);
-                    //  txtIngresosBrutos.setVisible(false);
-                    //   DateActividades.setVisible(false);
-                    //  txtRubro.setVisible(false);
-                    //     txtRazonSocial.setVisible(false);
-                    //       txtCuit.setVisible(false);
+
                 }
             }
         });
+        List<Rubro> rubrosAgregados=null; //TODO esto hay que modificarlo para que al hacer "+" agregue un rubro a la
+        // lista del futuro nuevo proveedor
 
-       /* addProveedor.addActionListener(new ActionListener() {
+        addRubroProveedor.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                try {
-                    provedorView dialog = new provedorView();
-                    JOptionPane.showMessageDialog(
-                            addProveedor,
-                            "proveedor",
-                            "Nuevo proveedor",
-                            JOptionPane.INFORMATION_MESSAGE);
-                }
 
-                *//*addRow(dialog.showDialog());*//* catch (Exception ex) {
+               var sel = (DDLItemDTO)dropRubro.getSelectedItem();
 
-                    ex.printStackTrace();
+                if ( sel != null ) {
+                   rubrosAgregados.add(new Rubro(sel.descripcion));
                 }
             }
         });
-*/
 
         addProveedor.addActionListener(new ActionListener() {
             @Override
@@ -203,6 +157,9 @@ public class provedorView extends JFrame {
 
                 //  SimpleDateFormat formatter = new SimpleDateFormat("EEE d MMM yyyy", Locale.getDefault());
                 var patata = ControladorProveedor.getInstancia().getOpcionesDDLProveedores();
+                var sel = (DDLItemDTO) dropListaProveedores.getSelectedItem();
+                assert sel != null;
+                itemSeleccionado = controlador.getProveedorByID(sel.id);
 
                 Proveedor provModel = new Proveedor(
                         txtNombreFantasia.getText(),
@@ -210,22 +167,18 @@ public class provedorView extends JFrame {
                         txtEmail.getText(),
                         txtIngresosBrutos.getText(),
                         DateActividades.getValue().toString(),
-                        txtRubro.getText(),
-                        (float) 2000,
+                        dropRubro.getSelectedItem().toString(),
+                        //(float) 2000,
                         txtRazonSocial.getText(),
-                        txtCuit.getText()
+                        txtCuit.getText(),
+                        dropResponsableIva.getSelectedItem().toString(),
+                        sel.id
                 );
+                var isProvedorExiste=controlador.existsProveedor(txtCuit.getText());
 
-                var p = patata
-                        .stream()
-                        .anyMatch(model ->
-                                model.descripcion
-                                        .equals(provModel.getNombre())
-                        );
-                var a = p;
-
-                if ( !p ) {
+                if ( !isProvedorExiste ) {
                     controlador.agregarProveedor(provModel);
+
                     JOptionPane.showMessageDialog(
                             addProveedor,
                             "proveedor",
@@ -242,20 +195,84 @@ public class provedorView extends JFrame {
             };
         });
 
+        removeProveedor.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                var sel = (DDLItemDTO) dropListaProveedores.getSelectedItem();
+
+
+                if ( sel != null ) {
+                 var provedor =controlador.getProveedorByID(sel.id);
+                    controlador.eliminarProveedor(provedor);
+                }
+            }
+        });
+
+
+        modifyProveedor.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                //  SimpleDateFormat formatter = new SimpleDateFormat("EEE d MMM yyyy", Locale.getDefault());
+                var patata = ControladorProveedor.getInstancia().getOpcionesDDLProveedores();
+                var sel = (DDLItemDTO) dropListaProveedores.getSelectedItem();
+                assert sel != null;
+                Proveedor provModel = new Proveedor(
+                        txtNombreFantasia.getText(),
+                        txtDireccion.getText(),
+                        txtEmail.getText(),
+                        txtIngresosBrutos.getText(),
+                        DateActividades.getValue().toString(),
+                        dropRubro.getSelectedItem().toString(),
+                        //(float) 2000,
+                        txtRazonSocial.getText(),
+                        txtCuit.getText(),
+                        dropResponsableIva.getSelectedItem().toString(),
+                        sel.id
+                );
+                var isProvedorExiste=controlador.existsProveedor(txtCuit.getText());
+
+                if ( isProvedorExiste ) {
+                    controlador.actualizarProveedor(provModel);
+
+                    JOptionPane.showMessageDialog(
+                            modifyProveedor,
+                            "proveedor",
+                            "modificar proveedor",
+                            JOptionPane.INFORMATION_MESSAGE);
+
+                } else {
+                    JOptionPane.showMessageDialog(
+                            modifyProveedor,
+                            "No se pudo modificar el proveedor",
+                            "Error modificar proveedor",
+                            JOptionPane.INFORMATION_MESSAGE);
+                }
+            };
+        });
     }
 
     private void setDDLProveedores() {
         var model = ControladorProveedor.getInstancia().getOpcionesDDLProveedores();
         this.dropListaProveedores.setModel(new DefaultComboBoxModel(model.toArray()));
     }
+    private void setDDLRubros() {
+        var controladorItem= ControladorItem.getInstancia().getOpcionesDDLRubros();
+        this.dropRubro.setModel(new DefaultComboBoxModel(controladorItem.toArray()));
+    }
 
+    private void setDDLResponsableIva() {
+        var controladorProv= ControladorProveedor.getInstancia().getOpcionesDDLResponsableIva();
+        this.dropResponsableIva.setModel(new DefaultComboBoxModel(controladorProv.toArray()));
+    }
 
     private void createUIComponents() { //componente custom para la fecha //TODO en facturas?
         Date date = new Date();
         SpinnerDateModel sm =
                 new SpinnerDateModel(date, null, null, Calendar.DAY_OF_MONTH);
         DateActividades = new javax.swing.JSpinner(sm);
-        JSpinner.DateEditor de = new JSpinner.DateEditor(DateActividades, "d MMM yyyy");
+        JSpinner.DateEditor de = new JSpinner.DateEditor(DateActividades, "dd MM yyyy");
         DateActividades.setEditor(de);
 
     }
