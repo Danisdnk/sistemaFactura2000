@@ -233,6 +233,31 @@ public class ControladorComprobantes {
 
     }
 
+    /**
+     * Metodo para traer notas de credito por cuit
+     * @param cuit
+     * @return List<Nota>
+     */
+    public List<Nota> getNCreditoByCuit(String cuit){
+        return this.repoNotas.getTodos()
+                .stream()
+                .filter(n -> n.tipo().equals("NOTA CREDITO") && n.getProveedor().getCuit().equals(cuit))
+                .toList();
+    }
+
+    /**
+     * Metodo para traer notas de credito por cuit
+     * @param cuit
+     * @return List<Nota>
+     */
+    public List<Nota> getNDebitoByCuit(String cuit){
+        return this.repoNotas.getTodos()
+                .stream()
+                .filter(n -> n.tipo().equals("NOTA DEBITO") && n.getProveedor().getCuit().equals(cuit))
+                .toList();
+    }
+
+
 
 
 
