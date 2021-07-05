@@ -1,6 +1,7 @@
 package views.documentosRecibidos;
 
 import controllers.ControladorProveedor;
+import models.dtos.DDlProveedorItemDTO;
 import views.consultasGenerales.ViewConsultasGenerales;
 import views.login.loginView;
 import views.ordenesDePago.OrdenesDePagoFrame;
@@ -74,7 +75,7 @@ public class SolapaCompra extends JDialog {
 
         this.controlador = ControladorProveedor.getInstancia();
         this.setDDLProveedores();
-        this.setDDLProductos();
+        //this.setDDLProductos();    //iniciarlo despues de seleccionar un proveedor
         LocalDate dateTime = LocalDate.now();
         this.textDate.setText(DateParse.unparse(dateTime));
         tablaItemsFactura.setModel(miModeloCompra);
@@ -102,6 +103,7 @@ public class SolapaCompra extends JDialog {
                                     .isEmpty() ?
                                     itemSeleccionado.getCuit()
                                     : "");
+                    setDDLProductos(itemSeleccionado.getCuit());   //iniciar ddlProductos luego de selecionar un proveedor
                 }
 
                 assert sel != null;
@@ -137,7 +139,7 @@ public class SolapaCompra extends JDialog {
         this.comboBox2.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                var sel = (DDLItemDTO)comboBox2.getSelectedItem();
+                var sel = (DDlProveedorItemDTO)comboBox2.getSelectedItem();
 
                 if (sel != null) {
                     rubroID = sel.id;
@@ -198,8 +200,8 @@ public class SolapaCompra extends JDialog {
         agregarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                var sel = (DDLItemDTO)comboBox2.getSelectedItem() ;
-                miModeloCompra.add(sel.id,sel.descripcion,Integer.parseInt(textCant.getText()),28.00);
+                var sel = (DDlProveedorItemDTO)comboBox2.getSelectedItem() ;
+                miModeloCompra.add(sel.id,sel.producto,Integer.parseInt(textCant.getText()), sel.precio);
                 miModeloCompra.fireTableDataChanged();
             }
         });
@@ -216,8 +218,8 @@ public class SolapaCompra extends JDialog {
         var model = ControladorProveedor.getInstancia().getOpcionesDDLProveedores();
         this.comboBox1.setModel(new DefaultComboBoxModel(model.toArray()));
     }
-    private void setDDLProductos() {
-        var model = ControladorItem.getInstancia().getOpcionesDDLItems();
+    private void setDDLProductos(String cuit) {
+        var model = ControladorItem.getInstancia().getOpcionesDDLItemsByProveedor(cuit);
         this.comboBox2.setModel(new DefaultComboBoxModel(model.toArray()));
     }
 
