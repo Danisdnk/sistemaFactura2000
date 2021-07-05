@@ -1,15 +1,11 @@
 package views.consultasGenerales;
 
-import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
-
 import views.MenuPrincipal;
 import views.documentosRecibidos.DocumentosView;
 import views.login.loginView;
 import views.ordenesDePago.OrdenesDePagoFrame;
 import views.proveedores.provedorView;
+import javax.swing.*;
 
 
 public class ViewConsultasGenerales extends JFrame{
@@ -18,15 +14,7 @@ public class ViewConsultasGenerales extends JFrame{
     private JPanel panelCentral;
 
     private JButton cancelarButton;
-    private JButton aceptarButton;
 
-    private JRadioButton consultaDeLibroIVARadioButton;
-    private JRadioButton totalDeImpuestosRetenidosRadioButton;
-    private JRadioButton totalDeDeudaPorRadioButton;
-    private JRadioButton ordenesDePagosEmitidasRadioButton;
-    private JRadioButton compulsaDePreciosRadioButton;
-    private JRadioButton cuentaCorrienteDeProveedoresRadioButton;
-    private JRadioButton totalDeFacturasRecibidasRadioButton;
 
     private JToolBar barraNavegacion;
     private JButton consultasGeneralesButton;
@@ -34,8 +22,13 @@ public class ViewConsultasGenerales extends JFrame{
     private JButton DocumentosButton;
     private JButton ordenesDePagoButton;
     private JButton usuariosButton;
-
-
+    private JButton totalDeFacturasRecibidasButton;
+    private JButton compulsaDePreciosButton;
+    private JButton ordenesDePagosEmitidasButton;
+    private JButton cuentaCorrienteDeProveedoresButton;
+    private JButton totalDeImpuestosRetenidosButton;
+    private JButton totalDeDeudaPorButton;
+    private JButton consultaDeLibroIVAButton;
 
 
     public ViewConsultasGenerales() {
@@ -48,130 +41,81 @@ public class ViewConsultasGenerales extends JFrame{
         this.setLocationRelativeTo(null);
 
 
-
-
-        ButtonGroup group = new ButtonGroup();group.add(totalDeFacturasRecibidasRadioButton);
-        group.add(totalDeImpuestosRetenidosRadioButton);
-        group.add(cuentaCorrienteDeProveedoresRadioButton);
-        group.add(compulsaDePreciosRadioButton);
-        group.add(totalDeDeudaPorRadioButton);
-        group.add(ordenesDePagosEmitidasRadioButton);
-        group.add(consultaDeLibroIVARadioButton);
-
-        aceptarButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-
-                if(totalDeFacturasRecibidasRadioButton.isSelected()){
-                    var ViewFacturasRecibidas = new ViewFacturasRecibidas();
-                    ViewFacturasRecibidas.setVisible(true);
-
-                    dispose();
-
-                } else if(cuentaCorrienteDeProveedoresRadioButton.isSelected()) {
-                    var ViewCuentaCorriente = new ViewCuentaCorriente();
-                    ViewCuentaCorriente.setVisible(true);
-                    //TODO ViewCentaCorriente
-
-                    dispose();
-
-                } else if (compulsaDePreciosRadioButton.isSelected()) {
-                    var ViewCompulsaPrecios = new ViewCompulsaPrecios();
-                    ViewCompulsaPrecios.setVisible(true);
-                    //TODO ViewCompulsaPrecios
-
-                    dispose();
-
-                } else if (ordenesDePagosEmitidasRadioButton.isSelected()){
-                    var ViewOrdenesPago = new ViewOrdenesPago();
-                    ViewOrdenesPago.setVisible(true);
-                    //TODO ViewOrdenesPagosEmitidas
-
-                    dispose();
-
-                } else if (totalDeDeudaPorRadioButton.isSelected()){
-                    var ViewTotalDeDeuda = new ViewTotalDeDeuda();
-                    ViewTotalDeDeuda.setVisible(true);
-                    //TODO ViewTotalDeDeuda
-
-                    dispose();
-
-                } else if (totalDeImpuestosRetenidosRadioButton.isSelected()){
-                   var ViewTotalDeImpuestosRetenidos = new ViewTotalDeImpuestosRetenidos();
-                   ViewTotalDeImpuestosRetenidos.setVisible(true);
-                    //TODO ViewTotalDeImpuestosRetenidos
-
-                    dispose();
-                } else if (consultaDeLibroIVARadioButton.isSelected()){
-                    var ViewConsultaLibroIVACompras = new ViewConsultaLibroIVACompras();
-                    ViewConsultaLibroIVACompras.setVisible(true);
-                    //TODO ViewConsultaLibro
-
-                    dispose();
-                } else {//no se selecciono nada
-
-                    JOptionPane.showMessageDialog(
-                            aceptarButton,
-                            "Seleccione una opcion para continuar",
-                            "Error",
-                            JOptionPane.ERROR_MESSAGE);
-                }
-            }
-        }
-
-
-        );
-
-        cancelarButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                var MenuPrincipal = new MenuPrincipal("Factura 2000");
-                MenuPrincipal.setVisible(true);
-                dispose();
-            }
+        totalDeFacturasRecibidasButton.addActionListener(e -> {
+            var ViewFacturasRecibidas = new ViewFacturasRecibidas();
+            ViewFacturasRecibidas.setVisible(true);
+            dispose();
         });
 
-        ordenesDePagoButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                OrdenesDePagoFrame op = new OrdenesDePagoFrame();
-                op.setVisible(true);
-                //dispose();
-            }
+        compulsaDePreciosButton.addActionListener(e -> {
+            var ViewCompulsaPrecios = new ViewCompulsaPrecios();
+            ViewCompulsaPrecios.setVisible(true);
+            dispose();
         });
 
-        consultasGeneralesButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                ViewConsultasGenerales cons = new ViewConsultasGenerales();
-                cons.setVisible(true);
-                dispose();
-            }
+        cuentaCorrienteDeProveedoresButton.addActionListener(e -> {
+            var ViewCuentaCorriente = new ViewCuentaCorriente();
+            ViewCuentaCorriente.setVisible(true);
+            dispose();
         });
 
-        usuariosButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                loginView principal = new loginView();
-                principal.setVisible(true);
-                dispose();
-            }
+        ordenesDePagosEmitidasButton.addActionListener(e -> {
+            var ViewOrdenesPago = new ViewOrdenesPago();
+            ViewOrdenesPago.setVisible(true);
+            dispose();
         });
 
-        proveedoresButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                provedorView principal = new provedorView();
-                principal.setVisible(true);
-                dispose();
-            }
+        totalDeDeudaPorButton.addActionListener(e -> {
+            var ViewTotalDeDeuda = new ViewTotalDeDeuda();
+            ViewTotalDeDeuda.setVisible(true);
+            dispose();
         });
-        DocumentosButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                DocumentosView principal = new DocumentosView();
-                principal.setVisible(true);
+
+        totalDeImpuestosRetenidosButton.addActionListener(e -> {
+                var ViewTotalDeImpuestosRetenidos = new ViewTotalDeImpuestosRetenidos();
+                ViewTotalDeImpuestosRetenidos.setVisible(true);
                 dispose();
-            }
+        });
+
+        consultaDeLibroIVAButton.addActionListener(e -> {
+            var ViewConsultaLibroIVACompras = new ViewConsultaLibroIVACompras();
+            ViewConsultaLibroIVACompras.setVisible(true);
+            dispose();
+        });
+
+        cancelarButton.addActionListener(e -> {
+            var MenuPrincipal = new MenuPrincipal("Factura 2000");
+            MenuPrincipal.setVisible(true);
+            dispose();
+        });
+
+        ordenesDePagoButton.addActionListener(e -> {
+            OrdenesDePagoFrame op = new OrdenesDePagoFrame();
+            op.setVisible(true);
+            dispose();
+        });
+
+        consultasGeneralesButton.addActionListener(e -> {
+            ViewConsultasGenerales cons = new ViewConsultasGenerales();
+            cons.setVisible(true);
+            dispose();
+        });
+
+        usuariosButton.addActionListener(e -> {
+            loginView principal = new loginView();
+            principal.setVisible(true);
+            dispose();
+        });
+
+        proveedoresButton.addActionListener(e -> {
+            provedorView principal = new provedorView();
+            principal.setVisible(true);
+            dispose();
+        });
+        DocumentosButton.addActionListener(e -> {
+            DocumentosView principal = new DocumentosView();
+            principal.setVisible(true);
+            dispose();
         });
 
     }

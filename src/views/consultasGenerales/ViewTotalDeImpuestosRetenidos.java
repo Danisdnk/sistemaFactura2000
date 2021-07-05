@@ -1,19 +1,20 @@
 package views.consultasGenerales;
 
+import controllers.ControladorOrdenesDePagos;
+import controllers.ControladorProveedor;
+import models.documento.OrdenPago;
 import views.documentosRecibidos.DocumentosView;
 import views.login.loginView;
 import views.ordenesDePago.OrdenesDePagoFrame;
 import views.proveedores.provedorView;
 
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import javax.swing.table.DefaultTableModel;
 
 public class ViewTotalDeImpuestosRetenidos extends JFrame{
 
 
     private JPanel impuestos;
-    private JTextField numero;
     private JButton volverButton;
     private JPanel panelCentral;
     private JToolBar barraNavegacion;
@@ -24,6 +25,8 @@ public class ViewTotalDeImpuestosRetenidos extends JFrame{
     private JButton usuariosButton;
     private JTextField textCuit;
     private JButton consultarButton;
+    private JTable tableImpuestos;
+    private DefaultTableModel model;
 
     public ViewTotalDeImpuestosRetenidos() {
 
@@ -33,60 +36,89 @@ public class ViewTotalDeImpuestosRetenidos extends JFrame{
         this.setVisible(true);
         this.setLocationRelativeTo(null);
 
+        model = new DefaultTableModel();
+        model.addColumn("Proveedor");
+        model.addColumn("Nro Docuemtno");
+        model.addColumn("Fecha");
+        model.addColumn("IVA retenido");
+        model.addColumn("IIBB retenido");
+        model.addColumn("Total retenido");
+        tableImpuestos.setModel(model);
 
 
-        volverButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                ViewConsultasGenerales principal = new ViewConsultasGenerales();
-                principal.setVisible(true);
-                dispose();
+
+        consultarButton.addActionListener(e -> {
+
+            if (!textCuit.getText().isEmpty()) {
+                String cuit = textCuit.getText();
+                if (ControladorProveedor.getInstancia().existsProveedorCuit(cuit)) {
+                    setJTable(cuit);
+                } else {
+                    JOptionPane.showMessageDialog(
+                            consultarButton,
+                            "No existe un Proveedor con el cuit ingresado",
+                            "Error",
+                            JOptionPane.ERROR_MESSAGE);
+                }
+            } else {
+                JOptionPane.showMessageDialog(
+                        consultarButton,
+                        "Ingrese un CUIT para continuar",
+                        "Error",
+                        JOptionPane.ERROR_MESSAGE);
             }
         });
 
-        ordenesDePagoButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                OrdenesDePagoFrame principal = new OrdenesDePagoFrame();
-                principal.setVisible(true);
-                //dispose();
-            }
+        volverButton.addActionListener(e -> {
+            ViewConsultasGenerales principal = new ViewConsultasGenerales();
+            principal.setVisible(true);
+            dispose();
         });
 
-        consultasGeneralesButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                ViewConsultasGenerales principal = new ViewConsultasGenerales();
-                principal.setVisible(true);
-                dispose();
-            }
+        ordenesDePagoButton.addActionListener(e -> {
+            OrdenesDePagoFrame principal = new OrdenesDePagoFrame();
+            principal.setVisible(true);
+            //dispose();
         });
 
-        usuariosButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                loginView principal = new loginView();
-                principal.setVisible(true);
-                dispose();
-            }
+        consultasGeneralesButton.addActionListener(e -> {
+            ViewConsultasGenerales principal = new ViewConsultasGenerales();
+            principal.setVisible(true);
+            dispose();
         });
 
-        proveedoresButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                provedorView principal = new provedorView();
-                principal.setVisible(true);
-                dispose();
-            }
-        });
-        DocumentosButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                DocumentosView principal = new DocumentosView();
-                principal.setVisible(true);
-                dispose();
-            }
+        usuariosButton.addActionListener(e -> {
+            loginView principal = new loginView();
+            principal.setVisible(true);
+            dispose();
         });
 
+        proveedoresButton.addActionListener(e -> {
+            provedorView principal = new provedorView();
+            principal.setVisible(true);
+            dispose();
+        });
+        DocumentosButton.addActionListener(e -> {
+            DocumentosView principal = new DocumentosView();
+            principal.setVisible(true);
+            dispose();
+        });
+
+    }
+    private void setJTable(String cuit) {
+
+        model.getDataVector().removeAllElements();
+        for(OrdenPago op : ControladorOrdenesDePagos.getInstancia().getOPsByCuit(cuit)){
+
+            model.addRow(new Object[]{
+                    op.getProveedor().getNombre(),
+                    op.tipo() +(" ")+ op.getNro(),
+                    op.getFecha(),
+                    op.getRetencionIVA(),
+                    op.getRetencionIIBB(),
+                    op.getTotalRetenciones()
+            });
+        }
+        model.fireTableDataChanged();
     }
 }

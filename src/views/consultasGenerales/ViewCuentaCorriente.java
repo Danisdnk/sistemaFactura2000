@@ -12,8 +12,6 @@ import views.proveedores.provedorView;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class ViewCuentaCorriente extends JFrame{
 
@@ -53,91 +51,73 @@ public class ViewCuentaCorriente extends JFrame{
         labelOP.setVisible(false);
 
         model = new DefaultTableModel();
+        model.addColumn("Proveedor");
         model.addColumn("Nro Documento");
         model.addColumn("Fecha");
+        model.addColumn("Monto Neto");
         model.addColumn("Monto Total");
         tablaCuentaCorriente.setModel(model);
 
         
-        consultarButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
+        consultarButton.addActionListener(e -> {
 
-                if (!textCuit.getText().isEmpty()) {
-                    String cuit = textCuit.getText();
-                    if (ControladorProveedor.getInstancia().existsProveedorCuit(cuit)) {
-                        setJData(cuit);
-                    } else {
-                        JOptionPane.showMessageDialog(
-                                consultarButton,
-                                "No existe un Proveedor con el cuit ingresado",
-                                "Error",
-                                JOptionPane.ERROR_MESSAGE);
-                    }
+            if (!textCuit.getText().isEmpty()) {
+                String cuit = textCuit.getText();
+                if (ControladorProveedor.getInstancia().existsProveedorCuit(cuit)) {
+                    setJData(cuit);
                 } else {
                     JOptionPane.showMessageDialog(
                             consultarButton,
-                            "Ingrese un CUIT para continuar",
+                            "No existe un Proveedor con el cuit ingresado",
                             "Error",
                             JOptionPane.ERROR_MESSAGE);
                 }
+            } else {
+                JOptionPane.showMessageDialog(
+                        consultarButton,
+                        "Ingrese un CUIT para continuar",
+                        "Error",
+                        JOptionPane.ERROR_MESSAGE);
             }
         });
 
 
 
 
-        cancelarButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                var ViewConsultasGenerales = new ViewConsultasGenerales();
-                ViewConsultasGenerales.setVisible(true);
+        cancelarButton.addActionListener(e -> {
+            var ViewConsultasGenerales = new ViewConsultasGenerales();
+            ViewConsultasGenerales.setVisible(true);
 
-                dispose();
-            }
+            dispose();
         });
 
-        ordenesDePagoButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                OrdenesDePagoFrame op = new OrdenesDePagoFrame();
-                op.setVisible(true);
-                //dispose();
-            }
+        ordenesDePagoButton.addActionListener(e -> {
+            OrdenesDePagoFrame op = new OrdenesDePagoFrame();
+            op.setVisible(true);
+            //dispose();
         });
 
-        consultasGeneralesButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                ViewConsultasGenerales cons = new ViewConsultasGenerales();
-                cons.setVisible(true);
-                dispose();
-            }
+        consultasGeneralesButton.addActionListener(e -> {
+            ViewConsultasGenerales cons = new ViewConsultasGenerales();
+            cons.setVisible(true);
+            dispose();
         });
 
-        usuariosButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                loginView principal = new loginView();
-                principal.setVisible(true);
-                dispose();
-            }
+        usuariosButton.addActionListener(e -> {
+            loginView principal = new loginView();
+            principal.setVisible(true);
+            dispose();
         });
 
-        proveedoresButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                provedorView principal = new provedorView();
-                principal.setVisible(true);
-                dispose();
-            }
+        proveedoresButton.addActionListener(e -> {
+            provedorView principal = new provedorView();
+            principal.setVisible(true);
+            dispose();
         });
-        DocumentosButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                DocumentosView principal = new DocumentosView();
-                principal.setVisible(true);
-                dispose();
-            }
+        DocumentosButton.addActionListener(e -> {
+            DocumentosView principal = new DocumentosView();
+            principal.setVisible(true);
+            dispose();
         });
     }
 

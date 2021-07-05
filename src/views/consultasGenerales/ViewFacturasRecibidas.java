@@ -9,8 +9,6 @@ import views.proveedores.provedorView;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.util.List;
@@ -59,138 +57,114 @@ public class ViewFacturasRecibidas extends JFrame {
         table1.setModel(model);
 
 
-        consultarButton.addActionListener(new ActionListener() {
-
-            @Override
-            public void actionPerformed(ActionEvent e) {
+        consultarButton.addActionListener(e -> {
 
 
-                String cuit = null;
-                LocalDate fecha = null;
-                try {
-                    if (!textCUIT.getText().isEmpty() || !(textDia.getText() + textMes.getText() + textAnio.getText()).isEmpty()) {
+            String cuit = null;
+            LocalDate fecha = null;
+            try {
+                if (!textCUIT.getText().isEmpty() || !(textDia.getText() + textMes.getText() + textAnio.getText()).isEmpty()) {
 
-                        if (!textCUIT.getText().isEmpty()) {
-                            //CUIT = Integer.parseInt(textCUIT.getText());
-                            cuit = textCUIT.getText();
-                            System.out.println("cuit agregado");
-                        }
-
-                        if (!(textDia.getText() + textMes.getText() + textAnio.getText()).isEmpty()) {
-
-                            fecha = LocalDate.parse(textAnio.getText() + ("-") + textMes.getText() + ("-") + textDia.getText());
-                            System.out.println("fecha agregado");
-
-                        }
-
-                        System.out.println("TENGO O FECHA O CUIT");
-                        if (cuit != null && fecha != null) {         // tengo cuit y fecha
-
-                            System.out.println("CUIT Y FECHA");
-                            var facturas = ControladorComprobantes.getInstancia().getFacturasDTOByFechaYProveedor(cuit, fecha);
-                            setJtextArea(facturas);
-                            setTableFacturas(facturas);
-                            System.out.println(1);
-
-                        } else {
-                            if (cuit != null) {           //solo cuit
-
-                                System.out.println("CUIT");
-                                var facturas = ControladorComprobantes.getInstancia().getFacturasDTOsByProveedor(cuit);
-                                setJtextArea(facturas);
-                                setTableFacturas(facturas);
-                                System.out.println(2);
-
-                            } else {                                  //solo fecha
-
-                                System.out.println("FECHA");
-                                var facturas = ControladorComprobantes.getInstancia().getFacturasDTOsByFecha(fecha);
-                                setJtextArea2(facturas);
-                                setTableFacturas(facturas);
-                                System.out.println(3);
-
-
-                            }
-
-
-                        }
-
-                    } else {
-                        JOptionPane.showMessageDialog(
-                                consultarButton,
-                                "Ingrese al menos un proveedor o fecha para continuar",
-                                "Error",
-                                JOptionPane.ERROR_MESSAGE);
+                    if (!textCUIT.getText().isEmpty()) {
+                        //CUIT = Integer.parseInt(textCUIT.getText());
+                        cuit = textCUIT.getText();
+                        System.out.println("cuit agregado");
                     }
 
-                } catch (Exception ex) {
-                    ex.printStackTrace();
+                    if (!(textDia.getText() + textMes.getText() + textAnio.getText()).isEmpty()) {
+
+                        fecha = LocalDate.parse(textAnio.getText() + ("-") + textMes.getText() + ("-") + textDia.getText());
+                        System.out.println("fecha agregado");
+
+                    }
+
+                    System.out.println("TENGO O FECHA O CUIT");
+                    if (cuit != null && fecha != null) {         // tengo cuit y fecha
+
+                        System.out.println("CUIT Y FECHA");
+                        var facturas = ControladorComprobantes.getInstancia().getFacturasDTOByFechaYProveedor(cuit, fecha);
+                        setJtextArea(facturas);
+                        setTableFacturas(facturas);
+                        System.out.println(1);
+
+                    } else {
+                        if (cuit != null) {           //solo cuit
+
+                            System.out.println("CUIT");
+                            var facturas = ControladorComprobantes.getInstancia().getFacturasDTOsByProveedor(cuit);
+                            setJtextArea(facturas);
+                            setTableFacturas(facturas);
+                            System.out.println(2);
+
+                        } else {                                  //solo fecha
+
+                            System.out.println("FECHA");
+                            var facturas = ControladorComprobantes.getInstancia().getFacturasDTOsByFecha(fecha);
+                            setJtextArea2(facturas);
+                            setTableFacturas(facturas);
+                            System.out.println(3);
+
+
+                        }
+
+
+                    }
+
+                } else {
                     JOptionPane.showMessageDialog(
                             consultarButton,
-                            "Fecha ingresada no valida",
+                            "Ingrese al menos un proveedor o fecha para continuar",
                             "Error",
                             JOptionPane.ERROR_MESSAGE);
                 }
+
+            } catch (Exception ex) {
+                ex.printStackTrace();
+                JOptionPane.showMessageDialog(
+                        consultarButton,
+                        "Fecha ingresada no valida",
+                        "Error",
+                        JOptionPane.ERROR_MESSAGE);
             }
         });
 
-        volverButton.addActionListener(new ActionListener() {
+        volverButton.addActionListener(e -> {
 
-            @Override
-            public void actionPerformed(ActionEvent e) {
+            var ViewConsultasGenerales = new ViewConsultasGenerales();
+            ViewConsultasGenerales.setVisible(true);
 
-                var ViewConsultasGenerales = new ViewConsultasGenerales();
-                ViewConsultasGenerales.setVisible(true);
-
-                dispose();
-
-            }
+            dispose();
 
         });
 
-        ordenesDePagoButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                OrdenesDePagoFrame op = new OrdenesDePagoFrame();
-                op.setVisible(true);
-                //dispose();//esto cierra la ventana anterior
-            }
+        ordenesDePagoButton.addActionListener(e -> {
+            OrdenesDePagoFrame op = new OrdenesDePagoFrame();
+            op.setVisible(true);
+            //dispose();//esto cierra la ventana anterior
         });
 
-        consultasGeneralesButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                ViewConsultasGenerales cons = new ViewConsultasGenerales();
-                cons.setVisible(true);
-                dispose();//esto cierra la ventana anterior
-            }
+        consultasGeneralesButton.addActionListener(e -> {
+            ViewConsultasGenerales cons = new ViewConsultasGenerales();
+            cons.setVisible(true);
+            dispose();//esto cierra la ventana anterior
         });
 
-        usuariosButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                loginView  principal = new loginView();
-                principal.setVisible(true);
-                dispose();
-            }
+        usuariosButton.addActionListener(e -> {
+            loginView  principal = new loginView();
+            principal.setVisible(true);
+            dispose();
         });
 
-        DocumentosButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                DocumentosView docu = new DocumentosView();
-                docu.setVisible(true);
-                dispose();
-            }
+        DocumentosButton.addActionListener(e -> {
+            DocumentosView docu = new DocumentosView();
+            docu.setVisible(true);
+            dispose();
         });
 
-        proveedoresButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                provedorView principal = new provedorView();
-                principal.setVisible(true);
-                dispose();
-            }
+        proveedoresButton.addActionListener(e -> {
+            provedorView principal = new provedorView();
+            principal.setVisible(true);
+            dispose();
         });
 
 

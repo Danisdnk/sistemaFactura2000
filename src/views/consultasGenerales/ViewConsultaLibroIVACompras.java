@@ -9,8 +9,6 @@ import views.proveedores.provedorView;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.text.DecimalFormat;
 
 public class ViewConsultaLibroIVACompras extends JFrame{
@@ -33,6 +31,10 @@ public class ViewConsultaLibroIVACompras extends JFrame{
     private JLabel iva21;
     private JLabel iva27;
     private JLabel textTotalIVA;
+    private JLabel textNeto;
+    private JLabel textTotal;
+    private JLabel textDocu;
+    private JButton button1;
     private DefaultTableModel model;
 
 
@@ -61,57 +63,42 @@ public class ViewConsultaLibroIVACompras extends JFrame{
 
 
 
-        cancelarButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                var ViewConsultasGenerales = new ViewConsultasGenerales();
-                ViewConsultasGenerales.setVisible(true);
-
-                dispose();
-            }
+        cancelarButton.addActionListener(e -> {
+            var ViewConsultasGenerales = new ViewConsultasGenerales();
+            ViewConsultasGenerales.setVisible(true);
+            dispose();
         });
 
-        ordenesDePagoButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                OrdenesDePagoFrame op = new OrdenesDePagoFrame();
-                op.setVisible(true);
-                //dispose();
-            }
+        ordenesDePagoButton.addActionListener(e -> {
+            OrdenesDePagoFrame op = new OrdenesDePagoFrame();
+            op.setVisible(true);
+            //dispose();
         });
 
-        consultasGeneralesButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                ViewConsultasGenerales cons = new ViewConsultasGenerales();
-                cons.setVisible(true);
-                dispose();
-            }
+        consultasGeneralesButton.addActionListener(e -> {
+            ViewConsultasGenerales cons = new ViewConsultasGenerales();
+            cons.setVisible(true);
+            dispose();
         });
 
-        usuariosButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                loginView principal = new loginView();
-                principal.setVisible(true);
-                dispose();
-            }
+        usuariosButton.addActionListener(e -> {
+            loginView principal = new loginView();
+            principal.setVisible(true);
+            dispose();
         });
 
-        proveedoresButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                provedorView principal = new provedorView();
-                principal.setVisible(true);
-                dispose();
-            }
+        proveedoresButton.addActionListener(e -> {
+            provedorView principal = new provedorView();
+            principal.setVisible(true);
+            dispose();
         });
-        DocumentosButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                DocumentosView principal = new DocumentosView();
-                principal.setVisible(true);
-                dispose();
-            }
+        DocumentosButton.addActionListener(e -> {
+            DocumentosView principal = new DocumentosView();
+            principal.setVisible(true);
+            dispose();
+        });
+        button1.addActionListener(e -> {
+            model.removeRow(model.getRowCount()-1);
         });
 
     }
@@ -123,6 +110,9 @@ public class ViewConsultaLibroIVACompras extends JFrame{
         double textiva105 = 0F;
         double textiva21 = 0F;
         double textiva27 = 0F;
+        double neto = 0f;
+        double total = 0f;
+        int docus = 0;
 
         DecimalFormat formato1 = new DecimalFormat("#.##");
         model.getDataVector().removeAllElements();
@@ -138,6 +128,9 @@ public class ViewConsultaLibroIVACompras extends JFrame{
                     formato1.format(Comprobante.getMontoTotal())
 
             });
+            neto+=(Comprobante.getMontoTotal() - Comprobante.getMontoIva());
+            total+=Comprobante.getMontoTotal();
+            docus++;
 
             if (Comprobante.getIva() != 0){
                 if(Comprobante.getIva() == 2.5)
@@ -152,6 +145,16 @@ public class ViewConsultaLibroIVACompras extends JFrame{
                                     textiva27 = textiva27 + Comprobante.getMontoIva();
             }
         }
+        model.addRow(new Object[]{
+                (""),
+                (""),
+                (""),
+                (""),
+                String.valueOf(formato1.format(neto)),
+                (""),
+                String.valueOf(formato1.format(textiva25+textiva5+textiva105+textiva21+textiva27)),
+                String.valueOf(formato1.format(total))
+        });
         model.fireTableDataChanged();
         iva25.setText(String.valueOf(formato1.format(textiva25)));
         iva5.setText(String.valueOf(formato1.format(textiva5)));
@@ -159,5 +162,8 @@ public class ViewConsultaLibroIVACompras extends JFrame{
         iva21.setText(String.valueOf(formato1.format(textiva21)));
         iva27.setText(String.valueOf(formato1.format(textiva27)));
         textTotalIVA.setText(String.valueOf(formato1.format(textiva25+textiva5+textiva105+textiva21+textiva27)));
+        textNeto.setText(String.valueOf(formato1.format(neto)));
+        textTotal.setText(String.valueOf(formato1.format(total)));
+        textDocu.setText(String.valueOf(docus));
     }
 }
