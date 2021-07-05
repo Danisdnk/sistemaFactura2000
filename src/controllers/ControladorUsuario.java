@@ -2,12 +2,9 @@ package controllers;
 
 import dal.RepoFactory;
 import dal.Repository;
-import models.dtos.DDLItemDTO;
-import models.dtos.DDLUsuarioDTO;
-import models.proveedor.Proveedor;
 import models.usuario.Usuario;
 
-import java.util.List;
+
 
 public class ControladorUsuario {
     private static ControladorUsuario instancia;
@@ -22,9 +19,6 @@ public class ControladorUsuario {
         this.RepoUsuarios.insertar(u);
     }
 
-    public List<Usuario> getProveedores() {
-        return this.RepoUsuarios.getTodos();
-    }
 
     // TODO para login comparar tmb con password
     public boolean getUsuarioByNombreUsuarioPass(String nombreUsuario, String pass) {
