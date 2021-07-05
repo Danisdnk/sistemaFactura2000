@@ -3,6 +3,8 @@ package views.consultasGenerales;
 import controllers.ControladorComprobantes;
 import controllers.ControladorOrdenesDePagos;
 import controllers.ControladorProveedor;
+import models.documento.Comprobante;
+import models.documento.OrdenPago;
 import views.documentosRecibidos.DocumentosView;
 import views.login.loginView;
 import views.ordenesDePago.OrdenesDePagoFrame;
@@ -51,29 +53,29 @@ public class ViewCuentaCorriente extends JFrame{
         labelOP.setVisible(false);
 
         model = new DefaultTableModel();
+        model.addColumn("Proveedor");
         model.addColumn("Nro Documento");
         model.addColumn("Fecha");
+        model.addColumn("Monto Neto");
         model.addColumn("Monto Total");
         tablaCuentaCorriente.setModel(model);
 
-        
         consultarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                
-                if(!textCuit.getText().isEmpty()){
-                    String cuit  = textCuit.getText();
-                    if(ControladorProveedor.getInstancia().existsProveedor(cuit)) {
-                        setJTableCuentaCorriente(cuit);
-                        setJTextData(cuit);
-                    }else{
+
+                if (!textCuit.getText().isEmpty()) {
+                    String cuit = textCuit.getText();
+                    if (ControladorProveedor.getInstancia().existsProveedor(cuit)) {
+                        setJData(cuit);
+                    } else {
                         JOptionPane.showMessageDialog(
                                 consultarButton,
                                 "No existe un Proveedor con el cuit ingresado",
                                 "Error",
-                                JOptionPane.ERROR_MESSAGE); 
-                         }
-                }else{
+                                JOptionPane.ERROR_MESSAGE);
+                    }
+                } else {
                     JOptionPane.showMessageDialog(
                             consultarButton,
                             "Ingrese un CUIT para continuar",
@@ -82,9 +84,6 @@ public class ViewCuentaCorriente extends JFrame{
                 }
             }
         });
-        
-        
-
 
 
         cancelarButton.addActionListener(new ActionListener() {
@@ -141,23 +140,48 @@ public class ViewCuentaCorriente extends JFrame{
         });
     }
 
-    private void setJTextData(String cuit) {
+    private void setJData(String cuit) {
         labelFacturas.setVisible(true);
         labelOP.setVisible(true);
         labelND.setVisible(true);
         labelNC.setVisible(true);
         labelEC.setVisible(true);
+
         labelFacturas.setText(String.valueOf(ControladorComprobantes.getInstancia().getFacturasByProveedor(cuit).size()));
         labelOP.setText(String.valueOf(ControladorOrdenesDePagos.getInstancia().getOPsByCuit(cuit).size()));
         labelNC.setText(String.valueOf(ControladorComprobantes.getInstancia().getNCreditoByCuit(cuit).size()));
         labelND.setText(String.valueOf(ControladorComprobantes.getInstancia().getNDebitoByCuit(cuit).size()));
         labelEC.setText(String.valueOf(ControladorComprobantes.getInstancia().calcularDeudaDeProveedorByCuit(cuit)));
+
+        model.getDataVector().removeAllElements();
+        for (Comprobante comprobante : ControladorComprobantes.getInstancia().getComprobantesByCuit(cuit)) {
+
+            model.addRow(new Object[]{
+                    comprobante.getProveedor().getNombre(),
+                    comprobante.tipo() + (" ") + comprobante.getNro(),
+                    comprobante.getFecha(),
+                    comprobante.getMontoNeto(),
+                    detectarMontoTOtal(comprobante.getMontoTotal(), comprobante.tipo())
+            });
+
+        }
+        model.fireTableDataChanged();
+        for (OrdenPago ordenPago : ControladorOrdenesDePagos.getInstancia().getOPsByCuit(cuit)) {
+
+            model.addRow(new Object[]{
+                    ordenPago.getProveedor().getNombre(),
+                    ("Orden de Pago ") + ordenPago.tipo() + ("") + ordenPago.getNro(),
+                    ordenPago.getFecha(),
+                    ordenPago.getMontoNeto(),
+                    ordenPago.getMontoTotal()
+            });
+        }
+        model.fireTableDataChanged();
     }
+    private Float detectarMontoTOtal(Float result, String tipo ) {
 
-    private void setJTableCuentaCorriente(String cuit) {
-
-
-
-    }
-
+        if (tipo.equals("NOTA CREDITO"))
+            result = result * -1;
+        return result;
+        }
 }

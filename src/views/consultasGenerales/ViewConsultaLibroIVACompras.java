@@ -11,6 +11,7 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.DecimalFormat;
 
 public class ViewConsultaLibroIVACompras extends JFrame{
 
@@ -52,6 +53,7 @@ public class ViewConsultaLibroIVACompras extends JFrame{
         model.addColumn("Nro Documento");
         model.addColumn("Monto Neto");
         model.addColumn("IVA (%)");
+        model.addColumn("Monto IVA");
         model.addColumn("Monto Total");
         tablaLibroIva.setModel(model);
 
@@ -122,6 +124,7 @@ public class ViewConsultaLibroIVACompras extends JFrame{
         double textiva21 = 0F;
         double textiva27 = 0F;
 
+        DecimalFormat formato1 = new DecimalFormat("#.##");
         model.getDataVector().removeAllElements();
         for(ComprobanteDTO Comprobante : ControladorComprobantes.getInstancia().getAllComprobantesDTO()){
             model.addRow(new Object[]{
@@ -129,9 +132,10 @@ public class ViewConsultaLibroIVACompras extends JFrame{
                     Comprobante.getProveedor().getCuit(),
                     Comprobante.getFecha(),
                     Comprobante.getTipo() +(" ")+ Comprobante.getNro(),
-                    Comprobante.getMontoTotal() - Comprobante.getMontoIva(),
+                    formato1.format(Comprobante.getMontoTotal() - Comprobante.getMontoIva()),
                     Comprobante.getIva(),
-                    Comprobante.getMontoTotal()
+                    formato1.format(Comprobante.getMontoIva()),
+                    formato1.format(Comprobante.getMontoTotal())
 
             });
 
@@ -149,12 +153,11 @@ public class ViewConsultaLibroIVACompras extends JFrame{
             }
         }
         model.fireTableDataChanged();
-        iva25.setText(String.valueOf(textiva25));
-        iva5.setText(String.valueOf(textiva5));
-        iva105.setText(String.valueOf(textiva105));
-        iva21.setText(String.valueOf(textiva21));
-        iva27.setText(String.valueOf(textiva27));
-        textTotalIVA.setText(String.valueOf(textiva25+textiva5+textiva105+textiva21+textiva27));
-        //todo sacar decimales
+        iva25.setText(String.valueOf(formato1.format(textiva25)));
+        iva5.setText(String.valueOf(formato1.format(textiva5)));
+        iva105.setText(String.valueOf(formato1.format(textiva105)));
+        iva21.setText(String.valueOf(formato1.format(textiva21)));
+        iva27.setText(String.valueOf(formato1.format(textiva27)));
+        textTotalIVA.setText(String.valueOf(formato1.format(textiva25+textiva5+textiva105+textiva21+textiva27)));
     }
 }

@@ -11,6 +11,7 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -245,13 +246,14 @@ public class ViewFacturasRecibidas extends JFrame {
 
     private void setTableFacturas(List<ComprobanteDTO> descripcion ) {
 
+        DecimalFormat formato1 = new DecimalFormat("#.##");
         model.getDataVector().removeAllElements();
         for(ComprobanteDTO factura : descripcion){
             model.addRow(new Object[]{
                     factura.getProveedor().getNombre(),
                     factura.getNro(),
                     factura.getFecha(),
-                    factura.getMontoTotal()
+                    formato1.format(factura.getMontoTotal())
             });
         }
         model.fireTableDataChanged();
