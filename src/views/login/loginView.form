@@ -55,6 +55,7 @@
         </constraints>
         <properties>
           <background color="-14139535"/>
+          <foreground color="-20202"/>
           <text value=""/>
         </properties>
       </component>
@@ -69,7 +70,7 @@
           <background color="-14139535"/>
           <caretColor color="-2829356"/>
           <disabledTextColor color="-12123969"/>
-          <foreground color="-12123969"/>
+          <foreground color="-20202"/>
           <text value=""/>
         </properties>
       </component>

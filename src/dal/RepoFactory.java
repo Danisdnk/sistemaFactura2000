@@ -10,6 +10,7 @@ import models.proveedor.Item;
 import models.proveedor.Proveedor;
 import models.proveedor.ProveedorItem;
 import models.proveedor.Rubro;
+import models.usuario.Usuario;
 
 public class RepoFactory {
     private static Repository<OrdenPago> ordenPagoRepository;
@@ -22,6 +23,7 @@ public class RepoFactory {
     private static Repository<ProveedorItem> ProveedorItemRepository;
     private static Repository<IVA> IVARepository;
     private static Repository<ResponsableIva> ResponsableIvaRepository;
+    private static Repository<Usuario> UsuarioRepository;
 
 
     public static Repository<OrdenPago> getRepoOrdenesPago(){
@@ -55,4 +57,5 @@ public class RepoFactory {
     public static Repository<ResponsableIva> getResponsableIva(){  return new Repository<>(ResponsableIva.class); }
 
     public static Repository<IVA> getIVA(){  return new Repository<>(IVA.class); }
+    public static Repository<Usuario> getUsuarioRepository(){  return new Repository<>(Usuario.class); }
 }

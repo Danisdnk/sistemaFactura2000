@@ -1,11 +1,13 @@
 package views.login;
 
+import controllers.ControladorUsuario;
+import models.usuario.Usuario;
 import views.MenuPrincipal;
-import views.proveedores.provedorView;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
 
 public class loginView extends JFrame {
     private JPanel loginPanel;
@@ -16,9 +18,10 @@ public class loginView extends JFrame {
     private JPasswordField textPass;
     private JButton btnIngresar;
     private JButton btnCrearUsuario;
+    private ControladorUsuario controlador;
 
     public loginView() {
-
+        this.controlador = ControladorUsuario.getInstancia();
         this.setSize(600, 900); // creamos el frame con las medidas
         this.setContentPane(loginPanel); //ponemos como panel el nombre de variable del panel
         this.setVisible(true); //lo volvemos visible
@@ -28,10 +31,10 @@ public class loginView extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                String nombre = textUsuario.getText();
+                String nombreUsuario = textUsuario.getText();
                 String pass = textPass.getText();
 
-                if ( nombre.equals("dani") && pass.equals("123") ) {
+                if ( ControladorUsuario.getInstancia().getUsuarioByNombreUsuarioPass(nombreUsuario, pass) == true) {
                     var menuPrincipal = new MenuPrincipal("Factura 2000");
                     menuPrincipal.setVisible(true);
 
@@ -39,11 +42,55 @@ public class loginView extends JFrame {
                 } else {
                     JOptionPane.showMessageDialog(
                             btnIngresar,
-                            "credenciales erroneas",
+                            "Credenciales Erroneas",
                             "Error",
                             JOptionPane.ERROR_MESSAGE);
                 }
             }
         });
+
+        btnCrearUsuario.addActionListener(new ActionListener() {
+
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String nombreUsuario = textUsuario.getText();
+                //var banana = ControladorUsuario.getInstancia().getOpcionesDDLUsuarios();
+            if(!ControladorUsuario.getInstancia().getUsuarioByCredenciales(nombreUsuario) && !nombreUsuario.equals("")){
+                Usuario usModel = new Usuario(
+                        textUsuario.getText(),
+                        textPass.getText()
+
+                );
+                System.out.println(nombreUsuario);
+                controlador.agregarUsuario(usModel);
+                JOptionPane.showMessageDialog(
+                        btnCrearUsuario,
+                        "Se creo el nuevo usuario",
+                        "Nuevo Usuario",
+                        JOptionPane.INFORMATION_MESSAGE);
+
+            }
+
+            else {
+                if (nombreUsuario.equals("")) {
+                    JOptionPane.showMessageDialog(
+                            btnCrearUsuario,
+                            "Ingrese un Usuario valido",
+                            "Error",
+                            JOptionPane.INFORMATION_MESSAGE);
+                } else {
+
+                    JOptionPane.showMessageDialog(
+                            btnCrearUsuario,
+                            "El Usuario ya existe",
+                            "Error",
+                            JOptionPane.INFORMATION_MESSAGE);
+                }
+            }
+            }
+
+        });
+
     }
 }

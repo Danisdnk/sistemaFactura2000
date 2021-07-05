@@ -3,49 +3,46 @@ package controllers;
 import dal.RepoFactory;
 import dal.Repository;
 import models.dtos.DDLItemDTO;
+import models.dtos.DDLUsuarioDTO;
 import models.proveedor.Proveedor;
+import models.usuario.Usuario;
 
 import java.util.List;
 
 public class ControladorUsuario {
     private static ControladorUsuario instancia;
 
-    private Repository<Proveedor> RepoProveedores; //repousuarios
+    private Repository<Usuario> RepoUsuarios; //repousuarios
 
     public ControladorUsuario() {
-        this.RepoProveedores =  RepoFactory.getRepoProveedores();
+        this.RepoUsuarios =  RepoFactory.getUsuarioRepository();
     }
 
-    public void agregarProveedor(Proveedor p){
-        this.RepoProveedores.insertar(p);
+    public void agregarUsuario(Usuario u){
+        this.RepoUsuarios.insertar(u);
     }
 
-    public List<Proveedor> getProveedores() {
-        return this.RepoProveedores.getTodos();
+    public List<Usuario> getProveedores() {
+        return this.RepoUsuarios.getTodos();
     }
 
     // TODO para login comparar tmb con password
-    public Proveedor getProveedorByNombre(String nombre) {
-        return this.RepoProveedores.getTodos()
+    public boolean getUsuarioByNombreUsuarioPass(String nombreUsuario, String pass) {
+        return this.RepoUsuarios.getTodos()
                 .stream()
-                .filter(p -> p.getNombre().equals(nombre) )
-                .findFirst()
-                .get();
+                .anyMatch(p -> p.getNombreUsuario().equals(nombreUsuario) && p.getPassword().equals(pass) );
     }
 
 
-    // TODO agregar a diagrama clases
-    public Proveedor getProveedorByID(int id) {
-        return this.RepoProveedores.getByID(id);
-    }
 
-    // TODO agregar a diagrama clases
-    public List<DDLItemDTO> getOpcionesDDLProveedores() {
-        return this.RepoProveedores.getTodos()
+    // TODO para login comparar tmb con password
+    public boolean getUsuarioByCredenciales(String nombreUsuario) {
+        return this.RepoUsuarios.getTodos()
                 .stream()
-                .map(Proveedor::toDDL)
-                .toList();
+                .anyMatch(p -> p.getNombreUsuario().equals(nombreUsuario) );
     }
+
+
 
     public static ControladorUsuario getInstancia() {
         if (instancia == null) {
