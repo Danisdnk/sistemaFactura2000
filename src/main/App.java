@@ -1,5 +1,9 @@
 package main;
 
+import com.formdev.flatlaf.FlatDarculaLaf;
+import com.formdev.flatlaf.FlatIntelliJLaf;
+import com.formdev.flatlaf.intellijthemes.FlatArcDarkOrangeIJTheme;
+import com.formdev.flatlaf.intellijthemes.FlatSolarizedDarkIJTheme;
 import views.MenuPrincipal;
 import views.login.loginView;
 import views.proveedores.provedorView;
@@ -10,7 +14,19 @@ public class App {
     public static void main(String[] args) {
         InicializadorDeDatos.iniciar();
 
-        JFrame menuPrincipal = new MenuPrincipal("Factura 2000");//new loginView();
-        menuPrincipal.setVisible(true);
+        try {
+          //  UIManager.setLookAndFeel(new FlatDarculaLaf()); //Windows Look and feel
+            FlatArcDarkOrangeIJTheme.setup();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                JFrame menuPrincipal = new MenuPrincipal("Factura 2000");//new loginView();
+                menuPrincipal.setVisible(true);
+            }
+        });
+
     }
 }
