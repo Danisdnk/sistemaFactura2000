@@ -67,7 +67,7 @@ public class ViewOrdenesPago extends JFrame{
 
                 System.out.println(cuit);
                 if(!cuit.equals("")) {
-                    if (ControladorProveedor.getInstancia().existsProveedor(cuit)) {
+                    if (ControladorProveedor.getInstancia().existsProveedorCuit(cuit)) {
                         model.getDataVector().removeAllElements();
                         setJtextAreaResultado(ControladorOrdenesDePagos.getInstancia().getOPsByCuit(cuit));
                         for (OrdenPago op : ControladorOrdenesDePagos.getInstancia().getOPsByCuit(cuit)) {

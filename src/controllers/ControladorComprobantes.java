@@ -259,10 +259,6 @@ public class ControladorComprobantes {
 
 
 
-
-
-
-
     public static ControladorComprobantes getInstancia() {
         if (instancia == null) {
             instancia = new ControladorComprobantes();

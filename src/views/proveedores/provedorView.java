@@ -4,10 +4,14 @@ import javax.swing.*;
 import javax.swing.text.DateFormatter;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.*;
 
-import controllers.ControladorComprobantes;
 import controllers.ControladorItem;
 import controllers.ControladorProveedor;
 import models.documento.Comprobante;
@@ -43,8 +47,7 @@ public class provedorView extends JFrame {
     private JTextField txtTelefono;
     private JTextField txtEmail;
     private JTextField txtIngresosBrutos;
-    private JTextField txtInicioActividades;
-    private JComboBox <DDLItemDTO>dropRubro;
+    private JComboBox<DDLItemDTO> dropRubro;
     private JButton removeProveedor;
     private JSpinner DateActividades;
     private JButton modifyProveedor;
@@ -59,15 +62,15 @@ public class provedorView extends JFrame {
 
     public provedorView() {
         this.controlador = ControladorProveedor.getInstancia();
-        this.setDDLProveedores();
-        this.setDDLRubros();
+
         this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         this.setContentPane(vistaProv);
         this.setSize(1000, 1000);
         this.setLocationRelativeTo(null);
         this.setDDLResponsableIva();
-        this.validate() ;// for JFrame up to Java7 is there only validate()
-        this.repaint();
+        this.setDDLProveedores();
+        this.setDDLRubros();
+
         ordenesDePagoButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -110,47 +113,42 @@ public class provedorView extends JFrame {
         });
 
         this.dropListaProveedores.addActionListener(new ActionListener() {
+
             @Override
             public void actionPerformed(ActionEvent e) {
-
-                vistaProv.validate() ;// for JFrame up to Java7 is there only validate()
-                vistaProv.repaint();
                 var sel = (DDLItemDTO) dropListaProveedores.getSelectedItem();
-
-                if ( sel != null ) {  //si la seleccion es distinta de nulo hacemos varias cosas
+/** si la seleccion es distinta de nulo hacemos un get del objeto seleccionda hacemos un setText para asignar valor al
+ dropdown Hacemos esta condicion "ternaria"  si se cumple cargamos el item si no se cumple porque el dato no se
+ completo cargamos el dato como string vacio.asi almenos no pincha. ternario es (condicion? caso true : caso false )**/
+                if ( sel != null ) {
                     proveedorID = sel.id;
-                    itemSeleccionado = controlador.getProveedorByID(sel.id); //hacemos un get del objeto seleccionda
-                    txtNombreFantasia.setText(  //hacemos un setText para asignar valor al dropdown
-                            !itemSeleccionado.getNombre() //hacemos esta condicion "ternaria"
-                                    .isEmpty() ?
-                                    itemSeleccionado.getNombre() //si se cumple cargamos el item
-                                    : ""); //si no se cumple porque el dato no se completo cargamos el dato como
-                    // string vacio.asi almenos no pincha. ternario es (condicion? caso true : caso false )
+                    itemSeleccionado = controlador.getProveedorByID(sel.id);
+                    txtNombreFantasia.setText(!itemSeleccionado.getNombre().isEmpty() ? itemSeleccionado.getNombre() : "");
                     txtDireccion.setText(!itemSeleccionado.getDireccion().isEmpty() ? itemSeleccionado.getDireccion() : "");
                     txtEmail.setText(!itemSeleccionado.getEmail().isEmpty() ? itemSeleccionado.getEmail() : "");
                     txtIngresosBrutos.setText(!itemSeleccionado.getNumeroIIBB().isEmpty() ? itemSeleccionado.getNumeroIIBB() : "");
-                   // txtRubro.setText(!itemSeleccionado.getRubros().isEmpty() ? itemSeleccionado.getRubros() : "");
+                    // txtRubro.setText(!itemSeleccionado.getRubros().isEmpty() ? itemSeleccionado.getRubros() : "");
                     txtRazonSocial.setText(!itemSeleccionado.getRazonSocial().isEmpty() ? itemSeleccionado.getRazonSocial() : "");
                     txtCuit.setText(!itemSeleccionado.getCuit().isEmpty() ? itemSeleccionado.getCuit() : "");
                     dropResponsableIva.setSelectedItem(itemSeleccionado.getResponsableIva());
-         } else {
+                   // DateActividades.getModel();
 
+                } else {
                     proveedorID = null;
-
                 }
             }
         });
-        List<Rubro> rubrosAgregados=null; //TODO esto hay que modificarlo para que al hacer "+" agregue un rubro a la
+        List<Rubro> rubrosAgregados = null; //TODO esto hay que modificarlo para que al hacer "+" agregue un rubro a la
         // lista del futuro nuevo proveedor
 
         addRubroProveedor.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-               var sel = (DDLItemDTO)dropRubro.getSelectedItem();
+                var sel = (DDLItemDTO) dropRubro.getSelectedItem();
 
                 if ( sel != null ) {
-                   rubrosAgregados.add(new Rubro(sel.descripcion));
+                    rubrosAgregados.add(new Rubro(sel.descripcion));
                 }
             }
         });
@@ -158,67 +156,61 @@ public class provedorView extends JFrame {
         addProveedor.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                vistaProv.validate() ;// for JFrame up to Java7 is there only validate()
-                vistaProv.repaint();
                 //  SimpleDateFormat formatter = new SimpleDateFormat("EEE d MMM yyyy", Locale.getDefault());
                 var patata = ControladorProveedor.getInstancia().getOpcionesDDLProveedores();
                 var sel = (DDLItemDTO) dropListaProveedores.getSelectedItem();
+
                 assert sel != null;
                 itemSeleccionado = controlador.getProveedorByID(sel.id);
 
-                Proveedor provModel = new Proveedor(
-                        txtNombreFantasia.getText(),
-                        txtDireccion.getText(),
-                        txtEmail.getText(),
-                        txtIngresosBrutos.getText(),
-                        DateActividades.getValue().toString(),
-                        dropRubro.getSelectedItem().toString(),
-                        //(float) 2000,
-                        txtRazonSocial.getText(),
-                        txtCuit.getText(),
-                        dropResponsableIva.getSelectedItem().toString(),
-                        sel.id
-                );
-                var isProvedorExiste=controlador.existsProveedor(txtCuit.getText());
+                var prov = getCamposProveedor(sel);
+                var ProvedorCuitExiste = controlador.existsProveedorCuit(txtCuit.getText());
+                var ProveedorNombreExiste = controlador.existsProveedorNombre(txtNombreFantasia.getText());
 
-                if ( !isProvedorExiste ) {
-                    controlador.agregarProveedor(provModel);
+                if ( !ProveedorNombreExiste ) {
 
-                    JOptionPane.showMessageDialog(
-                            addProveedor,
-                            "proveedor",
-                            "Nuevo proveedor",
-                            JOptionPane.INFORMATION_MESSAGE);
+                    if ( !ProvedorCuitExiste ) {
+                        controlador.agregarProveedor(prov);
+                        setDDLProveedores();
+                        JOptionPane.showMessageDialog(
+                                addProveedor,
+                                "El nuevo proveedor se agrego con exito",
+                                "Nuevo proveedor",
+                                JOptionPane.INFORMATION_MESSAGE);
+                    }
+                    else {
+                        JOptionPane.showMessageDialog(
+                                addProveedor,
+                                "No se pudo cargar.Ya existe proveedor con ese CUIT",
+                                "Nuevo proveedor",
+                                JOptionPane.INFORMATION_MESSAGE);
+                    }
 
                 } else {
                     JOptionPane.showMessageDialog(
                             addProveedor,
-                            "No se pudo cargar.Ya existe proveedor con ese nombre",
+                            "El nombre Fantasia Ingresado ya pertenece a otro proveedor",
                             "Nuevo proveedor",
                             JOptionPane.INFORMATION_MESSAGE);
                 }
             };
         });
-
         removeProveedor.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                vistaProv.validate() ;// for JFrame up to Java7 is there only validate()
-                vistaProv.repaint();
 
                 var sel = (DDLItemDTO) dropListaProveedores.getSelectedItem();
-
-
+                var seleccionado= dropListaProveedores.getSelectedIndex();
+                boolean eliminado=false;
                 if ( sel != null ) {
-                 var provedor =controlador.getProveedorByID(sel.id);
-                    boolean eliminado=controlador.eliminarProveedor(provedor);
+                    var provedor = controlador.getProveedorByID(sel.id);
+                     eliminado = controlador.eliminarProveedor(provedor);
                     if ( eliminado ) {
                         JOptionPane.showMessageDialog(
                                 removeProveedor,
                                 "El proveedor fue eliminado con exito",
                                 "Proveedor Eliminado",
                                 JOptionPane.INFORMATION_MESSAGE);
-
                     } else {
                         JOptionPane.showMessageDialog(
                                 removeProveedor,
@@ -227,40 +219,28 @@ public class provedorView extends JFrame {
                                 JOptionPane.ERROR_MESSAGE);
                     }
                 }
+                if(eliminado){
+                    setDDLProveedores();
+                }
             }
         });
-
 
         modifyProveedor.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                vistaProv.validate() ;// for JFrame up to Java7 is there only validate()
-                vistaProv.repaint();
+
                 //  SimpleDateFormat formatter = new SimpleDateFormat("EEE d MMM yyyy", Locale.getDefault());
                 var patata = ControladorProveedor.getInstancia().getOpcionesDDLProveedores();
                 var sel = (DDLItemDTO) dropListaProveedores.getSelectedItem();
 
                 assert sel != null;
+                var proveedor = getCamposProveedor(sel);
 
-                Proveedor provModel = new Proveedor(
-                        txtNombreFantasia.getText(),
-                        txtDireccion.getText(),
-                        txtEmail.getText(),
-                        txtIngresosBrutos.getText(),
-                        DateActividades.getValue().toString(),
-                        dropRubro.getSelectedItem().toString(),
-                        //(float) 2000,
-                        txtRazonSocial.getText(),
-                        txtCuit.getText(),
-                        dropResponsableIva.getSelectedItem().toString(),
-                        sel.id
-                );
-
-                var isProvedorExiste=controlador.existsProveedor(txtCuit.getText());
+                var isProvedorExiste = controlador.existsProveedorCuit(txtCuit.getText());
 
                 if ( isProvedorExiste ) {
-                    controlador.actualizarProveedor(provModel);
-
+                    controlador.actualizarProveedor(proveedor);
+                    setDDLProveedores();
                     JOptionPane.showMessageDialog(
                             modifyProveedor,
                             "proveedor",
@@ -274,29 +254,116 @@ public class provedorView extends JFrame {
                             "Error modificar proveedor",
                             JOptionPane.INFORMATION_MESSAGE);
                 }
-            };
+            }
+
+            ;
         });
+        //obliga al usuario a salo ingresar numeros >:D
+        txtCuit.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                super.keyPressed(e);
+                genericValidateJtextNumbers(txtCuit, e);
+            }
+        });
+        txtIngresosBrutos.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                super.keyPressed(e);
+                genericValidateJtextNumbers(txtIngresosBrutos, e);
+            }
+        });
+        txtTelefono.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                super.keyPressed(e);
+                genericValidateJtextNumbers(txtTelefono, e);
+            }
+        });
+        //no permite ingresar numeros o caracteres especiales
+
+        txtDireccion.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                super.keyPressed(e);
+                genericValidateJtext(txtDireccion, e);
+            }
+        });
+        txtNombreFantasia.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                super.keyPressed(e);
+                genericValidateJtext(txtNombreFantasia, e);
+            }
+        });
+        txtRazonSocial.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                super.keyPressed(e);
+                genericValidateJtext(txtRazonSocial, e);
+            }
+        });
+
     }
 
     private void setDDLProveedores() {
         var model = ControladorProveedor.getInstancia().getOpcionesDDLProveedores();
-        vistaProv.validate() ;// for JFrame up to Java7 is there only validate()
-        vistaProv.repaint();
         this.dropListaProveedores.setModel(new DefaultComboBoxModel(model.toArray()));
-
     }
+
     private void setDDLRubros() {
-        vistaProv.validate() ;// for JFrame up to Java7 is there only validate()
+        vistaProv.validate();// for JFrame up to Java7 is there only validate()
         vistaProv.repaint();
-        var controladorItem= ControladorItem.getInstancia().getOpcionesDDLRubros();
+        var controladorItem = ControladorItem.getInstancia().getOpcionesDDLRubros();
         this.dropRubro.setModel(new DefaultComboBoxModel(controladorItem.toArray()));
     }
 
+    private Proveedor getCamposProveedor(DDLItemDTO sel) {
+
+        Date date = (Date) DateActividades.getValue();
+        LocalDate fecha = Instant.ofEpochMilli(date.getTime()).atZone(ZoneId.systemDefault()).toLocalDate();
+
+        return new Proveedor(
+                txtNombreFantasia.getText(),
+                txtDireccion.getText(),
+                txtEmail.getText(),
+                txtIngresosBrutos.getText(),
+                fecha,
+                dropRubro.getSelectedItem().toString(),
+                //(float) 2000,
+                txtRazonSocial.getText(),
+                txtCuit.getText(),
+                dropResponsableIva.getSelectedItem().toString(),
+                sel.id
+        );
+
+    }
+
     private void setDDLResponsableIva() {
-        vistaProv.validate() ;// for JFrame up to Java7 is there only validate()
+        vistaProv.validate();// for JFrame up to Java7 is there only validate()
         vistaProv.repaint();
-        var controladorProv= ControladorProveedor.getInstancia().getOpcionesDDLResponsableIva();
+        var controladorProv = ControladorProveedor.getInstancia().getOpcionesDDLResponsableIva();
         this.dropResponsableIva.setModel(new DefaultComboBoxModel(controladorProv.toArray()));
+    }
+
+    private void genericValidateJtextNumbers(JTextField inputText, java.awt.event.KeyEvent evt) {
+        char c = evt.getKeyChar();
+
+        if ( Character.isDigit(c) || Character.isISOControl(c) ) {
+            inputText.setEditable(true);
+        } else {
+            inputText.setEditable(false);
+        }
+    }
+
+    private void genericValidateJtext(JTextField inputText, java.awt.event.KeyEvent evt) {
+        char c = evt.getKeyChar();
+
+        if ( Character.isLetter(c) || Character.isISOControl(c) || Character.isWhitespace(c) || !Character.isDigit(c) ) {
+            inputText.setEditable(true);
+        } else {
+            inputText.setEditable(false);
+        }
     }
 
     private void createUIComponents() { //componente custom para la fecha //TODO en facturas?

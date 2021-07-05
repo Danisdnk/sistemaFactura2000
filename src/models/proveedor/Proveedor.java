@@ -4,6 +4,8 @@ import dal.Identificable;
 import models.dtos.*;
 import models.impuesto.EnumResponsableIva;
 
+import java.time.LocalDate;
+
 public class Proveedor implements DDLeable, Identificable {
     // TODO agregar a diagrama clases
     private int ID;
@@ -20,7 +22,7 @@ public class Proveedor implements DDLeable, Identificable {
 
     private String numeroIIBB;
 
-    private String inicioActividades;
+    private LocalDate inicioActividades;
 
     private String rubros;
 
@@ -48,7 +50,7 @@ public class Proveedor implements DDLeable, Identificable {
             String direccion,
             String email,
             String numeroIIBB,
-            String inicioActividades,
+            LocalDate inicioActividades,
             String rubros,
           //  Float credito,
             String razonSocial,
@@ -136,11 +138,11 @@ public class Proveedor implements DDLeable, Identificable {
         this.numeroIIBB = numeroIIBB;
     }
 
-    public String getInicioActividades() {
+    public LocalDate getInicioActividades() {
         return inicioActividades;
     }
 
-    public void setInicioActividades(String inicioActividades) {
+    public void setInicioActividades(LocalDate inicioActividades) {
         this.inicioActividades = inicioActividades;
     }
 

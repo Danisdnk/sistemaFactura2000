@@ -63,7 +63,7 @@ public class ViewCuentaCorriente extends JFrame{
                 
                 if(!textCuit.getText().isEmpty()){
                     String cuit  = textCuit.getText();
-                    if(ControladorProveedor.getInstancia().existsProveedor(cuit)) {
+                    if(ControladorProveedor.getInstancia().existsProveedorCuit(cuit)) {
                         setJTableCuentaCorriente(cuit);
                         setJTextData(cuit);
                     }else{

@@ -15,21 +15,12 @@ public class ControladorProveedor {
         this.RepoProveedores =  RepoFactory.getRepoProveedores();
     }
 
-    public void verificarIndice(Proveedor p){
-        this.RepoProveedores.restarIndice(p);
-    }
-
     public void agregarProveedor(Proveedor p){
         this.RepoProveedores.insertar(p);
     }
 
-    public boolean eliminarProveedor(Proveedor p){
-     return this.RepoProveedores.borrar(p);
-    }
-    public void actualizarProveedor(Proveedor p){
-        this.RepoProveedores.updatear(p);
-    }
-
+    public boolean eliminarProveedor(Proveedor p){ return this.RepoProveedores.borrar(p); }
+    public void actualizarProveedor(Proveedor p){ this.RepoProveedores.updatear(p); }
     public List<Proveedor> getProveedores() {
         return this.RepoProveedores.getTodos();
     }
@@ -69,10 +60,16 @@ public class ControladorProveedor {
      * @param cuit
      * @return boolean
      */
-    public boolean existsProveedor(String cuit) {
+    public boolean existsProveedorCuit(String cuit) {
         return this.RepoProveedores.getTodos()
                 .stream()
                 .anyMatch(p -> p.getCuit().equals(cuit));
+    }
+
+    public boolean existsProveedorNombre(String nombre) {
+        return this.RepoProveedores.getTodos()
+                .stream()
+                .anyMatch(p -> p.getNombre().equals(nombre));
     }
 
     public static ControladorProveedor getInstancia() {

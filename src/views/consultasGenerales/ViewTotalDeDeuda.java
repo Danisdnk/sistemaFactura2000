@@ -128,7 +128,7 @@ public class ViewTotalDeDeuda extends JFrame{
 
     private void setJtextArea(String cuit) {
 
-        if (!ControladorProveedor.getInstancia().existsProveedor(cuit)){
+        if (!ControladorProveedor.getInstancia().existsProveedorCuit(cuit)){
 
             this.labelMonto.setText(" El proveedor correspondiente al cuit ingresado no existe ");
         }else{
