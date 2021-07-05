@@ -51,8 +51,9 @@ public class ProveedorItem implements DDLeable, Identificable {
             {
                 id = IDProveedorItem;
                 precio = precioUnitario;
+                producto = item.getNombre();
                 tipo = item.getTipo().toString();
-                descripcion = proveedor.getNombre();
+                proveedor = getProveedor().getNombre();
             }
         };
     }

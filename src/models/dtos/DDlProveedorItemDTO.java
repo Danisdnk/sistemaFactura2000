@@ -8,14 +8,15 @@ public class DDlProveedorItemDTO extends DDLItemDTO {
 
         public int id;
 
-        public  Double precio;
-        public String descripcion;
+        public Double precio;
+        public String producto;
+        public String proveedor;
         public String tipo;
 
 
         @Override
         public String toString() {
-            return  this.tipo+(" ")+this.descripcion+(" ")+this.precio;
+            return  this.producto;
          }
 
 }
