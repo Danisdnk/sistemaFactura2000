@@ -31,6 +31,7 @@ public class ViewConsultaLibroIVACompras extends JFrame{
     private JLabel iva105;
     private JLabel iva21;
     private JLabel iva27;
+    private JLabel textTotalIVA;
     private DefaultTableModel model;
 
 
@@ -153,6 +154,7 @@ public class ViewConsultaLibroIVACompras extends JFrame{
         iva105.setText(String.valueOf(textiva105));
         iva21.setText(String.valueOf(textiva21));
         iva27.setText(String.valueOf(textiva27));
-
+        textTotalIVA.setText(String.valueOf(textiva25+textiva5+textiva105+textiva21+textiva27));
+        //todo sacar decimales
     }
 }

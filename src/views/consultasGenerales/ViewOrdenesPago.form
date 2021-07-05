@@ -241,7 +241,7 @@
                 </constraints>
                 <properties>
                   <foreground color="-22507"/>
-                  <text value="CUIT"/>
+                  <text value="Proveedor (CUIT)"/>
                 </properties>
               </component>
               <component id="6054f" class="javax.swing.JTextField" binding="textCuit">

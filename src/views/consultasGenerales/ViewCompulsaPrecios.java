@@ -52,7 +52,7 @@ public class ViewCompulsaPrecios extends JFrame{
 
         model = new DefaultTableModel();
         model.addColumn("Proveedor");
-        model.addColumn("Precio");
+        model.addColumn("Precio Neto");
         tablePrecios.setModel(model);
 
 
@@ -228,7 +228,7 @@ public class ViewCompulsaPrecios extends JFrame{
         model.getDataVector().removeAllElements();
         for(DDlProveedorItemDTO itemPorProveedor : ControladorItem.getInstancia().getProveedorItemsByItem(descripcion)){
             model.addRow(new Object[]{
-                    itemPorProveedor.descripcion,
+                    itemPorProveedor.proveedor,
                     itemPorProveedor.precio,
             });
         }

@@ -1,11 +1,15 @@
 package views.consultasGenerales;
 
+import controllers.ControladorComprobantes;
+import controllers.ControladorOrdenesDePagos;
+import controllers.ControladorProveedor;
 import views.documentosRecibidos.DocumentosView;
 import views.login.loginView;
 import views.ordenesDePago.OrdenesDePagoFrame;
 import views.proveedores.provedorView;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -20,8 +24,16 @@ public class ViewCuentaCorriente extends JFrame{
     private JButton ordenesDePagoButton;
     private JButton usuariosButton;
     private JButton cancelarButton;
-    private JTable table1;
+    private JTable tablaCuentaCorriente;
     private JPanel cuentaCorriente;
+    private JTextField textCuit;
+    private JButton consultarButton;
+    private JLabel labelFacturas;
+    private JLabel labelND;
+    private JLabel labelNC;
+    private JLabel labelOP;
+    private JLabel labelEC;
+    private DefaultTableModel model;
 
     public ViewCuentaCorriente(){
 
@@ -31,6 +43,47 @@ public class ViewCuentaCorriente extends JFrame{
         this.setSize(1000,600);
         this.setVisible(true);
         this.setLocationRelativeTo(null);
+
+        labelFacturas.setVisible(false);
+        labelEC.setVisible(false);
+        labelNC.setVisible(false);
+        labelND.setVisible(false);
+        labelOP.setVisible(false);
+
+        model = new DefaultTableModel();
+        model.addColumn("Nro Documento");
+        model.addColumn("Fecha");
+        model.addColumn("Monto Total");
+        tablaCuentaCorriente.setModel(model);
+
+        
+        consultarButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                
+                if(!textCuit.getText().isEmpty()){
+                    String cuit  = textCuit.getText();
+                    if(ControladorProveedor.getInstancia().existsProveedor(cuit)) {
+                        setJTableCuentaCorriente(cuit);
+                        setJTextData(cuit);
+                    }else{
+                        JOptionPane.showMessageDialog(
+                                consultarButton,
+                                "No existe un Proveedor con el cuit ingresado",
+                                "Error",
+                                JOptionPane.ERROR_MESSAGE); 
+                         }
+                }else{
+                    JOptionPane.showMessageDialog(
+                            consultarButton,
+                            "Ingrese un CUIT para continuar",
+                            "Error",
+                            JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        });
+        
+        
 
 
 
@@ -86,6 +139,25 @@ public class ViewCuentaCorriente extends JFrame{
                 dispose();
             }
         });
+    }
+
+    private void setJTextData(String cuit) {
+        labelFacturas.setVisible(true);
+        labelOP.setVisible(true);
+        labelND.setVisible(true);
+        labelNC.setVisible(true);
+        labelEC.setVisible(true);
+        labelFacturas.setText(String.valueOf(ControladorComprobantes.getInstancia().getFacturasByProveedor(cuit).size()));
+        labelOP.setText(String.valueOf(ControladorOrdenesDePagos.getInstancia().getOPsByCuit(cuit).size()));
+        labelNC.setText(String.valueOf(ControladorComprobantes.getInstancia().getNCreditoByCuit(cuit).size()));
+        labelND.setText(String.valueOf(ControladorComprobantes.getInstancia().getNDebitoByCuit(cuit).size()));
+        labelEC.setText(String.valueOf(ControladorComprobantes.getInstancia().calcularDeudaDeProveedorByCuit(cuit)));
+    }
+
+    private void setJTableCuentaCorriente(String cuit) {
+
+
+
     }
 
 }
