@@ -62,13 +62,6 @@ public class ViewCuentaCorriente extends JFrame{
         consultarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                
-                if(!textCuit.getText().isEmpty()){
-                    String cuit  = textCuit.getText();
-                    if(ControladorProveedor.getInstancia().existsProveedorCuit(cuit)) {
-                        setJTableCuentaCorriente(cuit);
-                        setJTextData(cuit);
-                    }else{
 
                 if (!textCuit.getText().isEmpty()) {
                     String cuit = textCuit.getText();
@@ -90,8 +83,7 @@ public class ViewCuentaCorriente extends JFrame{
                 }
             }
         });
-        
-        
+
 
 
 
