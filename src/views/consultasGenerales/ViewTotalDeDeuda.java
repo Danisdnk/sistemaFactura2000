@@ -11,6 +11,7 @@ import views.proveedores.provedorView;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.DecimalFormat;
 import java.util.List;
 
 public class ViewTotalDeDeuda extends JFrame{
@@ -128,11 +129,12 @@ public class ViewTotalDeDeuda extends JFrame{
 
     private void setJtextArea(String cuit) {
 
-        if (!ControladorProveedor.getInstancia().existsProveedorCuit(cuit)){
+        DecimalFormat formato1 = new DecimalFormat("#.##");
+       if (!ControladorProveedor.getInstancia().existsProveedorCuit(cuit)){
 
             this.labelMonto.setText(" El proveedor correspondiente al cuit ingresado no existe ");
         }else{
-            this.labelMonto.setText(String.valueOf(ControladorComprobantes.getInstancia().calcularDeudaDeProveedorByCuit(cuit)));
+            this.labelMonto.setText(String.valueOf(formato1.format(ControladorComprobantes.getInstancia().calcularDeudaDeProveedorByCuit(cuit))));
         }
     }
 

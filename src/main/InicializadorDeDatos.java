@@ -25,6 +25,7 @@ public class InicializadorDeDatos {
         var repoProveedorItem = RepoFactory.getProveedorItem();
         var repoResponsableIva=RepoFactory.getResponsableIva();
         var repoIVA = RepoFactory.getIVA();
+        var repoOrdenCompra = RepoFactory.getRepoOrdenCompra();
 
 
         //Tipos de pago
@@ -206,6 +207,9 @@ public class InicializadorDeDatos {
             repoProveedorItem.insertar(new ProveedorItem(1300D,hierro,philips));
             repoProveedorItem.insertar(new ProveedorItem(700D,madera,philips));
             repoProveedorItem.insertar(new ProveedorItem(40000D,oro,philips));
+
+        }
+        if(repoOrdenCompra.getTodos().size() == 0){
 
         }
 

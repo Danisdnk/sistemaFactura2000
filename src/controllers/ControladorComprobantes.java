@@ -213,23 +213,17 @@ public class ControladorComprobantes {
      */
     public float calcularDeudaDeProveedorByCuit(String cuit) {
         var ordenesDePago = ControladorOrdenesDePagos.getInstancia().getOPsByCuit(cuit);
-        var comprobantesPagos = ordenesDePago
-                .stream()
-                .flatMap(x -> x.getItems().stream())
-                .flatMap(x -> x.getComprobantesAsociados().stream())
-                .toList();
-
         var comprobantes = getComprobantesByCuit(cuit);
 
-        float sum1 = 0;
-        float sum2 = 0;
+        float sumaCompro = 0;
+        float sumaOPs = 0;
         for (Comprobante comprobante : comprobantes)
-            sum1 = sum1  + comprobante.getMontoTotal();
+            sumaCompro = sumaCompro  + comprobante.getMontoTotal();
 
-        for (Comprobante cp : comprobantesPagos)
-            sum2 = sum2  + cp.getMontoTotal();
+        for (OrdenPago op : ordenesDePago)
+            sumaOPs = sumaOPs  + op.getMontoTotal();
 
-        return  sum1 - sum2;
+        return  sumaCompro - sumaOPs;
 
     }
 
