@@ -1,13 +1,14 @@
 package views.documentosRecibidos;
 
-import controllers.ControladorProveedor;
+import controllers.*;
+import models.documento.ItemOrdenCompra;
+import models.documento.OrdenCompra;
 import models.dtos.DDlProveedorItemDTO;
 import views.consultasGenerales.ViewConsultasGenerales;
 import views.login.loginView;
 import views.ordenesDePago.OrdenesDePagoFrame;
 import views.proveedores.provedorView;
 import models.dtos.DDLItemDTO;
-import controllers.ControladorItem;
 import controllers.ControladorProveedor;
 import models.proveedor.Proveedor;
 import models.dtos.DDLItemDTO;
@@ -28,9 +29,12 @@ import views.utils.DateParse;
 import java.awt.event.ActionListener;
 
 import java.sql.Date;
+import java.text.NumberFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.List;
 
 public class SolapaCompra extends JDialog {
     private JPanel prinicipalSolapaCompra;
@@ -45,13 +49,14 @@ public class SolapaCompra extends JDialog {
     private JTable tablaItemsFactura;
     private JButton cancelarButton;
     private JButton guardarButton;
-    private JTextField textField4;
+    private JTextField totalCompra;
     private JTextField textDate;
     private Integer proveedorID;
     private ControladorProveedor controlador;
     private Proveedor itemSeleccionado;
     private MiTableModelCompra miModeloCompra = new MiTableModelCompra();
     private Integer rubroID;
+    private ControladorOrdenCompra controladorOC;
 
     //botones nav
     private JButton usuariosButton;
@@ -81,13 +86,6 @@ public class SolapaCompra extends JDialog {
         tablaItemsFactura.setModel(miModeloCompra);
 
 
-
-
-
-        miModeloCompra.add(1, "Bananas", 8, 20.0);
-        miModeloCompra.add(2, "Bananas", 5, 27.5);
-        miModeloCompra.add(3, "Bananas", 10, 38.2);
-        miModeloCompra.add(4, "Bananas", 7, 28.2);
 
         this.comboBox1.addActionListener(new ActionListener() {
             @Override
@@ -202,16 +200,53 @@ public class SolapaCompra extends JDialog {
             public void actionPerformed(ActionEvent e) {
                 var sel = (DDlProveedorItemDTO)comboBox2.getSelectedItem() ;
                 miModeloCompra.add(sel.id,sel.producto,Integer.parseInt(textCant.getText()), sel.precio);
+
                 miModeloCompra.fireTableDataChanged();
+                getSumItems();
             }
         });
 
         quitarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+
                 miModeloCompra.removeRowAt(miModeloCompra.getRowCount()-1);
+                miModeloCompra.fireTableDataChanged();
+                getSumItems();
+
             }
         });
+
+
+        guardarButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                var sel = (DDLItemDTO) comboBox1.getSelectedItem();
+                if (sel != null){
+                    var proveedor = controlador.getProveedorByID(sel.id);
+                    var fecha = DateParse.parse(textDate.getText());
+                    Float total = Float.parseFloat(totalCompra.getText());
+                    OrdenCompra oc = new OrdenCompra(fecha,proveedor,total);
+                    controladorOC.getInstancia().agregarOrdenCompra(oc);
+                }
+
+
+
+            }
+        });
+    }
+
+    private void getSumItems(){
+        float sum = 0;
+        int numOfRows = tablaItemsFactura.getRowCount();
+        for (int i =0; i < numOfRows; i++){
+            Object cost = tablaItemsFactura.getValueAt(i, 3);
+            if (cost instanceof Number) {
+                sum += ((Number) cost).floatValue();
+            }
+
+        }
+        totalCompra.setText(String.valueOf(sum));
     }
 
     private void setDDLProveedores() {
