@@ -1,17 +1,16 @@
 package models.documento;
 
-import models.mediopago.TipoPago;
 import models.proveedor.Proveedor;
 
-import java.time.LocalDate;
-import java.util.*;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
+import java.util.ArrayList;
+import java.util.List;
 
 public class OrdenPago extends Comprobante {
     private List<ItemOrdenPago> items = new ArrayList<>();
 
     private float totalRetenciones;
+    private float retencionIVA;
+    private float retencionIIBB;
 
     public OrdenPago() {
         this.tipo = "OP";
@@ -56,11 +55,23 @@ public class OrdenPago extends Comprobante {
         return totalRetenciones;
     }
 
-    public void setTotalRetenciones(float totalRetenciones) {
-        this.totalRetenciones = totalRetenciones;
+    public void setTotalRetenciones(float retencionIVA, float retencionIIBB) {
+        this.totalRetenciones = totalRetenciones + retencionIVA + retencionIIBB;
     }
 
     private void calcularTotal() {
-        this.montoTotal = (float) this.items.stream().mapToDouble(ItemOrdenPago::getTotal).sum();
+        this.montoTotal = (float) this.items.stream().mapToDouble(ItemOrdenPago::getMontoTotal).sum();
+        this.montoNeto = (float) this.items.stream().mapToDouble(ItemOrdenPago::getMontoNeto).sum();
+        this.montoIva = (float) this.items.stream().mapToDouble(ItemOrdenPago::getMontoIva).sum();
+        this.retencionIVA = (float) this.items.stream().mapToDouble(ItemOrdenPago::getMontoRetencionIVA).sum();
+        this.retencionIIBB = (float) this.items.stream().mapToDouble(ItemOrdenPago::getMontoRetencionIIBB).sum();
+        setTotalRetenciones(retencionIVA,retencionIIBB);
+    }
+    public float getRetencionIIBB() {
+        return retencionIIBB;
+    }
+
+    public float getRetencionIVA() {
+        return retencionIVA;
     }
 }

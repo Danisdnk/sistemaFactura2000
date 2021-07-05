@@ -7,15 +7,14 @@ import views.consultasGenerales.ViewConsultasGenerales;
 import views.documentosRecibidos.DocumentosView;
 import views.login.loginView;
 import views.proveedores.provedorView;
-import views.utils.MultiLineTableCell;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.stream.Collectors;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class OrdenDePagoItemsDialog extends JDialog implements ActionListener  {
     private JTable tbPagos;
@@ -166,7 +165,7 @@ public class OrdenDePagoItemsDialog extends JDialog implements ActionListener  {
     }
 
     private  Object[] crearObjTabla(ItemOrdenPago pago){
-        var total = pago.getTotal();
+        var total = pago.getMontoTotal();
         var comprobantes = pago
                 .getComprobantesAsociados()
                 .stream()
