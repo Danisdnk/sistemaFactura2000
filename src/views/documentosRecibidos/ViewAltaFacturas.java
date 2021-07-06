@@ -8,6 +8,7 @@ import models.documento.ItemFactura;
 import models.dtos.DDLItemDTO;
 import models.dtos.DDlProveedorItemDTO;
 import models.proveedor.Proveedor;
+import views.MenuPrincipal;
 import views.consultasGenerales.ViewConsultasGenerales;
 import views.login.loginView;
 import views.ordenesDePago.OrdenesDePagoFrame;
@@ -17,6 +18,7 @@ import views.utils.DateParse;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.text.DecimalFormat;
+import java.text.ParseException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -96,6 +98,7 @@ public class ViewAltaFacturas extends JFrame{
             textNeto.setText("0");
             textTotal.setText("0");
             textIva.setText("0");
+            model.getDataVector().removeAllElements();
 
             var sel = (DDLItemDTO) ddlProveedor.getSelectedItem();
 
@@ -145,36 +148,72 @@ public class ViewAltaFacturas extends JFrame{
 
         });
 
-        quitarButton.addActionListener(e -> model.removeRow(model.getRowCount()-1));
+        quitarButton.addActionListener(e -> {
+            if (model.getRowCount() != 0 ){
+
+                if(model.getRowCount()>0) {
+                    int rows = model.getRowCount();
+                    var subtotal = model.getValueAt(model.getRowCount()-1 , 5);
+                    var Iva = model.getValueAt(model.getRowCount() -1, 3);
+
+
+                    montoIva =  montoIva - Float.parseFloat(subtotal.toString())*(Float.parseFloat(Iva.toString())/100);
+                    montoNeto = montoNeto - Float.parseFloat(subtotal.toString());
+                    montoTotal = montoTotal - Float.parseFloat(subtotal.toString())*(Float.parseFloat(Iva.toString())/100) - Float.parseFloat(subtotal.toString());
+                    textNeto.setText(String.valueOf(formato1.format(montoNeto)));
+                    textTotal.setText(String.valueOf(formato1.format(montoTotal)));
+                }
+                model.removeRow(model.getRowCount()-1);
+                if(model.getRowCount()==0) {
+                    textIva.setText("0");
+                    Iva = 0F;
+                }
+
+            }
+
+        });
 
         guardarButton.addActionListener(e -> {
             try {
-                var sel = (DDLItemDTO) ddlProveedor.getSelectedItem();
-                var sel2 = (DDLItemDTO) ddlProductos.getSelectedItem();
-                if (sel != null) {
-                    assert sel2 != null;
-                    var ItemFactura = generarListaDeItemsFactura();
-                    var proveedor = ControladorProveedor.getInstancia().getProveedorByID(sel.id);
-                    var fecha = DateParse.parse(textDate.getText());
-                    Factura f = new Factura(proveedor,montoNeto, Iva, montoIva,montoTotal, fecha, ItemFactura);
-                    ControladorComprobantes.getInstancia().agregarFactura(f);
+                if(model.getRowCount() != 0){
 
-                    textTotal.setText("0");
-                    textNeto.setText("0");
-                    textIva.setText("0");
-                    textCant.setText("");
-                    montoIva = 0F;
-                    montoNeto = 0F;
-                    montoTotal = 0F;
-                    Iva = 0F;
-                    model.getDataVector().removeAllElements();
-                    model.fireTableDataChanged();
+                    var sel = (DDLItemDTO) ddlProveedor.getSelectedItem();
+                    var sel2 = (DDLItemDTO) ddlProductos.getSelectedItem();
+                    if (sel != null) {
+                        assert sel2 != null;
+                        detectarPreciosImputs();
+                        var ItemFactura = generarListaDeItemsFactura();
+                        var proveedor = ControladorProveedor.getInstancia().getProveedorByID(sel.id);
+                        var fecha = DateParse.parse(textDate.getText());
+                        Factura f = new Factura(proveedor, montoNeto, Iva, montoIva, montoTotal, fecha, ItemFactura);
+                        ControladorComprobantes.getInstancia().agregarFactura(f);
+
+                        textTotal.setText("0");
+                        textNeto.setText("0");
+                        textIva.setText("0");
+                        textCant.setText("");
+                        montoIva = 0F;
+                        montoNeto = 0F;
+                        montoTotal = 0F;
+                        Iva = 0F;
+                        model.getDataVector().removeAllElements();
+                        model.fireTableDataChanged();
+
+                        JOptionPane.showMessageDialog(
+                                guardarButton,
+                                "Nueva factura creada",
+                                "Information",
+                                JOptionPane.INFORMATION_MESSAGE);
+                     }
+
+                }else{
+                        JOptionPane.showMessageDialog(
+                                guardarButton,
+                                "Agrege algun item a la factura",
+                                "Information",
+                                JOptionPane.INFORMATION_MESSAGE);
                 }
-                JOptionPane.showMessageDialog(
-                        guardarButton,
-                        "Nueva factura creada",
-                        "Information",
-                        JOptionPane.INFORMATION_MESSAGE);
+
 
             }catch  (Exception ex) {
                 ex.printStackTrace();
@@ -187,8 +226,8 @@ public class ViewAltaFacturas extends JFrame{
         });
 
         cancelarButton.addActionListener(e -> {
-            OrdenesDePagoFrame op = new OrdenesDePagoFrame();
-            op.setVisible(true);
+            var MenuPrincipal = new MenuPrincipal("Factura 2000");
+            MenuPrincipal.setVisible(true);
             dispose();
         });
 
@@ -221,6 +260,8 @@ public class ViewAltaFacturas extends JFrame{
             dispose();
         });
     }
+
+
 
     private List<ItemFactura> generarListaDeItemsFactura() {
 
@@ -260,7 +301,7 @@ public class ViewAltaFacturas extends JFrame{
             textIva.setText(String.valueOf(ivaP));
             Iva = (float) ivaP;
         }
-        montoIva = subNetoP * (Iva/ 100);
+        montoIva =  montoIva + subNetoP * (Iva/ 100);
         montoNeto = montoNeto + subNetoP;
         this.textNeto.setText(String.valueOf(formato1.format(montoNeto)));
         montoTotal = montoNeto  + montoIva;
@@ -268,6 +309,21 @@ public class ViewAltaFacturas extends JFrame{
         
         
 
+    }
+
+    private void detectarPreciosImputs() throws ParseException {
+
+
+        var netoText = Float.parseFloat(String.valueOf(formato1.parse(textNeto.getText()).floatValue()));
+        var totalText = Float.parseFloat(String.valueOf(formato1.parse(textTotal.getText()).floatValue()));
+        var ivaText = Float.parseFloat(String.valueOf(formato1.parse(textIva.getText()).floatValue()));
+
+        if(netoText != montoNeto)
+            montoNeto = netoText;
+        if(totalText != montoTotal)
+            montoTotal = totalText;
+        if(ivaText != montoIva)
+            montoIva = ivaText;
     }
 
 

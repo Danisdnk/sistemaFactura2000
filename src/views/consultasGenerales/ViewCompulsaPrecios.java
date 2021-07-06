@@ -57,28 +57,13 @@ public class ViewCompulsaPrecios extends JFrame{
 
         this.setDDLRubros();
         this.ddlProductos.addItem("Selecione un Rubro");
-        //this.setDDLProductos((String) this.ddlRubros.getSelectedItem());
-
-        /*
-        this.ddlProductos.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                var sel = (DDLItemDTO) ddlProductos.getSelectedItem();
-
-                if (sel != null) {
-                    provductoID = sel.id;
-                } else {
-                    provductoID = null;
-                }
-            }
-        });*/
 
         this.ddlRubros.addActionListener(e -> {
             var sel = (DDLItemDTO)ddlRubros.getSelectedItem();
 
             if (sel != null ) {
                 rubroID = sel.id;
-                setDDLProductos(sel.descripcion);
+                setDDLProductos(rubroID);
             } else {
                 rubroID = null;
             }
@@ -92,8 +77,8 @@ public class ViewCompulsaPrecios extends JFrame{
             if( ddlProductos.getSelectedItem() != ("Selecione un Rubro")) {
                 var sel = (DDLItemDTO)ddlProductos.getSelectedItem() ;
                 if (sel != null) {
-                    setJtextArea(sel.descripcion);
-                    setTablePrecios(sel.descripcion);
+                    setJtextArea(sel.id);
+                    setTablePrecios(sel.id);
                 } else {
                     rubroID = null;
 
@@ -165,8 +150,8 @@ public class ViewCompulsaPrecios extends JFrame{
         this.ddlRubros.setModel(new DefaultComboBoxModel(model.toArray()));
     }
 
-    private void setDDLProductos(String descripcion) {
-        var model = ControladorItem.getInstancia().getOpcionesDDLItems(descripcion);
+    private void setDDLProductos(int rubroID) {
+        var model = ControladorItem.getInstancia().getOpcionesDDLItems(rubroID);
         this.ddlProductos.setModel(new DefaultComboBoxModel(model.toArray()));
     }
 
@@ -175,8 +160,8 @@ public class ViewCompulsaPrecios extends JFrame{
         this.ddlProductos.setModel(new DefaultComboBoxModel(model.toArray()));
     }
 
-    private void setJtextArea(String descripcion) {
-        var itemPorProveedor = ControladorItem.getInstancia().getProveedorItemsByItem(descripcion);
+    private void setJtextArea(int itemID) {
+        var itemPorProveedor = ControladorItem.getInstancia().getProveedorItemsByItem(itemID);
         if (itemPorProveedor.isEmpty()){
             this.TextResultado.setText("Este producto no posee precio fijados por vendedores actualmente ");
         }
@@ -199,10 +184,10 @@ public class ViewCompulsaPrecios extends JFrame{
         System.out.println(itemPorProveedor);
     }
 
-    private void setTablePrecios(String descripcion) {
+    private void setTablePrecios(int itemID) {
 
         model.getDataVector().removeAllElements();
-        for(DDlProveedorItemDTO itemPorProveedor : ControladorItem.getInstancia().getProveedorItemsByItem(descripcion)){
+        for(DDlProveedorItemDTO itemPorProveedor : ControladorItem.getInstancia().getProveedorItemsByItem(itemID)){
             model.addRow(new Object[]{
                     itemPorProveedor.proveedor,
                     itemPorProveedor.precio,

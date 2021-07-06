@@ -100,7 +100,7 @@ public class ControladorComprobantes {
     }
 
     /**
-     * metodo para traer(facturas y notas) Comprobantes por CUIT -> CG calculo deuda?
+     * metodo para traer(facturas y notas) Comprobantes por CUIT -> CG calculo deuda
      * @param cuit
      * @return List<Factura>
      */

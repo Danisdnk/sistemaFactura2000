@@ -46,6 +46,17 @@ public class Nota extends Comprobante {
     }
 
     @Override
+    public float getMontoNeto() {
+        //debito suma, credito resta
+        return this.nota == TipoDeNota.DEBITO ? this.montoNeto : this.montoNeto*-1;
+    }
+
+    @Override
+    public float getMontoIva() {
+        //debito suma, credito resta
+        return this.nota == TipoDeNota.DEBITO ? this.montoIva : this.montoIva*-1;
+    }
+    @Override
     public float getMontoTotal() {
         //debito suma, credito resta
         return this.nota == TipoDeNota.DEBITO ? this.montoTotal : this.montoTotal*-1;

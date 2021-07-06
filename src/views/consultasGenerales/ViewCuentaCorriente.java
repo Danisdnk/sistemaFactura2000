@@ -141,8 +141,8 @@ public class ViewCuentaCorriente extends JFrame{
                     comprobante.getProveedor().getNombre(),
                     comprobante.tipo() + (" ") + comprobante.getNro(),
                     comprobante.getFecha(),
-                    comprobante.getMontoNeto(),
-                    detectarMontoTOtal(comprobante.getMontoTotal(), comprobante.tipo())
+                    detectarMontoTotal(comprobante.getMontoNeto(), comprobante.tipo()),
+                    detectarMontoTotal(comprobante.getMontoTotal(), comprobante.tipo())
             });
 
         }
@@ -159,7 +159,7 @@ public class ViewCuentaCorriente extends JFrame{
         }
         model.fireTableDataChanged();
     }
-    private Float detectarMontoTOtal(Float result, String tipo ) {
+    private Float detectarMontoTotal(Float result, String tipo ) {
 
         if (tipo.equals("NOTA CREDITO"))
             result = result * -1;

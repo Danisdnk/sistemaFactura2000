@@ -77,17 +77,22 @@ public class ControladorItem {
     /**
      * metodo que devuelve una DropDownList de Items segun un Rubro, convertida a DDLItemDTO
      * Usado en CompulsaPrecios y SolapaCompras
-     * @param descripcion
+     * @param rubroID
      * @return List<DDLItemDTO>
      */
-    public List<DDLItemDTO> getOpcionesDDLItems(String descripcion) {
+    public List<DDLItemDTO> getOpcionesDDLItems(int rubroID) {
         return this.RepoItems.getTodos()
                 .stream()
-                .filter(p -> p.getPertenece().getNombre().equals(descripcion))
+                .filter(p -> p.getPertenece().getID() ==  rubroID)
                 .map(Item::toDDL)
                 .toList();
     }
 
+    /**
+     * metodo que devuelve una DropDownList de item de un proveedor segun un cuit
+     * @param cuit
+     * @return List<DDLItemDTO>
+     */
     public List<DDlProveedorItemDTO> getOpcionesDDLItemsByProveedor(String cuit) {
         return this.RepoProveedorItem.getTodos()
                 .stream()
@@ -113,15 +118,15 @@ public class ControladorItem {
     }
 
     /**
-     * metodo que devuelve una lista de ProveedorItems segun un Item (sirve para obtener el precio de un item de todos los proveedores)
+     * metodo que devuelve una lista de ProveedorItems segun un ItemID (sirve para obtener el precio de un item de todos los proveedores)
      * Usada en CompulsaPrecios
-     * @param descripcion
+     * @param itemID
      * @return List<DDlProveedorItemDTO>
      */
-    public List<DDlProveedorItemDTO> getProveedorItemsByItem(String descripcion){
+    public List<DDlProveedorItemDTO> getProveedorItemsByItem(int itemID){
         return this.RepoProveedorItem.getTodos()
                 .stream()
-                .filter(p -> p.getItem().getNombre().equals(descripcion))
+                .filter(p -> p.getItem().getID() == itemID)
                 .map(ProveedorItem::toDDL)
                 .toList();
     }
@@ -150,9 +155,5 @@ public class ControladorItem {
     }
 
 
-    public float consultarIva(int idItem) {
-        // TODO implement here
-        return 0.0f;
-    }
 
 }
