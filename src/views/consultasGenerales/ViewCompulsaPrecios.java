@@ -4,13 +4,11 @@ import controllers.ControladorItem;
 import models.dtos.DDLItemDTO;
 import models.dtos.DDlProveedorItemDTO;
 import views.documentosRecibidos.DocumentosView;
+import views.login.loginView;
 import views.ordenesDePago.OrdenesDePagoFrame;
-import views.proveedores.provedorView;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class ViewCompulsaPrecios extends JFrame{
 
@@ -75,107 +73,85 @@ public class ViewCompulsaPrecios extends JFrame{
             }
         });*/
 
-        this.ddlRubros.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                var sel = (DDLItemDTO)ddlRubros.getSelectedItem();
+        this.ddlRubros.addActionListener(e -> {
+            var sel = (DDLItemDTO)ddlRubros.getSelectedItem();
 
-                if (sel != null ) {
-                    rubroID = sel.id;
-                    setDDLProductos(sel.descripcion);
-                } else {
-                    rubroID = null;
-                }
-
-
+            if (sel != null ) {
+                rubroID = sel.id;
+                setDDLProductos(sel.descripcion);
+            } else {
+                rubroID = null;
             }
+
 
         });
 
-        this.consultarPreciosButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
+        this.consultarPreciosButton.addActionListener(e -> {
 
 
-                if( ddlProductos.getSelectedItem() != ("Selecione un Rubro")) {
-                    var sel = (DDLItemDTO)ddlProductos.getSelectedItem() ;
-                    if (sel != null) {
-                        setJtextArea(sel.descripcion);
-                        setTablePrecios(sel.descripcion);
-                    } else {
-                        rubroID = null;
+            if( ddlProductos.getSelectedItem() != ("Selecione un Rubro")) {
+                var sel = (DDLItemDTO)ddlProductos.getSelectedItem() ;
+                if (sel != null) {
+                    setJtextArea(sel.descripcion);
+                    setTablePrecios(sel.descripcion);
+                } else {
+                    rubroID = null;
 
-                        JOptionPane.showMessageDialog(
-                                consultarPreciosButton,
-                                "No se selecciono ningun producto",
-                                "Error",
-                                JOptionPane.ERROR_MESSAGE);
-
-
-                    }
-                }else{
                     JOptionPane.showMessageDialog(
                             consultarPreciosButton,
-                            "No se selecciono ningun Rubro",
+                            "No se selecciono ningun producto",
                             "Error",
                             JOptionPane.ERROR_MESSAGE);
 
 
                 }
-            }
-
-        });
-
-
-
-
-
+            }else{
+                JOptionPane.showMessageDialog(
+                        consultarPreciosButton,
+                        "No se selecciono ningun Rubro",
+                        "Error",
+                        JOptionPane.ERROR_MESSAGE);
 
 
-
-
-        cancelarButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                var ViewConsultasGenerales = new ViewConsultasGenerales();
-                ViewConsultasGenerales.setVisible(true);
-                dispose();
             }
         });
 
-        ordenesDePagoButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                OrdenesDePagoFrame op = new OrdenesDePagoFrame();
-                op.setVisible(true);
-                //dispose();
-            }
+
+
+
+
+
+
+
+
+        cancelarButton.addActionListener(e -> {
+            DocumentosView principal = new DocumentosView();
+            principal.setVisible(true);
+            dispose();
         });
 
-        consultasGeneralesButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                ViewConsultasGenerales cons = new ViewConsultasGenerales();
-                cons.setVisible(true);
-                dispose();
-            }
+        ordenesDePagoButton.addActionListener(e -> {
+            OrdenesDePagoFrame op = new OrdenesDePagoFrame();
+            op.setVisible(true);
+            dispose();
         });
 
-        DocumentosButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                DocumentosView docu = new DocumentosView();
-                docu.setVisible(true);
-                dispose();
-            }
+        consultasGeneralesButton.addActionListener(e -> {
+            ViewConsultasGenerales cons = new ViewConsultasGenerales();
+            cons.setVisible(true);
+            dispose();
         });
 
-        usuariosButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                provedorView principal = new provedorView();
-                principal.setVisible(true);
-                dispose();//esto cierra la ventana anterior
-            }
+        DocumentosButton.addActionListener(e -> {
+            DocumentosView docu = new DocumentosView();
+            docu.setVisible(true);
+            dispose();
+        });
+
+        usuariosButton.addActionListener(e -> {
+            loginView principal = new loginView();
+            principal.setVisible(true);
+            dispose();
         });
 
 

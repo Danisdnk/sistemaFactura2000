@@ -2,17 +2,13 @@ package views.consultasGenerales;
 
 import controllers.ControladorComprobantes;
 import controllers.ControladorProveedor;
-import models.dtos.ComprobanteDTO;
 import views.documentosRecibidos.DocumentosView;
 import views.login.loginView;
 import views.ordenesDePago.OrdenesDePagoFrame;
 import views.proveedores.provedorView;
 
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.text.DecimalFormat;
-import java.util.List;
 
 public class ViewTotalDeDeuda extends JFrame{
 
@@ -45,84 +41,61 @@ public class ViewTotalDeDeuda extends JFrame{
         this.setLocationRelativeTo(null);
 
 
-        consultarDeudaButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
+        consultarDeudaButton.addActionListener(e -> {
 
-                String cuit = null;
+            String cuit = null;
 
 
-                if (!textCUIT.getText().isEmpty()){
-                    cuit = textCUIT.getText();
-                    setJtextArea(cuit);
-                }else{
-                    JOptionPane.showMessageDialog(
-                            consultarButton,
-                            "Ingrese un CUIT para continuar",
-                            "Error",
-                            JOptionPane.ERROR_MESSAGE);
+            if (!textCUIT.getText().isEmpty()){
+                cuit = textCUIT.getText();
+                setJtextArea(cuit);
+            }else{
+                JOptionPane.showMessageDialog(
+                        consultarButton,
+                        "Ingrese un CUIT para continuar",
+                        "Error",
+                        JOptionPane.ERROR_MESSAGE);
 
-                }
             }
         });
 
 
-        cancelarButton.addActionListener(new ActionListener() {
+        cancelarButton.addActionListener(e -> {
 
-            @Override
-            public void actionPerformed(ActionEvent e) {
+            var ViewConsultasGenerales = new ViewConsultasGenerales();
+            ViewConsultasGenerales.setVisible(true);
 
-                var ViewConsultasGenerales = new ViewConsultasGenerales();
-                ViewConsultasGenerales.setVisible(true);
-
-                dispose();
-
-            }
+            dispose();
 
         });
 
-        ordenesDePagoButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                OrdenesDePagoFrame op = new OrdenesDePagoFrame();
-                op.setVisible(true);
-                //dispose();
-            }
+        ordenesDePagoButton.addActionListener(e -> {
+            OrdenesDePagoFrame op = new OrdenesDePagoFrame();
+            op.setVisible(true);
+            //dispose();
         });
 
-        consultasGeneralesButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                ViewConsultasGenerales cons = new ViewConsultasGenerales();
-                cons.setVisible(true);
-                dispose();
-            }
+        consultasGeneralesButton.addActionListener(e -> {
+            ViewConsultasGenerales cons = new ViewConsultasGenerales();
+            cons.setVisible(true);
+            dispose();
         });
 
-        usuariosButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                loginView principal = new loginView();
-                principal.setVisible(true);
-                dispose();
-            }
+        usuariosButton.addActionListener(e -> {
+            loginView principal = new loginView();
+            principal.setVisible(true);
+            dispose();
         });
 
-        proveedoresButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                provedorView principal = new provedorView();
-                principal.setVisible(true);
-                dispose();
-            }
+        proveedoresButton.addActionListener(e -> {
+            provedorView principal = new provedorView();
+            principal.setVisible(true);
+            dispose();
         });
-        DocumentosButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                DocumentosView principal = new DocumentosView();
-                principal.setVisible(true);
-                dispose();
-            }
+        DocumentosButton.addActionListener(e -> {
+            DocumentosView principal = new DocumentosView();
+            principal.setVisible(true);
+            dispose();
         });
 
     }

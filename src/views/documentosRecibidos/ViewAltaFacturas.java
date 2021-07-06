@@ -8,6 +8,9 @@ import models.documento.ItemFactura;
 import models.dtos.DDLItemDTO;
 import models.dtos.DDlProveedorItemDTO;
 import models.proveedor.Proveedor;
+import views.consultasGenerales.ViewConsultasGenerales;
+import views.login.loginView;
+import views.ordenesDePago.OrdenesDePagoFrame;
 import views.utils.DateParse;
 
 import javax.swing.*;
@@ -163,6 +166,37 @@ public class ViewAltaFacturas extends JFrame{
 
 
         });
+
+        cancelarButton.addActionListener(e -> {
+            OrdenesDePagoFrame op = new OrdenesDePagoFrame();
+            op.setVisible(true);
+            dispose();
+        });
+
+        ordenesDePagoButton.addActionListener(e -> {
+            OrdenesDePagoFrame op = new OrdenesDePagoFrame();
+            op.setVisible(true);
+            dispose();
+        });
+
+        consultasGeneralesButton.addActionListener(e -> {
+            ViewConsultasGenerales cons = new ViewConsultasGenerales();
+            cons.setVisible(true);
+            dispose();
+        });
+
+        DocumentosButton.addActionListener(e -> {
+            DocumentosView docu = new DocumentosView();
+            docu.setVisible(true);
+            dispose();
+        });
+
+        usuariosButton.addActionListener(e -> {
+            loginView principal = new loginView();
+            principal.setVisible(true);
+            dispose();//esto cierra la ventana anterior
+        });
+
     }
 
     private List<ItemFactura> generarListaDeItemsFactura() {

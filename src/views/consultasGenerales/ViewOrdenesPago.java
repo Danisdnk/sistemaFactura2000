@@ -10,8 +10,6 @@ import views.proveedores.provedorView;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.List;
 
 public class ViewOrdenesPago extends JFrame{
@@ -43,8 +41,6 @@ public class ViewOrdenesPago extends JFrame{
         this.setVisible(true);
         this.setLocationRelativeTo(null);
 
-        //var op = ControladorOrdenesDePagos.getInstancia().getOPs();
-        //setJtextAreaResultado(op);
 
         model = new DefaultTableModel();
         model.addColumn("Orden De Pago ID");
@@ -59,139 +55,119 @@ public class ViewOrdenesPago extends JFrame{
 
 
 
-        consultarButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
+        consultarButton.addActionListener(e -> {
 
-                String cuit = textCuit.getText();
+            String cuit = textCuit.getText();
 
-                System.out.println(cuit);
-                if(!cuit.equals("")) {
-                    if (ControladorProveedor.getInstancia().existsProveedorCuit(cuit)) {
-                        model.getDataVector().removeAllElements();
-                        setJtextAreaResultado(ControladorOrdenesDePagos.getInstancia().getOPsByCuit(cuit));
-                        for (OrdenPago op : ControladorOrdenesDePagos.getInstancia().getOPsByCuit(cuit)) {
+            System.out.println(cuit);
+            if(!cuit.equals("")) {
+                if (ControladorProveedor.getInstancia().existsProveedorCuit(cuit)) {
+                    model.getDataVector().removeAllElements();
+                    setJtextAreaResultado(ControladorOrdenesDePagos.getInstancia().getOPsByCuit(cuit));
+                    for (OrdenPago op : ControladorOrdenesDePagos.getInstancia().getOPsByCuit(cuit)) {
 
-                            boolean ch = op.getItems().stream().anyMatch(u -> u.getTipoDePago().getType().equals("Cheque"));
-                            boolean ef = op.getItems().stream().anyMatch(u -> u.getTipoDePago().getType().equals("Efectivo"));
+                        boolean ch = op.getItems().stream().anyMatch(u -> u.getTipoDePago().getType().equals("Cheque"));
+                        boolean ef = op.getItems().stream().anyMatch(u -> u.getTipoDePago().getType().equals("Efectivo"));
 
-                            if (ch || ef) {
-                                if(ef){
-                                    model.addRow(new Object[]{
-                                            op.getID(),
-                                            op.getProveedor().getNombre(),
-                                            op.getFecha(),
-                                            op.getMontoTotal(),
-                                            op.getTotalRetenciones(),
-                                            "Si",
-                                            "Si"
-                                  });
-
-                                } else {
-                                    model.addRow(new Object[]{
-                                            op.getID(),
-                                            op.getProveedor().getNombre(),
-                                            op.getFecha(),
-                                            op.getMontoTotal(),
-                                            op.getTotalRetenciones(),
-                                            "Si",
-                                            "No"
-                                    });
-                                }
-
-
-                            }else{
+                        if (ch || ef) {
+                            if(ef){
                                 model.addRow(new Object[]{
-
                                         op.getID(),
                                         op.getProveedor().getNombre(),
                                         op.getFecha(),
                                         op.getMontoTotal(),
                                         op.getTotalRetenciones(),
-                                        "No",
-                                        "No"
+                                        "Si",
+                                        "Si"
+                              });
 
+                            } else {
+                                model.addRow(new Object[]{
+                                        op.getID(),
+                                        op.getProveedor().getNombre(),
+                                        op.getFecha(),
+                                        op.getMontoTotal(),
+                                        op.getTotalRetenciones(),
+                                        "Si",
+                                        "No"
                                 });
                             }
 
 
+                        }else{
+                            model.addRow(new Object[]{
+
+                                    op.getID(),
+                                    op.getProveedor().getNombre(),
+                                    op.getFecha(),
+                                    op.getMontoTotal(),
+                                    op.getTotalRetenciones(),
+                                    "No",
+                                    "No"
+
+                            });
                         }
-                        model.fireTableDataChanged();
-
-                    } else {
-
-                        JOptionPane.showMessageDialog(
-                                consultarButton,
-                                "El proveedor seleccionado no existe",
-                                "Error",
-                                JOptionPane.ERROR_MESSAGE);
 
 
                     }
-                }else{
+                    model.fireTableDataChanged();
+
+                } else {
+
                     JOptionPane.showMessageDialog(
                             consultarButton,
-                            "Ingrese un cuit",
+                            "El proveedor seleccionado no existe",
                             "Error",
                             JOptionPane.ERROR_MESSAGE);
+
+
                 }
+            }else{
+                JOptionPane.showMessageDialog(
+                        consultarButton,
+                        "Ingrese un cuit",
+                        "Error",
+                        JOptionPane.ERROR_MESSAGE);
             }
         });
 
 
-        cancelarButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                var ViewConsultasGenerales = new ViewConsultasGenerales();
-                ViewConsultasGenerales.setVisible(true);
+        cancelarButton.addActionListener(e -> {
+            var ViewConsultasGenerales = new ViewConsultasGenerales();
+            ViewConsultasGenerales.setVisible(true);
 
-                dispose();
-            }
+            dispose();
         });
 
 
 
-        ordenesDePagoButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                OrdenesDePagoFrame principal = new OrdenesDePagoFrame();
-                principal.setVisible(true);
-                //dispose();
-            }
+        ordenesDePagoButton.addActionListener(e -> {
+            OrdenesDePagoFrame principal = new OrdenesDePagoFrame();
+            principal.setVisible(true);
+            //dispose();
         });
 
-        consultasGeneralesButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                ViewConsultasGenerales principal = new ViewConsultasGenerales();
-                principal.setVisible(true);
-                dispose();
-            }
+        consultasGeneralesButton.addActionListener(e -> {
+            ViewConsultasGenerales principal = new ViewConsultasGenerales();
+            principal.setVisible(true);
+            dispose();
         });
 
-        usuariosButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                loginView principal = new loginView();
-                principal.setVisible(true);
-                dispose();
-            }
+        usuariosButton.addActionListener(e -> {
+            loginView principal = new loginView();
+            principal.setVisible(true);
+            dispose();
         });
 
-        proveedoresButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                provedorView principal = new provedorView();
-                principal.setVisible(true);
-                dispose();
-            }
+        proveedoresButton.addActionListener(e -> {
+            provedorView principal = new provedorView();
+            principal.setVisible(true);
+            dispose();
         });
-        DocumentosButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                DocumentosView principal = new DocumentosView();
-                principal.setVisible(true);
-                dispose();
-            }
+        DocumentosButton.addActionListener(e -> {
+            DocumentosView principal = new DocumentosView();
+            principal.setVisible(true);
+            dispose();
         });
 
 
