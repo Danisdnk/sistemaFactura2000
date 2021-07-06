@@ -1,14 +1,11 @@
 package views.documentosRecibidos;
 
 import views.consultasGenerales.ViewConsultasGenerales;
-import views.documentosRecibidos.SolapaFactura;
-import views.documentosRecibidos.SolapaCompra;
 import views.login.loginView;
 import views.ordenesDePago.OrdenesDePagoFrame;
 import views.proveedores.provedorView;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -24,6 +21,7 @@ public class DocumentosView extends JFrame {
     private JButton ordenDeCompraButton;
     private JToolBar barraNavegacion;
     private JButton hideButton;
+    private JButton factura2Button;
     private JDesktopPane desktopPaneFactura;
 
     public DocumentosView(){
@@ -85,6 +83,14 @@ public class DocumentosView extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 ViewConsultasGenerales cons = new ViewConsultasGenerales();
                 cons.setVisible(true);
+                dispose();
+            }
+        });
+        factura2Button.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                ViewAltaFacturas documentos = new ViewAltaFacturas();
+                documentos.setVisible(true);
                 dispose();
             }
         });

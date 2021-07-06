@@ -213,7 +213,7 @@ public class ViewCompulsaPrecios extends JFrame{
 
                 text = text
                         + "El Proveedor: "
-                        + itemPorProveedor.get(i).descripcion +
+                        + itemPorProveedor.get(i).proveedor +
                         " lo vende a "+
                         itemPorProveedor.get(i).precio +
                         "$ \n";

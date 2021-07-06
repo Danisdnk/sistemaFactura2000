@@ -131,10 +131,10 @@ public class ControladorItem {
      * @param cuit
      * @return DDlProveedorItemDTO
      */
-    public DDlProveedorItemDTO getProveedorItemByProveedor(String cuit){
+    public DDlProveedorItemDTO getProveedorItemByProveedor(String cuit, int itemID){
         return this.RepoProveedorItem.getTodos()
                 .stream()
-                .filter(p -> p.getProveedor().getCuit().equals(cuit))
+                .filter(p -> p.getProveedor().getCuit().equals(cuit) && p.getItem().getID() == itemID)
                 .map(ProveedorItem:: toDDL)
                 .findFirst()
                 .get();

@@ -12,6 +12,7 @@ public class DDlProveedorItemDTO extends DDLItemDTO {
         public String producto;
         public String proveedor;
         public String tipo;
+        public Double iva;
 
 
         @Override

@@ -2,19 +2,11 @@ package controllers;
 
 import dal.RepoFactory;
 import dal.Repository;
-import models.documento.Factura;
 import models.documento.OrdenCompra;
-import models.dtos.DDLItemDTO;
 import models.dtos.DDLOrdenDeCompraProveedor;
-import models.dtos.DDlProveedorItemDTO;
-import models.proveedor.Proveedor;
-import models.proveedor.ProveedorItem;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class ControladorOrdenCompra {
 

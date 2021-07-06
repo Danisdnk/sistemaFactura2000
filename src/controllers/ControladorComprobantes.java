@@ -25,6 +25,9 @@ public class ControladorComprobantes {
         this.repoFacturas = RepoFactory.getRepoFacturas();
         this.repoNotas = RepoFactory.getRepoNotas();
     }
+    public void agregarFactura(Factura f) {
+        this.repoFacturas.insertar(f);
+    }
 
     public List<Comprobante> getComprobantesByProveedor(int provID) {
         return Stream.of(this.repoFacturas.getTodos(), this.repoNotas.getTodos())

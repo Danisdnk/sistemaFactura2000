@@ -9,7 +9,7 @@ import java.util.*;
 
 public class Factura extends Comprobante {
     private List<Retencion> retencion;
-    private List<ItemFactura> itemFactura;
+    private List<ItemFactura> itemFactura = new ArrayList<>();
 
 
 
@@ -24,12 +24,33 @@ public class Factura extends Comprobante {
         setMontoTotal(montoNeto, montoIva);
     }
 
+    public Factura(Proveedor prov, float montoNeto, float iva, float montoIva,
+                   float montoTotal,LocalDate fecha, List<ItemFactura> ItemFactura ) {
+        this.proveedor = prov;
+        this.montoNeto = montoNeto;
+        this.iva = iva;
+        this.fecha = fecha;
+        this.tipo = "FAC";
+        this.montoIva = montoIva;
+        this.montoTotal = montoTotal;
+        setItemFactura(ItemFactura);
+    }
+
     public void devolverFacturaDeUnaFecha(Date fecha) {
         // TODO implement here
     }
 
     public void devolverFacturaDeUnaFecha() {
         // TODO implement here
+    }
+
+    public List<ItemFactura> getItemFactura() {
+        return itemFactura;
+    }
+
+    public void setItemFactura(List<ItemFactura> itemFactura) {
+
+        this.itemFactura = itemFactura;
     }
 
     public void calcularDeuda() {

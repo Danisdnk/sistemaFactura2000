@@ -49,11 +49,12 @@ public class ProveedorItem implements DDLeable, Identificable {
     public DDlProveedorItemDTO toDDL() {
         return new DDlProveedorItemDTO(){
             {
-                id = IDProveedorItem;
+                id = item.getID();
                 precio = precioUnitario;
                 producto = item.getNombre();
                 tipo = item.getTipo().toString();
                 proveedor = getProveedor().getNombre();
+                iva = item.getIva();
             }
         };
     }

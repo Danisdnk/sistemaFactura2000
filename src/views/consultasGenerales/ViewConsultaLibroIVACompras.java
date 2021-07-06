@@ -34,7 +34,6 @@ public class ViewConsultaLibroIVACompras extends JFrame{
     private JLabel textNeto;
     private JLabel textTotal;
     private JLabel textDocu;
-    private JButton button1;
     private DefaultTableModel model;
 
 
@@ -97,9 +96,6 @@ public class ViewConsultaLibroIVACompras extends JFrame{
             principal.setVisible(true);
             dispose();
         });
-        button1.addActionListener(e -> {
-            model.removeRow(model.getRowCount()-1);
-        });
 
     }
 
@@ -145,16 +141,7 @@ public class ViewConsultaLibroIVACompras extends JFrame{
                                     textiva27 = textiva27 + Comprobante.getMontoIva();
             }
         }
-        model.addRow(new Object[]{
-                (""),
-                (""),
-                (""),
-                (""),
-                String.valueOf(formato1.format(neto)),
-                (""),
-                String.valueOf(formato1.format(textiva25+textiva5+textiva105+textiva21+textiva27)),
-                String.valueOf(formato1.format(total))
-        });
+
         model.fireTableDataChanged();
         iva25.setText(String.valueOf(formato1.format(textiva25)));
         iva5.setText(String.valueOf(formato1.format(textiva5)));

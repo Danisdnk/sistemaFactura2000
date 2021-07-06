@@ -2,8 +2,6 @@ package main;
 
 import com.formdev.flatlaf.intellijthemes.FlatArcDarkOrangeIJTheme;
 import views.MenuPrincipal;
-import views.login.loginView;
-import views.proveedores.provedorView;
 
 import javax.swing.*;
 
@@ -14,6 +12,7 @@ public class App {
         try {
           //  UIManager.setLookAndFeel(new FlatDarculaLaf()); //Windows Look and feel
             FlatArcDarkOrangeIJTheme.setup();
+            //FlatLightFlatIJTheme.setup();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -21,6 +20,7 @@ public class App {
             @Override
             public void run() {
                 JFrame menuPrincipal = new MenuPrincipal("Factura 2000");//new loginView();
+                //JFrame menuPrincipal = new loginView();
                 menuPrincipal.setVisible(true);
             }
         });
