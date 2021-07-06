@@ -12,7 +12,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class DocumentosView extends JDialog {
+public class DocumentosView extends JFrame {
     private JLabel titulo;
     private JButton usuariosButton;
     private JButton ordenesDePagoButton;
@@ -30,7 +30,7 @@ public class DocumentosView extends JDialog {
         this.setContentPane(docuMain);
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.setSize(1000, 1000);
-        this.setModal(true);
+
         this.setLocationRelativeTo(null);
 
         facturaButton.addActionListener(new ActionListener() {
