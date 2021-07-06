@@ -6,11 +6,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
+import com.github.lgooddatepicker.components.DatePicker;
 
 import controllers.ControladorItem;
 import controllers.ControladorProveedor;
@@ -22,7 +23,7 @@ import views.documentosRecibidos.DocumentosView;
 import views.login.loginView;
 import views.ordenesDePago.OrdenesDePagoFrame;
 import models.proveedor.Proveedor;
-
+import models.proveedor.Proveedor;
 public class provedorView extends JFrame {
     private JPanel mainPanel;
     private JLabel titulo;
@@ -53,13 +54,13 @@ public class provedorView extends JFrame {
     private JButton modifyProveedor;
     private JComboBox ddlCertificadoRetencion;
     private JButton addRubroProveedor;
+    private DatePicker datePickerAct;
     private JButton borrarButton;
     private JButton modificarButton;
     private ControladorProveedor controlador;
     private List<Comprobante> proveedoresCargados;
     private Integer proveedorID;
     private Proveedor itemSeleccionado;
-
     public provedorView() {
         this.controlador = ControladorProveedor.getInstancia();
 
@@ -70,7 +71,7 @@ public class provedorView extends JFrame {
         this.setDDLResponsableIva();
         this.setDDLProveedores();
         this.setDDLRubros();
-
+        datePickerAct.setDateToToday();
         ordenesDePagoButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -117,21 +118,23 @@ public class provedorView extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 var sel = (DDLItemDTO) dropListaProveedores.getSelectedItem();
-/** si la seleccion es distinta de nulo hacemos un get del objeto seleccionda hacemos un setText para asignar valor al
+/* si la seleccion es distinta de nulo hacemos un get del objeto seleccionda hacemos un setText para asignar valor al
  dropdown Hacemos esta condicion "ternaria"  si se cumple cargamos el item si no se cumple porque el dato no se
  completo cargamos el dato como string vacio.asi almenos no pincha. ternario es (condicion? caso true : caso false )**/
                 if ( sel != null ) {
+
                     proveedorID = sel.id;
                     itemSeleccionado = controlador.getProveedorByID(sel.id);
-                    txtNombreFantasia.setText(!itemSeleccionado.getNombre().isEmpty() ? itemSeleccionado.getNombre() : "");
-                    txtDireccion.setText(!itemSeleccionado.getDireccion().isEmpty() ? itemSeleccionado.getDireccion() : "");
-                    txtEmail.setText(!itemSeleccionado.getEmail().isEmpty() ? itemSeleccionado.getEmail() : "");
-                    txtIngresosBrutos.setText(!itemSeleccionado.getNumeroIIBB().isEmpty() ? itemSeleccionado.getNumeroIIBB() : "");
-                    // txtRubro.setText(!itemSeleccionado.getRubros().isEmpty() ? itemSeleccionado.getRubros() : "");
-                    txtRazonSocial.setText(!itemSeleccionado.getRazonSocial().isEmpty() ? itemSeleccionado.getRazonSocial() : "");
-                    txtCuit.setText(!itemSeleccionado.getCuit().isEmpty() ? itemSeleccionado.getCuit() : "");
+                    checkIfEmpty(txtNombreFantasia,itemSeleccionado.getNombre());
+                    checkIfEmpty(txtDireccion,itemSeleccionado.getDireccion());
+                    checkIfEmpty(txtEmail,itemSeleccionado.getEmail());
+                    checkIfEmpty(txtRazonSocial,itemSeleccionado.getRazonSocial());
+                    checkIfEmpty(txtIngresosBrutos,itemSeleccionado.getNumeroIIBB());
+                    checkIfEmpty(txtTelefono,itemSeleccionado.getTelefono());
+                    checkIfEmpty(txtCuit,itemSeleccionado.getCuit());
+                    dropRubro.setSelectedItem(itemSeleccionado.getRubros());
                     dropResponsableIva.setSelectedItem(itemSeleccionado.getResponsableIva());
-                   // DateActividades.getModel();
+                    datePickerAct.setDate(itemSeleccionado.getInicioActividades());
 
                 } else {
                     proveedorID = null;
@@ -322,13 +325,14 @@ public class provedorView extends JFrame {
 
         Date date = (Date) DateActividades.getValue();
         LocalDate fecha = Instant.ofEpochMilli(date.getTime()).atZone(ZoneId.systemDefault()).toLocalDate();
-
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy MM dd");
         return new Proveedor(
                 txtNombreFantasia.getText(),
                 txtDireccion.getText(),
                 txtEmail.getText(),
+                txtTelefono.getText(),
                 txtIngresosBrutos.getText(),
-                fecha,
+                datePickerAct.getDate(),
                 dropRubro.getSelectedItem().toString(),
                 //(float) 2000,
                 txtRazonSocial.getText(),
@@ -366,7 +370,13 @@ public class provedorView extends JFrame {
         }
     }
 
-    private void createUIComponents() { //componente custom para la fecha //TODO en facturas?
+    private void checkIfEmpty(JTextField inputText,String p) {
+
+        inputText.setText(!p.isEmpty() ? p : "");
+
+    }
+
+   private void createUIComponents() { //componente custom para la fecha //TODO en facturas?
         Date date = new Date();
         SpinnerDateModel sm =
                 new SpinnerDateModel(date, null, null, Calendar.DAY_OF_MONTH);

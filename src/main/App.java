@@ -1,9 +1,6 @@
 package main;
 
-import com.formdev.flatlaf.FlatDarculaLaf;
-import com.formdev.flatlaf.FlatIntelliJLaf;
 import com.formdev.flatlaf.intellijthemes.FlatArcDarkOrangeIJTheme;
-import com.formdev.flatlaf.intellijthemes.FlatSolarizedDarkIJTheme;
 import views.MenuPrincipal;
 import views.login.loginView;
 import views.proveedores.provedorView;

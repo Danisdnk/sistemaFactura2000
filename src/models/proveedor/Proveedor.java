@@ -17,6 +17,7 @@ public class Proveedor implements DDLeable, Identificable {
     private String nombre;
 
     private String direccion;
+    private String telefono;
 
     private String email; //TODO puede ser nuleable ? verificar
 
@@ -25,6 +26,14 @@ public class Proveedor implements DDLeable, Identificable {
     private LocalDate inicioActividades;
 
     private String rubros;
+
+    public String getTelefono() {
+        return telefono;
+    }
+
+    public void setTelefono(String telefono) {
+        this.telefono = telefono;
+    }
 
     private String responsableIva;
 
@@ -49,10 +58,11 @@ public class Proveedor implements DDLeable, Identificable {
             String nombre,
             String direccion,
             String email,
+            String telefono,
             String numeroIIBB,
             LocalDate inicioActividades,
             String rubros,
-          //  Float credito,
+            //  Float credito,
             String razonSocial,
             String cuit,
             String responsableIva,
@@ -61,6 +71,7 @@ public class Proveedor implements DDLeable, Identificable {
         setNombre(nombre);
         setDireccion(direccion);
         setEmail(email);
+        setTelefono(telefono);
         //setCredito(credito);
         setID(idProv);
         setInicioActividades(inicioActividades);
@@ -154,13 +165,13 @@ public class Proveedor implements DDLeable, Identificable {
         this.responsableIva = responsableIva;
     }
 
-   // public Float getCredito() {
+    // public Float getCredito() {
     //    return credito;
     //}
 
- //   public void setCredito(Float credito) {
+    //   public void setCredito(Float credito) {
     //    this.credito = credito;
- //   }
+    //   }
 
     public void calcularDeudaDelProveedor(String cuit) {
         // TODO implement here
