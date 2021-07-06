@@ -74,7 +74,7 @@ public class Repository<T extends Identificable> {
         var indice = getIndice();
         var path = getPath(String.valueOf(indice));
 
-        ((Identificable)obj).setID(indice);
+        obj.setID(indice);
         var next = indice + 1;
         escribirArchivo(getPath(INDICE_FILE), new Indice(next));
         escribirArchivo(path, obj);
@@ -82,17 +82,8 @@ public class Repository<T extends Identificable> {
         return indice;
     }
 
-    public int restarIndice(T obj) { //TODO revisar si esta demas
-        var indice = getIndice() - 1;
-        var path = getPath(String.valueOf(indice));
-        ( (Identificable) obj ).setID(indice);
-        escribirArchivo(getPath(INDICE_FILE), new Indice(indice));
-        escribirArchivo(path, obj);
-
-        return indice;
-    }
     public boolean updatear(T obj) {
-        var indice = ((Identificable)obj).getID();
+        var indice = obj.getID();
         var path = getPath(String.valueOf(indice));
         return this.escribirArchivo(path, obj);
     }
@@ -104,6 +95,7 @@ public class Repository<T extends Identificable> {
     public int getIndice() {
         crearIndice();
         var ind = this.leerArchivo(Indice.class, getPath(INDICE_FILE));
+        assert ind != null;
         return ind.getIndice();
     }
 
