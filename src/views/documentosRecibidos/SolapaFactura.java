@@ -1,15 +1,19 @@
 package views.documentosRecibidos;
 
+import controllers.*;
+import models.documento.ItemOrdenCompra;
+import models.documento.OrdenCompra;
 import models.dtos.DDLItemDTO;
-import controllers.ControladorProveedor;
+import models.dtos.DDLOrdenDeCompraProveedor;
+import models.dtos.DDlProveedorItemDTO;
+import models.proveedor.Item;
 import models.proveedor.Proveedor;
+import views.MenuPrincipal;
 import views.consultasGenerales.ViewConsultasGenerales;
 import views.login.loginView;
 import views.ordenesDePago.OrdenesDePagoFrame;
 import views.proveedores.provedorView;
 import views.utils.MiTableModelFactura;
-import controllers.ControladorComprobantes;
-import controllers.ControladorOrdenesDePagos;
 import controllers.ControladorProveedor;
 import models.documento.Comprobante;
 import models.documento.OrdenPago;
@@ -23,27 +27,32 @@ import java.awt.event.ActionListener;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
-public class SolapaFactura extends JDialog {
+public class SolapaFactura extends JFrame {
     private JComboBox<DDLItemDTO> comboBox1;
     private JTextField txtCUIT;
     private JPanel panelProveedor;
     private JComboBox comboBox2;
-    private JTextField textField2;
+    private JTextField txtIDItem;
     private JTextField textCant;
     private JButton cancelarButton;
     private JButton guardarButton;
-    private JTextField textField4;
-    private JTextField textField5;
+    private JTextField totalCompra;
+    private JTextField textDate;
     private JButton agregarButton;
     private JButton quitarButton;
     private JPanel prinicipalSolapaFactura;
-    private JComboBox comboBox3;
+    private JComboBox<DDLOrdenDeCompraProveedor> comboBox3;
     private JTable tablaItemsFactura;
     private Integer proveedorID;
     private ControladorProveedor controlador;
     private Proveedor itemSeleccionado;
     private MiTableModelFactura miModeloFactura = new MiTableModelFactura();
+    private Integer rubroID;
+    private ControladorOrdenCompra controladorOC;
     //botones nav
     private JButton usuariosButton;
     private JButton ordenesDePagoButton;
@@ -58,17 +67,17 @@ public class SolapaFactura extends JDialog {
         this.setContentPane(prinicipalSolapaFactura);
         this.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
         this.setSize(1000, 1000);
-        this.setModal(true);
         this.setLocationRelativeTo(null);
-        tablaItemsFactura.setModel(miModeloFactura);
-
-        miModeloFactura.add(1, "Bananas", 8, 20.0);
-        miModeloFactura.add(2, "Bananas", 5, 27.5);
-        miModeloFactura.add(3, "Bananas", 10, 38.2);
-        miModeloFactura.add(4, "Bananas", 7, 28.2);
 
         this.controlador = ControladorProveedor.getInstancia();
         this.setDDLProveedores();
+        //this.setDDLProductos();    //iniciarlo despues de seleccionar un proveedor
+        LocalDate dateTime = LocalDate.now();
+        this.textDate.setText(DateParse.unparse(dateTime));
+        tablaItemsFactura.setModel(miModeloFactura);
+        List<ItemOrdenCompra> listaOrdenCompra= new ArrayList<>();
+
+
         this.comboBox1.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -83,6 +92,8 @@ public class SolapaFactura extends JDialog {
                                     .isEmpty() ?
                                     itemSeleccionado.getCuit()
                                     : "");
+                    setDDLProductos(itemSeleccionado.getCuit());
+                    setDDLOC();//iniciar ddlProductos luego de selecionar un proveedor
                 }
 
                 assert sel != null;
@@ -113,6 +124,24 @@ public class SolapaFactura extends JDialog {
                     //       txtCuit.setVisible(false);
                 }
             }
+        });
+
+        this.comboBox2.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                var sel = (DDlProveedorItemDTO)comboBox2.getSelectedItem();
+
+                if (sel != null) {
+                    rubroID = sel.id;
+                    txtIDItem.setText(rubroID.toString());
+
+                } else {
+                    rubroID = null;
+                }
+
+
+            }
+
         });
 
 
@@ -158,19 +187,110 @@ public class SolapaFactura extends JDialog {
             }
         });
 
-
         agregarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                var sel = (DDLItemDTO)comboBox2.getSelectedItem() ;
-                miModeloFactura.add(sel.id,sel.descripcion,Integer.parseInt(textCant.getText()),28.00);
+                var sel = (DDlProveedorItemDTO)comboBox2.getSelectedItem();
+                var sel2 = (DDLItemDTO)comboBox1.getSelectedItem() ;
+                var proveedor = ControladorProveedor.getInstancia().getProveedorByID(sel2.id);
+
+                miModeloFactura.add(sel.id,sel.producto,Integer.parseInt(textCant.getText()), sel.precio);
                 miModeloFactura.fireTableDataChanged();
+
+
+                Item item= new Item(sel.id,sel.descripcion,Integer.parseInt(textCant.getText()),sel.precio);
+                ItemOrdenCompra itemOC = new ItemOrdenCompra(item,Integer.parseInt(textCant.getText()),sel.precio);
+                listaOrdenCompra.add(itemOC);
+
+                getSumItems();
+            }
+        });
+
+        quitarButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                miModeloFactura.removeRowAt(miModeloFactura.getRowCount()-1);
+                if (listaOrdenCompra.size() > 0) {
+                    listaOrdenCompra.remove(listaOrdenCompra.size() - 1);
+
+
+                }
+                miModeloFactura.fireTableDataChanged();
+                getSumItems();
+
+            }
+        });
+
+/*
+        guardarButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                var sel = (DDLItemDTO) comboBox1.getSelectedItem();
+                if (sel != null){
+                    var proveedor = controlador.getProveedorByID(sel.id);
+                    var fecha = DateParse.parse(textDate.getText());
+                    Float total = Float.parseFloat(totalCompra.getText());
+                    OrdenCompra oc = new OrdenCompra(fecha,proveedor,total);
+                    controladorOC.getInstancia().agregarOrdenCompra(oc);
+                }
+
+
+
+            }
+        }); */
+
+        guardarButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                var sel = (DDlProveedorItemDTO)comboBox2.getSelectedItem();
+                var idproveedor = (DDLItemDTO)comboBox1.getSelectedItem() ;
+                if (idproveedor!=null){
+                    var proveedor = ControladorProveedor.getInstancia().getProveedorByID(idproveedor.id);
+                    OrdenCompra ordenCompra= new OrdenCompra(DateParse.parse(textDate.getText()),proveedor,listaOrdenCompra,Float.parseFloat(totalCompra.getText()));
+                    controladorOC.getInstancia().agregarOrdenCompra(ordenCompra);
+                }
+
+            }
+        });
+        cancelarButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                var viewPrincipal = new MenuPrincipal("Sistema Factura 2000");
+                viewPrincipal.setVisible(true);
+                dispose();
             }
         });
     }
+
+    private void getSumItems(){
+        float sum = 0;
+        int numOfRows = tablaItemsFactura.getRowCount();
+        for (int i =0; i < numOfRows; i++){
+            Object cost = tablaItemsFactura.getValueAt(i, 3);
+            Object cant = tablaItemsFactura.getValueAt(i,2);
+            if (cost instanceof Number) {
+                cost = ((Number) cost).floatValue()*((Number) cant).floatValue() ;
+                sum += ((Number) cost).floatValue();
+            }
+
+        }
+        totalCompra.setText(String.valueOf(sum));
+    }
+
     private void setDDLProveedores() {
         var model = ControladorProveedor.getInstancia().getOpcionesDDLProveedores();
         this.comboBox1.setModel(new DefaultComboBoxModel(model.toArray()));
     }
+    private void setDDLProductos(String cuit) {
+        var model = ControladorItem.getInstancia().getOpcionesDDLItemsByProveedor(cuit);
+        this.comboBox2.setModel(new DefaultComboBoxModel(model.toArray()));
+    }
+
+    private  void setDDLOC(){
+        var model = ControladorOrdenCompra.getInstancia().getOCByProveedor(proveedorID);
+        this.comboBox3.setModel(new DefaultComboBoxModel(model.toArray()));
+    }
+
 }
 

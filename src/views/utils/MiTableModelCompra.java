@@ -1,4 +1,5 @@
 package views.utils;
+import models.documento.ItemOrdenCompra;
 import models.proveedor.Item;
 
 import javax.swing.table.AbstractTableModel;
@@ -40,16 +41,20 @@ public class MiTableModelCompra extends AbstractTableModel {
 
     public int add(Integer id,String nombre, Integer cantidad, Double precio){
         lista.add(new Item(id,nombre,cantidad,precio));
+
         return lista.size();
 
     }
 
-    public void removeRowAt(int row) {
-        lista.remove(row);
-        //fireTableDataChanged();
-        fireTableRowsDeleted(row - 1, lista.size() - 1);
-    }
 
+    public void removeRowAt(int row) {
+        if (lista.size() > 0) {
+            lista.remove(row);
+
+
+        }
+        fireTableRowsDeleted(row , lista.size() );
+    }
 
 
 }

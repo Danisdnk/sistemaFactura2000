@@ -211,6 +211,7 @@ public class InicializadorDeDatos {
         }
         if(repoOrdenCompra.getTodos().size() == 0){
 
+            repoOrdenCompra.insertar(new OrdenCompra((LocalDate.parse("2020-05-05")),new Proveedor("Coto"),500.00F));
         }
 
 

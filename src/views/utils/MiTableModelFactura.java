@@ -39,4 +39,13 @@ public class MiTableModelFactura extends AbstractTableModel {
         lista.add(new Item(id,nombre,cantidad,precio));
         return lista.size();
     }
+
+    public void removeRowAt(int row) {
+        if (lista.size() > 0) {
+            lista.remove(row);
+
+
+        }
+        fireTableRowsDeleted(row , lista.size() );
+    }
 }

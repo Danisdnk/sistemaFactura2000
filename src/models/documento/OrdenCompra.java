@@ -2,6 +2,7 @@ package models.documento;
 
 import dal.Identificable;
 import models.dtos.DDLItemDTO;
+import models.dtos.DDLOrdenDeCompraProveedor;
 import models.dtos.DDLeable;
 import models.proveedor.Proveedor;
 
@@ -82,7 +83,13 @@ public class OrdenCompra implements DDLeable, Identificable {
 
 
     @Override
-    public DDLItemDTO toDDL() {
-        return null;
+    public DDLOrdenDeCompraProveedor toDDL() {
+        return new DDLOrdenDeCompraProveedor() {
+            {
+                id = ID;
+
+            }
+        };
+
     }
 }

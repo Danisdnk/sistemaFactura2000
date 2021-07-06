@@ -4,6 +4,8 @@ import controllers.*;
 import models.documento.ItemOrdenCompra;
 import models.documento.OrdenCompra;
 import models.dtos.DDlProveedorItemDTO;
+import models.proveedor.Item;
+import views.MenuPrincipal;
 import views.consultasGenerales.ViewConsultasGenerales;
 import views.login.loginView;
 import views.ordenesDePago.OrdenesDePagoFrame;
@@ -36,7 +38,7 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SolapaCompra extends JDialog {
+public class SolapaCompra extends JFrame {
     private JPanel prinicipalSolapaCompra;
     private JPanel panelProveedor;
     private JComboBox<DDLItemDTO> comboBox1;
@@ -75,7 +77,6 @@ public class SolapaCompra extends JDialog {
         this.setContentPane(prinicipalSolapaCompra);
         this.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
         this.setSize(1000, 1000);
-        this.setModal(true);
         this.setLocationRelativeTo(null);
 
         this.controlador = ControladorProveedor.getInstancia();
@@ -84,7 +85,7 @@ public class SolapaCompra extends JDialog {
         LocalDate dateTime = LocalDate.now();
         this.textDate.setText(DateParse.unparse(dateTime));
         tablaItemsFactura.setModel(miModeloCompra);
-
+        List<ItemOrdenCompra> listaOrdenCompra= new ArrayList<>();
 
 
         this.comboBox1.addActionListener(new ActionListener() {
@@ -198,9 +199,17 @@ public class SolapaCompra extends JDialog {
         agregarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                var sel = (DDlProveedorItemDTO)comboBox2.getSelectedItem() ;
+                var sel = (DDlProveedorItemDTO)comboBox2.getSelectedItem();
+                var sel2 = (DDLItemDTO)comboBox1.getSelectedItem() ;
+                var proveedor = ControladorProveedor.getInstancia().getProveedorByID(sel2.id);
+
                 miModeloCompra.add(sel.id,sel.producto,Integer.parseInt(textCant.getText()), sel.precio);
 
+
+
+                    Item item= new Item(sel.id,sel.descripcion,Integer.parseInt(textCant.getText()),sel.precio);
+                    ItemOrdenCompra itemOC = new ItemOrdenCompra(item,Integer.parseInt(textCant.getText()),sel.precio);
+                    listaOrdenCompra.add(itemOC);
                 miModeloCompra.fireTableDataChanged();
                 getSumItems();
             }
@@ -210,14 +219,19 @@ public class SolapaCompra extends JDialog {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                miModeloCompra.removeRowAt(miModeloCompra.getRowCount()-1);
+                miModeloCompra.removeRowAt(miModeloCompra.getRowCount() - 1);
+                if (listaOrdenCompra.size() > 0) {
+                    listaOrdenCompra.remove(listaOrdenCompra.size() - 1);
+
+
+                }
                 miModeloCompra.fireTableDataChanged();
                 getSumItems();
-
             }
         });
 
 
+/*
         guardarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -233,6 +247,28 @@ public class SolapaCompra extends JDialog {
 
 
             }
+        }); */
+
+        guardarButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                var sel = (DDlProveedorItemDTO)comboBox2.getSelectedItem();
+                var idproveedor = (DDLItemDTO)comboBox1.getSelectedItem() ;
+                if (idproveedor!=null){
+                    var proveedor = ControladorProveedor.getInstancia().getProveedorByID(idproveedor.id);
+                    OrdenCompra ordenCompra= new OrdenCompra(DateParse.parse(textDate.getText()),proveedor,listaOrdenCompra,Float.parseFloat(totalCompra.getText()));
+                    controladorOC.getInstancia().agregarOrdenCompra(ordenCompra);
+                }
+
+            }
+        });
+        cancelarButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                var viewPrincipal = new MenuPrincipal("Sistema Factura 2000");
+                viewPrincipal.setVisible(true);
+                dispose();
+            }
         });
     }
 
@@ -241,7 +277,9 @@ public class SolapaCompra extends JDialog {
         int numOfRows = tablaItemsFactura.getRowCount();
         for (int i =0; i < numOfRows; i++){
             Object cost = tablaItemsFactura.getValueAt(i, 3);
+            Object cant = tablaItemsFactura.getValueAt(i,2);
             if (cost instanceof Number) {
+                cost = ((Number) cost).floatValue()*((Number) cant).floatValue() ;
                 sum += ((Number) cost).floatValue();
             }
 
