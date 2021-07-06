@@ -46,8 +46,19 @@ public class InicializadorDeDatos {
 
         //Proveedores
         if (repoProveedores.getTodos().size() == 0) {
-            repoProveedores.insertar(new Proveedor("Coto", "20"));
-            repoProveedores.insertar(new Proveedor("Philips", "21"));
+            repoProveedores.insertar(new Proveedor("Coto", " Av Roca y traful", "coto@coto.com",
+                            "1536998340", "400000", LocalDate.parse("2020-01-02"),
+                            "Alimentos", "coto tophouse", "20",
+                            EnumResponsableIva.MONOTRIBUTO.toString(),0));
+
+            repoProveedores.insertar(new Proveedor("Philips", " Vedia 3892", "philips@electrics.com",
+                    "15300340", "400000", LocalDate.parse("2020-01-02"),
+                    "Tecnologia", "Philips Electrics", "21",
+                    EnumResponsableIva.RESPONSABLE_INSCRIPTO.toString(),1));
+
+            repoProveedores.insertar(new Proveedor("Samsung", " Armenia 1644", "tucelu@gmail.com",
+                    "1536998340", "23000", LocalDate.parse("2020-01-03"), "Telefonia",
+                    "Sansumg electronic", "27385431232", EnumResponsableIva.RESPONSABLE_INSCRIPTO.toString(),2));
         }
 
         if (repoResponsableIva.getTodos().size() == 0) {
