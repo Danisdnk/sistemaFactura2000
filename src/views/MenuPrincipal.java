@@ -55,11 +55,6 @@ public class MenuPrincipal extends JFrame {
             cons.setVisible(true);
             dispose();
         });
-        hideButton.addActionListener(e -> {
-            hidePanel about = new hidePanel();
-            about.setVisible(true);
-            dispose();
-        });
 
     }
 }
