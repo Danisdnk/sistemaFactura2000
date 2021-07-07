@@ -4,6 +4,8 @@ import dal.Repository;
 import models.dtos.DDLItemDTO;
 import models.impuesto.ResponsableIva;
 import models.proveedor.Proveedor;
+import models.proveedor.Rubro;
+
 import java.util.List;
 
 public class ControladorProveedor {
@@ -53,12 +55,22 @@ public class ControladorProveedor {
                 .map(ResponsableIva::toDDL)
                 .toList();
     }
+
     public DDLItemDTO getOpcionesDDLResponsableIvaByProv(int p) {
         this.RepoResponsableIva =  RepoFactory.getResponsableIva();
         return this.RepoResponsableIva.getTodos()
                 .stream()
                 .map(ResponsableIva::toDDL)
                 .filter(a->a.descripcion.equals(getProveedorByID(p).getResponsableIva()))
+                .findFirst()
+                .get();
+    }
+
+    public DDLItemDTO getOpcionesDDLRubrosByProv(int p) {
+        var controladorItem= ControladorItem.getInstancia();
+        return controladorItem.getOpcionesDDLRubros()
+                .stream()
+                .filter(a->a.descripcion.equals(getProveedorByID(p).getRubros()))
                 .findFirst()
                 .get();
     }

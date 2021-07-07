@@ -114,6 +114,9 @@ completo cargamos el dato como string vacio.asi almenos no pincha. ternario es (
                 proveedorID = sel.id;
                 itemSeleccionado = controlador.getProveedorByID(sel.id);
                 var respiva = controlador.getOpcionesDDLResponsableIvaByProv(sel.id);
+
+                var provRubro=controlador.getOpcionesDDLRubrosByProv(sel.id);
+
                 checkIfEmpty(txtNombreFantasia, itemSeleccionado.getNombre());
                 checkIfEmpty(txtDireccion, itemSeleccionado.getDireccion());
                 checkIfEmpty(txtEmail, itemSeleccionado.getEmail());
@@ -121,7 +124,7 @@ completo cargamos el dato como string vacio.asi almenos no pincha. ternario es (
                 checkIfEmpty(txtIngresosBrutos, itemSeleccionado.getNumeroIIBB());
                 checkIfEmpty(txtTelefono, itemSeleccionado.getTelefono());
                 checkIfEmpty(txtCuit, itemSeleccionado.getCuit());
-                dropRubro.setSelectedItem(itemSeleccionado.getRubros());
+                dropRubro.setSelectedIndex(provRubro.id-1);
                 dropResponsableIva.setSelectedIndex(respiva.id - 1);
                 datePickerAct.setDate(itemSeleccionado.getInicioActividades());
 
