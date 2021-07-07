@@ -8,7 +8,6 @@ import models.documento.ItemFactura;
 import models.dtos.DDLItemDTO;
 import models.dtos.DDlProveedorItemDTO;
 import models.proveedor.Proveedor;
-import views.MenuPrincipal;
 import views.consultasGenerales.ViewConsultasGenerales;
 import views.login.loginView;
 import views.ordenesDePago.OrdenesDePagoFrame;
@@ -226,8 +225,8 @@ public class ViewAltaFacturas extends JFrame{
         });
 
         cancelarButton.addActionListener(e -> {
-            var MenuPrincipal = new MenuPrincipal("Factura 2000");
-            MenuPrincipal.setVisible(true);
+            DocumentosView dv = new DocumentosView();
+            dv.setVisible(true);
             dispose();
         });
 
@@ -331,12 +330,8 @@ public class ViewAltaFacturas extends JFrame{
 
     private void setDDLProveedor() {
         var model = ControladorProveedor.getInstancia().getOpcionesDDLProveedores();
-       // List<String> lista = new ArrayList<>();
-        //for (DDLItemDTO m : model){
-       //     var datecomps =  m.descripcion.split("-");
-       //     lista.add(datecomps[0]);
-       // }
         this.ddlProveedor.setModel(new DefaultComboBoxModel(model.toArray()));
+        ddlProveedor.removeItemAt(0);
     }
 
     private void setDDLProductos(String cuit) {

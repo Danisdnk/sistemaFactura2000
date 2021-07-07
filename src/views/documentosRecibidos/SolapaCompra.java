@@ -1,40 +1,24 @@
 package views.documentosRecibidos;
 
-import controllers.*;
+import controllers.ControladorItem;
+import controllers.ControladorOrdenCompra;
+import controllers.ControladorProveedor;
 import models.documento.ItemOrdenCompra;
 import models.documento.OrdenCompra;
+import models.dtos.DDLItemDTO;
 import models.dtos.DDlProveedorItemDTO;
 import models.proveedor.Item;
-import views.MenuPrincipal;
-import views.consultasGenerales.ViewConsultasGenerales;
-import views.login.loginView;
-import views.ordenesDePago.OrdenesDePagoFrame;
-import views.proveedores.provedorView;
-import models.dtos.DDLItemDTO;
-import controllers.ControladorProveedor;
-import models.proveedor.Proveedor;
-import models.dtos.DDLItemDTO;
-import controllers.ControladorProveedor;
 import models.proveedor.Proveedor;
 import views.consultasGenerales.ViewConsultasGenerales;
 import views.login.loginView;
 import views.ordenesDePago.OrdenesDePagoFrame;
 import views.proveedores.provedorView;
-import views.utils.MiTableModelCompra;
-import views.utils.MiTableModelFactura;
-import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
-import javax.xml.crypto.Data;
-import java.awt.*;
-import java.awt.event.ActionEvent;
 import views.utils.DateParse;
+import views.utils.MiTableModelCompra;
+import javax.swing.*;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
-import java.sql.Date;
-import java.text.NumberFormat;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -265,8 +249,8 @@ public class SolapaCompra extends JFrame {
         cancelarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                var viewPrincipal = new MenuPrincipal("Sistema Factura 2000");
-                viewPrincipal.setVisible(true);
+                DocumentosView dc= new DocumentosView();
+                dc.setVisible(true);
                 dispose();
             }
         });
@@ -290,6 +274,7 @@ public class SolapaCompra extends JFrame {
     private void setDDLProveedores() {
         var model = ControladorProveedor.getInstancia().getOpcionesDDLProveedores();
         this.comboBox1.setModel(new DefaultComboBoxModel(model.toArray()));
+        comboBox1.removeItemAt(0);
     }
     private void setDDLProductos(String cuit) {
         var model = ControladorItem.getInstancia().getOpcionesDDLItemsByProveedor(cuit);

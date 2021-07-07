@@ -187,13 +187,24 @@ public class ViewCompulsaPrecios extends JFrame{
     private void setTablePrecios(int itemID) {
 
         model.getDataVector().removeAllElements();
-        for(DDlProveedorItemDTO itemPorProveedor : ControladorItem.getInstancia().getProveedorItemsByItem(itemID)){
-            model.addRow(new Object[]{
-                    itemPorProveedor.proveedor,
-                    itemPorProveedor.precio,
-            });
+        var itemPorProveedor = ControladorItem.getInstancia().getProveedorItemsByItem(itemID);
+        if (!itemPorProveedor.isEmpty()) {
+            for (DDlProveedorItemDTO itemP : itemPorProveedor) {
+                model.addRow(new Object[]{
+                        itemP.proveedor,
+                        itemP.precio,
+                });
+            }
+            model.fireTableDataChanged();
+        }else{
+            JOptionPane.showMessageDialog(
+                    consultarPreciosButton,
+                    "No hay precios para los productos selecionados",
+                    "Information",
+                    JOptionPane.INFORMATION_MESSAGE);
+
+
         }
-        model.fireTableDataChanged();
     }
 
 

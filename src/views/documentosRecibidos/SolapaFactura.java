@@ -1,6 +1,8 @@
 package views.documentosRecibidos;
 
-import controllers.*;
+import controllers.ControladorItem;
+import controllers.ControladorOrdenCompra;
+import controllers.ControladorProveedor;
 import models.documento.ItemOrdenCompra;
 import models.documento.OrdenCompra;
 import models.dtos.DDLItemDTO;
@@ -13,17 +15,9 @@ import views.consultasGenerales.ViewConsultasGenerales;
 import views.login.loginView;
 import views.ordenesDePago.OrdenesDePagoFrame;
 import views.proveedores.provedorView;
-import views.utils.MiTableModelFactura;
-import controllers.ControladorProveedor;
-import models.documento.Comprobante;
-import models.documento.OrdenPago;
-import models.dtos.DDLItemDTO;
 import views.utils.DateParse;
+import views.utils.MiTableModelFactura;
 
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -281,6 +275,7 @@ public class SolapaFactura extends JFrame {
     private void setDDLProveedores() {
         var model = ControladorProveedor.getInstancia().getOpcionesDDLProveedores();
         this.comboBox1.setModel(new DefaultComboBoxModel(model.toArray()));
+        comboBox1.removeItemAt(0);
     }
     private void setDDLProductos(String cuit) {
         var model = ControladorItem.getInstancia().getOpcionesDDLItemsByProveedor(cuit);
