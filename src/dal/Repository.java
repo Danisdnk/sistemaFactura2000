@@ -1,5 +1,7 @@
 package dal;
 
+import com.google.gson.*;
+import com.google.gson.stream.JsonReader;
 import java.io.*;
 import java.lang.reflect.Type;
 import java.nio.file.DirectoryNotEmptyException;
@@ -11,9 +13,6 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-
-import com.google.gson.*;
-import com.google.gson.stream.JsonReader;
 
 public class Repository<T extends Identificable> {
     private final String DATA_DIRECTORY = "data/";
@@ -160,6 +159,7 @@ public class Repository<T extends Identificable> {
 
         try {
             Files.delete(Path.of(path));
+            updateCache= true;
             return true;
         }
         catch (NoSuchFileException x) {

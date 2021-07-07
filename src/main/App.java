@@ -1,9 +1,7 @@
 package main;
 
 import com.formdev.flatlaf.intellijthemes.FlatArcDarkOrangeIJTheme;
-import views.MenuPrincipal;
-
-import javax.swing.*;
+import views.login.loginView;
 
 public class App {
     public static void main(String[] args) {
@@ -19,8 +17,8 @@ public class App {
         java.awt.EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
-                JFrame menuPrincipal = new MenuPrincipal("Factura 2000");//new loginView();
-                //JFrame menuPrincipal = new loginView();
+                //JFrame menuPrincipal = new MenuPrincipal("Factura 2000");//new loginView();
+                loginView menuPrincipal = new loginView();
                 menuPrincipal.setVisible(true);
             }
         });
