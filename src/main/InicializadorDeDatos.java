@@ -86,6 +86,7 @@ public class InicializadorDeDatos {
 
             repoFacturas.insertar(new Factura(philips,"0001-00002558", 3000F,21F ,LocalDate.parse("2020-01-03")));
             repoFacturas.insertar(new Factura(philips,"0001-00002590", 4800F, 27F,LocalDate.parse("2020-01-04")));
+            repoFacturas.insertar(new Factura(philips,"0001-00002600", 3000F,21F ,LocalDate.parse("2020-01-01")));
         }
 
         //Notas
