@@ -31,11 +31,13 @@ public class DocumentosView extends JFrame {
 
         this.setLocationRelativeTo(null);
 
+        facturaButton.setVisible(false);
         facturaButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 SolapaFactura solapaF = new SolapaFactura();
                 solapaF.setVisible(true);
+                dispose();
             }
         });
         ordenDeCompraButton.addActionListener(new ActionListener() {
@@ -43,6 +45,7 @@ public class DocumentosView extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 SolapaCompra solapaC = new SolapaCompra();
                 solapaC.setVisible(true);
+                dispose();
             }
         });
         ordenesDePagoButton.addActionListener(new ActionListener() {

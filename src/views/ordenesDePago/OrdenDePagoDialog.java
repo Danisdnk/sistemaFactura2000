@@ -2,7 +2,6 @@ package views.ordenesDePago;
 
 import controllers.ControladorOrdenesDePagos;
 import controllers.ControladorProveedor;
-import models.documento.Comprobante;
 import models.documento.OrdenPago;
 import models.dtos.DDLItemDTO;
 import views.consultasGenerales.ViewConsultasGenerales;
@@ -137,6 +136,7 @@ public class OrdenDePagoDialog extends JDialog implements ActionListener{
     private void setDDLProveedores() {
        var model = ControladorProveedor.getInstancia().getOpcionesDDLProveedores();
        this.ddlProveedores.setModel(new DefaultComboBoxModel(model.toArray()));
+        ddlProveedores.removeItemAt(0);
     }
 
     private void setupForm(Integer opID) {
