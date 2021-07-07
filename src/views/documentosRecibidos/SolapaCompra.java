@@ -242,6 +242,11 @@ public class SolapaCompra extends JFrame {
                     var proveedor = ControladorProveedor.getInstancia().getProveedorByID(idproveedor.id);
                     OrdenCompra ordenCompra= new OrdenCompra(DateParse.parse(textDate.getText()),proveedor,listaOrdenCompra,Float.parseFloat(totalCompra.getText()));
                     controladorOC.getInstancia().agregarOrdenCompra(ordenCompra);
+                    JOptionPane.showMessageDialog(
+                            guardarButton,
+                            "Orden de compra generada",
+                            "Information",
+                            JOptionPane.INFORMATION_MESSAGE);
                 }
 
             }
