@@ -37,6 +37,7 @@ public class ViewFacturasRecibidas extends JFrame {
     private JTable table1;
     private JTextArea textAreaResultado;
     private JTable JTabbedPane1;
+    private ControladorComprobantes controlador;
 
     private DefaultTableModel model;
 
@@ -56,7 +57,7 @@ public class ViewFacturasRecibidas extends JFrame {
         model.addColumn("Fecha");
         model.addColumn("Monto Total");
         table1.setModel(model);
-
+        this.controlador = ControladorComprobantes.getInstancia();
 
         consultarButton.addActionListener(e -> {
 
@@ -83,7 +84,7 @@ public class ViewFacturasRecibidas extends JFrame {
                     if (cuit != null && fecha != null) {         // tengo cuit y fecha
 
                         if(ControladorProveedor.getInstancia().existsProveedorCuit(cuit)) {
-                            var facturas = ControladorComprobantes.getInstancia().getFacturasDTOByFechaYProveedor(cuit, fecha);
+                            var facturas = controlador.getFacturasDTOByFechaYProveedor(cuit, fecha);
                             setJtextArea(facturas);
                             setTableFacturas(facturas);
                             System.out.println(1);
@@ -100,7 +101,7 @@ public class ViewFacturasRecibidas extends JFrame {
 
                             if(ControladorProveedor.getInstancia().existsProveedorCuit(cuit)) {
                                 System.out.println("CUIT");
-                                var facturas = ControladorComprobantes.getInstancia().getFacturasDTOsByProveedor(cuit);
+                                var facturas = controlador.getFacturasDTOsByProveedor(cuit);
                                 setJtextArea(facturas);
                                 setTableFacturas(facturas);
                                 System.out.println(2);
@@ -114,7 +115,7 @@ public class ViewFacturasRecibidas extends JFrame {
                         } else {                                  //solo fecha
 
                             System.out.println("FECHA");
-                            var facturas = ControladorComprobantes.getInstancia().getFacturasDTOsByFecha(fecha);
+                            var facturas = controlador.getFacturasDTOsByFecha(fecha);
                             setJtextArea2(facturas);
                             setTableFacturas(facturas);
                             System.out.println(3);

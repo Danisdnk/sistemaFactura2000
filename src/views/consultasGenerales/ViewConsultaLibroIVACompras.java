@@ -35,6 +35,7 @@ public class ViewConsultaLibroIVACompras extends JFrame{
     private JLabel textTotal;
     private JLabel textDocu;
     private DefaultTableModel model;
+    private ControladorComprobantes controlador;
 
 
 
@@ -57,6 +58,7 @@ public class ViewConsultaLibroIVACompras extends JFrame{
         model.addColumn("Monto IVA");
         model.addColumn("Monto Total");
         tablaLibroIva.setModel(model);
+        this.controlador = ControladorComprobantes.getInstancia();
 
         setTablePrecios();
 
@@ -112,7 +114,7 @@ public class ViewConsultaLibroIVACompras extends JFrame{
 
         DecimalFormat formato1 = new DecimalFormat("#.##");
         model.getDataVector().removeAllElements();
-        for(ComprobanteDTO Comprobante : ControladorComprobantes.getInstancia().getAllComprobantesDTO()){
+        for(ComprobanteDTO Comprobante :controlador.getAllComprobantesDTO()){
             model.addRow(new Object[]{
                     Comprobante.getProveedor().getNombre(),
                     Comprobante.getProveedor().getCuit(),

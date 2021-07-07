@@ -30,6 +30,8 @@ public class ViewTotalDeDeuda extends JFrame{
     private JButton consultarDeudaButton;
     private JButton cancelarButton;
     private JTextField labelMonto;
+    private ControladorProveedor controladorP;
+    private ControladorComprobantes controladorC;
 
     public ViewTotalDeDeuda() {
 
@@ -39,6 +41,8 @@ public class ViewTotalDeDeuda extends JFrame{
         this.setSize(1000, 600);
         this.setVisible(true);
         this.setLocationRelativeTo(null);
+        this.controladorP = ControladorProveedor.getInstancia();
+        this.controladorC = ControladorComprobantes.getInstancia();
 
 
         consultarDeudaButton.addActionListener(e -> {
@@ -103,11 +107,11 @@ public class ViewTotalDeDeuda extends JFrame{
     private void setJtextArea(String cuit) {
 
         DecimalFormat formato1 = new DecimalFormat("#.##");
-       if (!ControladorProveedor.getInstancia().existsProveedorCuit(cuit)){
+       if (!controladorP.existsProveedorCuit(cuit)){
 
             this.labelMonto.setText(" El proveedor correspondiente al cuit ingresado no existe ");
         }else{
-            this.labelMonto.setText(String.valueOf(formato1.format(ControladorComprobantes.getInstancia().calcularDeudaDeProveedorByCuit(cuit))));
+            this.labelMonto.setText(String.valueOf(formato1.format(controladorC.calcularDeudaDeProveedorByCuit(cuit))));
         }
     }
 

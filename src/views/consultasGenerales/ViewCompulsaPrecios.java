@@ -33,6 +33,7 @@ public class ViewCompulsaPrecios extends JFrame{
     private JTabbedPane tab;
     private JTable tablePrecios;
     private DefaultTableModel model;
+    private ControladorItem controlador;
 
 
     private Integer rubroID;
@@ -52,6 +53,7 @@ public class ViewCompulsaPrecios extends JFrame{
         model.addColumn("Proveedor");
         model.addColumn("Precio Neto");
         tablePrecios.setModel(model);
+        this.controlador = ControladorItem.getInstancia();
 
 
 
@@ -146,22 +148,22 @@ public class ViewCompulsaPrecios extends JFrame{
 
 
     private void setDDLRubros() {
-        var model = ControladorItem.getInstancia().getOpcionesDDLRubros();
+        var model = controlador.getOpcionesDDLRubros();
         this.ddlRubros.setModel(new DefaultComboBoxModel(model.toArray()));
     }
 
     private void setDDLProductos(int rubroID) {
-        var model = ControladorItem.getInstancia().getOpcionesDDLItems(rubroID);
+        var model = controlador.getOpcionesDDLItems(rubroID);
         this.ddlProductos.setModel(new DefaultComboBoxModel(model.toArray()));
     }
 
     private void setDDLProductos() {
-        var model = ControladorItem.getInstancia().getOpcionesDDLItems();
+        var model = controlador.getOpcionesDDLItems();
         this.ddlProductos.setModel(new DefaultComboBoxModel(model.toArray()));
     }
 
     private void setJtextArea(int itemID) {
-        var itemPorProveedor = ControladorItem.getInstancia().getProveedorItemsByItem(itemID);
+        var itemPorProveedor = controlador.getProveedorItemsByItem(itemID);
         if (itemPorProveedor.isEmpty()){
             this.TextResultado.setText("Este producto no posee precio fijados por vendedores actualmente ");
         }
@@ -187,7 +189,7 @@ public class ViewCompulsaPrecios extends JFrame{
     private void setTablePrecios(int itemID) {
 
         model.getDataVector().removeAllElements();
-        var itemPorProveedor = ControladorItem.getInstancia().getProveedorItemsByItem(itemID);
+        var itemPorProveedor = controlador.getProveedorItemsByItem(itemID);
         if (!itemPorProveedor.isEmpty()) {
             for (DDlProveedorItemDTO itemP : itemPorProveedor) {
                 model.addRow(new Object[]{

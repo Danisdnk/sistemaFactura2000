@@ -27,6 +27,8 @@ public class ViewTotalDeImpuestosRetenidos extends JFrame{
     private JButton consultarButton;
     private JTable tableImpuestos;
     private DefaultTableModel model;
+    private ControladorProveedor controladorP;
+    private ControladorOrdenesDePagos controladorOP;
 
     public ViewTotalDeImpuestosRetenidos() {
 
@@ -35,6 +37,8 @@ public class ViewTotalDeImpuestosRetenidos extends JFrame{
         this.setSize(1000, 600);
         this.setVisible(true);
         this.setLocationRelativeTo(null);
+        this.controladorP = ControladorProveedor.getInstancia();
+        this.controladorOP = ControladorOrdenesDePagos.getInstancia();
 
         model = new DefaultTableModel();
         model.addColumn("Proveedor");
@@ -51,7 +55,7 @@ public class ViewTotalDeImpuestosRetenidos extends JFrame{
 
             if (!textCuit.getText().isEmpty()) {
                 String cuit = textCuit.getText();
-                if (ControladorProveedor.getInstancia().existsProveedorCuit(cuit)) {
+                if (controladorP.existsProveedorCuit(cuit)) {
                     setJTable(cuit);
                 } else {
                     JOptionPane.showMessageDialog(
@@ -108,7 +112,7 @@ public class ViewTotalDeImpuestosRetenidos extends JFrame{
     private void setJTable(String cuit) {
 
         model.getDataVector().removeAllElements();
-        for(OrdenPago op : ControladorOrdenesDePagos.getInstancia().getOPsByCuit(cuit)){
+        for(OrdenPago op : controladorOP.getOPsByCuit(cuit)){
 
             model.addRow(new Object[]{
                     op.getProveedor().getNombre(),

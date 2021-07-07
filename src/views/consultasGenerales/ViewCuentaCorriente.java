@@ -34,6 +34,9 @@ public class ViewCuentaCorriente extends JFrame{
     private JLabel labelOP;
     private JLabel labelEC;
     private DefaultTableModel model;
+    private ControladorProveedor controladorP;
+    private ControladorComprobantes controladorC;
+    private ControladorOrdenesDePagos controladorOP;
 
     public ViewCuentaCorriente(){
 
@@ -57,13 +60,16 @@ public class ViewCuentaCorriente extends JFrame{
         model.addColumn("Monto Neto");
         model.addColumn("Monto Total");
         tablaCuentaCorriente.setModel(model);
+        this.controladorP = ControladorProveedor.getInstancia();
+        this.controladorC = ControladorComprobantes.getInstancia();
+        this.controladorOP = ControladorOrdenesDePagos.getInstancia();
 
         
         consultarButton.addActionListener(e -> {
 
             if (!textCuit.getText().isEmpty()) {
                 String cuit = textCuit.getText();
-                if (ControladorProveedor.getInstancia().existsProveedorCuit(cuit)) {
+                if (controladorP.existsProveedorCuit(cuit)) {
                     setJData(cuit);
                 } else {
                     JOptionPane.showMessageDialog(
@@ -128,14 +134,14 @@ public class ViewCuentaCorriente extends JFrame{
         labelNC.setVisible(true);
         labelEC.setVisible(true);
 
-        labelFacturas.setText(String.valueOf(ControladorComprobantes.getInstancia().getFacturasByProveedor(cuit).size()));
-        labelOP.setText(String.valueOf(ControladorOrdenesDePagos.getInstancia().getOPsByCuit(cuit).size()));
-        labelNC.setText(String.valueOf(ControladorComprobantes.getInstancia().getNCreditoByCuit(cuit).size()));
-        labelND.setText(String.valueOf(ControladorComprobantes.getInstancia().getNDebitoByCuit(cuit).size()));
-        labelEC.setText(String.valueOf(ControladorComprobantes.getInstancia().calcularDeudaDeProveedorByCuit(cuit)));
+        labelFacturas.setText(String.valueOf(controladorC.getFacturasByProveedor(cuit).size()));
+        labelOP.setText(String.valueOf(controladorOP.getOPsByCuit(cuit).size()));
+        labelNC.setText(String.valueOf(controladorC.getNCreditoByCuit(cuit).size()));
+        labelND.setText(String.valueOf(controladorC.getNDebitoByCuit(cuit).size()));
+        labelEC.setText(String.valueOf(controladorC.calcularDeudaDeProveedorByCuit(cuit)));
 
         model.getDataVector().removeAllElements();
-        for (Comprobante comprobante : ControladorComprobantes.getInstancia().getComprobantesByCuit(cuit)) {
+        for (Comprobante comprobante : controladorC.getComprobantesByCuit(cuit)) {
 
             model.addRow(new Object[]{
                     comprobante.getProveedor().getNombre(),
@@ -147,7 +153,7 @@ public class ViewCuentaCorriente extends JFrame{
 
         }
         model.fireTableDataChanged();
-        for (OrdenPago ordenPago : ControladorOrdenesDePagos.getInstancia().getOPsByCuit(cuit)) {
+        for (OrdenPago ordenPago : controladorOP.getOPsByCuit(cuit)) {
 
             model.addRow(new Object[]{
                     ordenPago.getProveedor().getNombre(),

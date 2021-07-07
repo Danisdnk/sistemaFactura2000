@@ -30,6 +30,8 @@ public class ViewOrdenesPago extends JFrame{
     private JButton consultarButton;
     DefaultTableModel model;
     private List<OrdenPago> ordenPago;
+    private ControladorProveedor controladorP;
+    private ControladorOrdenesDePagos controladorOP;
 
 
     public ViewOrdenesPago() {
@@ -40,6 +42,9 @@ public class ViewOrdenesPago extends JFrame{
         this.setSize(1000,600);
         this.setVisible(true);
         this.setLocationRelativeTo(null);
+
+        this.controladorP = ControladorProveedor.getInstancia();
+        this.controladorOP = ControladorOrdenesDePagos.getInstancia();
 
 
         model = new DefaultTableModel();
@@ -61,10 +66,10 @@ public class ViewOrdenesPago extends JFrame{
 
             System.out.println(cuit);
             if(!cuit.equals("")) {
-                if (ControladorProveedor.getInstancia().existsProveedorCuit(cuit)) {
+                if (controladorP.existsProveedorCuit(cuit)) {
                     model.getDataVector().removeAllElements();
-                    setJtextAreaResultado(ControladorOrdenesDePagos.getInstancia().getOPsByCuit(cuit));
-                    for (OrdenPago op : ControladorOrdenesDePagos.getInstancia().getOPsByCuit(cuit)) {
+                    setJtextAreaResultado(controladorOP.getOPsByCuit(cuit));
+                    for (OrdenPago op : controladorOP.getOPsByCuit(cuit)) {
 
                         boolean ch = op.getItems().stream().anyMatch(u -> u.getTipoDePago().getType().equals("Cheque"));
                         boolean ef = op.getItems().stream().anyMatch(u -> u.getTipoDePago().getType().equals("Efectivo"));
