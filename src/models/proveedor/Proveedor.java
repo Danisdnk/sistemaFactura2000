@@ -3,6 +3,7 @@ package models.proveedor;
 import dal.Identificable;
 import models.dtos.*;
 import models.impuesto.EnumResponsableIva;
+import models.impuesto.ResponsableIva;
 
 import java.time.LocalDate;
 
@@ -54,37 +55,26 @@ public class Proveedor implements DDLeable, Identificable {
         this.cuit = cuit;
     }
 
-    public Proveedor(
-            String nombre,
-            String direccion,
-            String email,
-            String telefono,
-            String numeroIIBB,
-            LocalDate inicioActividades,
-            String rubros,
-            //  Float credito,
-            String razonSocial,
-            String cuit,
-            String responsableIva,
-            int idProv)
+    public Proveedor( String nombre, String direccion, String email, String telefono,
+                      String numeroIIBB, LocalDate inicioActividades, String rubros,
+                      String razonSocial, String cuit, String responsableIva, int idProv)
+            //  Float credito,)
     {
-        setNombre(nombre);
-        setDireccion(direccion);
-        setEmail(email);
-        setTelefono(telefono);
+        setNombre(nombre); setDireccion(direccion); setEmail(email); setTelefono(telefono);
+        setID(idProv);setInicioActividades(inicioActividades);setNumeroIIBB(numeroIIBB);
+        setRubros(rubros);setRazonSocial(razonSocial);setCuit(cuit);setResponsableIva(responsableIva);
         //setCredito(credito);
-        setID(idProv);
-        setInicioActividades(inicioActividades);
-        setNumeroIIBB(numeroIIBB);
-        setRubros(rubros);
-        setRazonSocial(razonSocial);
-        setCuit(cuit);
-        setResponsableIva(responsableIva);
     }
 
-    // public ControladorSistema ; //metodo para devolver algo al controlador???
-
-    // PROVEEDORES CONTROLER - DAR DE ALTA , MODIFICAR, LISTAR Prov del sistema, BORRAR
+    public Proveedor( String nombre, String direccion, String email, String telefono,
+                      String numeroIIBB, LocalDate inicioActividades, String rubros,
+                      String razonSocial, String cuit, String responsableIva)
+    {
+        setNombre(nombre); setDireccion(direccion); setEmail(email); setTelefono(telefono);
+        setID(ID);setInicioActividades(inicioActividades);setNumeroIIBB(numeroIIBB);
+        setRubros(rubros);setRazonSocial(razonSocial);setCuit(cuit);setResponsableIva(responsableIva);
+        //setCredito(credito);
+    }
     public int getID() {
         return ID;
     }
@@ -173,9 +163,6 @@ public class Proveedor implements DDLeable, Identificable {
     //    this.credito = credito;
     //   }
 
-    public void calcularDeudaDelProveedor(String cuit) {
-        // TODO implement here
-    }
 
     @Override
     public String toString() {
