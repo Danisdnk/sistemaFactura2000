@@ -85,6 +85,9 @@ public class ViewAltaFacturas extends JFrame{
         textNeto.setText("0");
         textTotal.setText("0");
         textIva.setText("0");
+        txtCUIT.setEnabled(false);
+        txtIDItem.setEnabled(false);
+        ddlProductos.addItem("Selecione un Proveedor");
 
 
         this.ddlProveedor.addActionListener(e -> {
@@ -129,20 +132,37 @@ public class ViewAltaFacturas extends JFrame{
 
         });
 
-        agregarButton.addActionListener(e -> {
+        agregarButton.addActionListener(e -> { ;
             var sel = (DDlProveedorItemDTO)ddlProductos.getSelectedItem() ;
             try {
-                setTable(sel);
+                if((Float.parseFloat(textCant.getText()) > 0 && !textCant.getText().equals(""))) {
+                    if (sel != null) {
+                        setTable(sel);
+                    } else {
+                        JOptionPane.showMessageDialog(
+                                guardarButton,
+                                "Elija un producto",
+                                "Error",
+                                JOptionPane.ERROR_MESSAGE);
+                    }
+                }else{
+                    JOptionPane.showMessageDialog(
+                            guardarButton,
+                            "Ingrese una cantidad valida",
+                            "Information",
+                            JOptionPane.INFORMATION_MESSAGE);
+                }
             }catch (Exception NumberFormatException){
+
                 JOptionPane.showMessageDialog(
                         guardarButton,
-                        "Ingrese solo numeros",
+                        "Error",
                         "Error",
                         JOptionPane.ERROR_MESSAGE);
             }
 
             SetTotales(Float.parseFloat(String.valueOf(sel.precio)) * Float.parseFloat(textCant.getText()), sel.iva);
-            textCant.setText("");
+            textCant.setText("0");
 
 
         });

@@ -1,6 +1,7 @@
 package views.consultasGenerales;
 
 import controllers.ControladorComprobantes;
+import controllers.ControladorProveedor;
 import models.dtos.ComprobanteDTO;
 import views.documentosRecibidos.DocumentosView;
 import views.login.loginView;
@@ -81,21 +82,35 @@ public class ViewFacturasRecibidas extends JFrame {
                     System.out.println("TENGO O FECHA O CUIT");
                     if (cuit != null && fecha != null) {         // tengo cuit y fecha
 
-                        System.out.println("CUIT Y FECHA");
-                        var facturas = ControladorComprobantes.getInstancia().getFacturasDTOByFechaYProveedor(cuit, fecha);
-                        setJtextArea(facturas);
-                        setTableFacturas(facturas);
-                        System.out.println(1);
+                        if(ControladorProveedor.getInstancia().existsProveedorCuit(cuit)) {
+                            var facturas = ControladorComprobantes.getInstancia().getFacturasDTOByFechaYProveedor(cuit, fecha);
+                            setJtextArea(facturas);
+                            setTableFacturas(facturas);
+                            System.out.println(1);
+                        }else {
+                            JOptionPane.showMessageDialog(
+                                    consultarButton,
+                                    "No existe un proveedor con el cuit ingresado",
+                                    "Error",
+                                    JOptionPane.INFORMATION_MESSAGE);
+                        }
 
                     } else {
                         if (cuit != null) {           //solo cuit
 
-                            System.out.println("CUIT");
-                            var facturas = ControladorComprobantes.getInstancia().getFacturasDTOsByProveedor(cuit);
-                            setJtextArea(facturas);
-                            setTableFacturas(facturas);
-                            System.out.println(2);
-
+                            if(ControladorProveedor.getInstancia().existsProveedorCuit(cuit)) {
+                                System.out.println("CUIT");
+                                var facturas = ControladorComprobantes.getInstancia().getFacturasDTOsByProveedor(cuit);
+                                setJtextArea(facturas);
+                                setTableFacturas(facturas);
+                                System.out.println(2);
+                            }else {
+                                JOptionPane.showMessageDialog(
+                                        consultarButton,
+                                        "No existe un proveedor con el cuit ingresado",
+                                        "Error",
+                                        JOptionPane.INFORMATION_MESSAGE);
+                            }
                         } else {                                  //solo fecha
 
                             System.out.println("FECHA");

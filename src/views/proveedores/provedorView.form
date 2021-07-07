@@ -299,7 +299,7 @@
                   <foreground color="-22507"/>
                   <horizontalAlignment value="10"/>
                   <horizontalTextPosition value="0"/>
-                  <text value="Certificado retención"/>
+                  <text value="Responsabilidad frente al IVA"/>
                 </properties>
               </component>
             </children>
@@ -329,7 +329,7 @@
                   <background color="-10854290"/>
                   <caretColor color="-22507"/>
                   <foreground color="-2829356"/>
-                  <margin top="4" left="11" bottom="4" right="11"/>
+                  <margin top="2" left="6" bottom="2" right="6"/>
                   <name value=""/>
                   <opaque value="true"/>
                 </properties>

@@ -56,7 +56,7 @@ public class OrdenPago extends Comprobante {
     }
 
     public void setTotalRetenciones(float retencionIVA, float retencionIIBB) {
-        this.totalRetenciones = totalRetenciones + retencionIVA + retencionIIBB;
+        this.totalRetenciones =  totalRetenciones+ retencionIVA + retencionIIBB;
     }
 
     private void calcularTotal() {

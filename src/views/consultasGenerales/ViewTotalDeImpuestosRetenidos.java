@@ -38,7 +38,7 @@ public class ViewTotalDeImpuestosRetenidos extends JFrame{
 
         model = new DefaultTableModel();
         model.addColumn("Proveedor");
-        model.addColumn("Nro Docuemtno");
+        model.addColumn("Nro Documento");
         model.addColumn("Fecha");
         model.addColumn("IVA retenido");
         model.addColumn("IIBB retenido");
