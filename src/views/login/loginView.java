@@ -26,70 +26,60 @@ public class loginView extends JFrame {
         this.setContentPane(loginPanel); //ponemos como panel el nombre de variable del panel
         this.setVisible(true); //lo volvemos visible
         this.setLocationRelativeTo(null); // centra la pantalla
-        btnIngresar.addActionListener(new ActionListener() {
+        btnIngresar.addActionListener(e -> {
 
-            @Override
-            public void actionPerformed(ActionEvent e) {
+            String nombreUsuario = textUsuario.getText();
+            String pass = textPass.getText();
 
-                String nombreUsuario = textUsuario.getText();
-                String pass = textPass.getText();
+            if ( controlador.getUsuarioByNombreUsuarioPass(nombreUsuario, pass) ) {
+                var menuPrincipal = new MenuPrincipal("Factura 2000");
+                menuPrincipal.setVisible(true);
 
-                if ( ControladorUsuario.getInstancia().getUsuarioByNombreUsuarioPass(nombreUsuario, pass) == true) {
-                    var menuPrincipal = new MenuPrincipal("Factura 2000");
-                    menuPrincipal.setVisible(true);
-
-                    dispose(); //cierra la ventana para mostrar la otra vista
-                } else {
-                    JOptionPane.showMessageDialog(
-                            btnIngresar,
-                            "Credenciales Erroneas",
-                            "Error",
-                            JOptionPane.ERROR_MESSAGE);
-                }
+                dispose(); //cierra la ventana para mostrar la otra vista
+            } else {
+                JOptionPane.showMessageDialog(
+                        btnIngresar,
+                        "Credenciales Erroneas",
+                        "Error",
+                        JOptionPane.ERROR_MESSAGE);
             }
         });
 
-        btnCrearUsuario.addActionListener(new ActionListener() {
+        btnCrearUsuario.addActionListener(e -> {
+            String nombreUsuario = textUsuario.getText();
 
+        if(!ControladorUsuario.getInstancia().getUsuarioByCredenciales(nombreUsuario) && !nombreUsuario.equals("")){
+            Usuario usModel = new Usuario(
+                    textUsuario.getText(),
+                    textPass.getText()
 
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String nombreUsuario = textUsuario.getText();
-                //var banana = ControladorUsuario.getInstancia().getOpcionesDDLUsuarios();
-            if(!ControladorUsuario.getInstancia().getUsuarioByCredenciales(nombreUsuario) && !nombreUsuario.equals("")){
-                Usuario usModel = new Usuario(
-                        textUsuario.getText(),
-                        textPass.getText()
+            );
+            System.out.println(nombreUsuario);
+            controlador.agregarUsuario(usModel);
+            JOptionPane.showMessageDialog(
+                    btnCrearUsuario,
+                    "Se creo el nuevo usuario",
+                    "Nuevo Usuario",
+                    JOptionPane.INFORMATION_MESSAGE);
 
-                );
-                System.out.println(nombreUsuario);
-                controlador.agregarUsuario(usModel);
+        }
+
+        else {
+            if (nombreUsuario.equals("")) {
                 JOptionPane.showMessageDialog(
                         btnCrearUsuario,
-                        "Se creo el nuevo usuario",
-                        "Nuevo Usuario",
+                        "Ingrese un Usuario valido",
+                        "Error",
                         JOptionPane.INFORMATION_MESSAGE);
+            } else {
 
+                JOptionPane.showMessageDialog(
+                        btnCrearUsuario,
+                        "El Usuario ya existe",
+                        "Error",
+                        JOptionPane.INFORMATION_MESSAGE);
             }
-
-            else {
-                if (nombreUsuario.equals("")) {
-                    JOptionPane.showMessageDialog(
-                            btnCrearUsuario,
-                            "Ingrese un Usuario valido",
-                            "Error",
-                            JOptionPane.INFORMATION_MESSAGE);
-                } else {
-
-                    JOptionPane.showMessageDialog(
-                            btnCrearUsuario,
-                            "El Usuario ya existe",
-                            "Error",
-                            JOptionPane.INFORMATION_MESSAGE);
-                }
-            }
-            }
-
+        }
         });
 
     }
