@@ -57,6 +57,8 @@ public class ViewAltaFacturas extends JFrame{
     private float montoTotal = 0F;
     private float Iva = 0F;
     private DefaultTableModel model;
+    private ControladorProveedor controladorP;
+    private ControladorComprobantes controladorC;
 
 
     DecimalFormat formato1 = new DecimalFormat("#.##");
@@ -70,6 +72,9 @@ public class ViewAltaFacturas extends JFrame{
         this.setSize(1000, 900);
         this.setVisible(true);
         this.setLocationRelativeTo(null);
+
+        this.controladorP = ControladorProveedor.getInstancia();
+        this.controladorC = ControladorComprobantes.getInstancia();
 
         model = new DefaultTableModel();
         model.addColumn("ID");
@@ -105,7 +110,7 @@ public class ViewAltaFacturas extends JFrame{
             var sel = (DDLItemDTO) ddlProveedor.getSelectedItem();
 
             if ( sel != null ) {  //si la seleccion es distinta de nulo hacemos varias cosas
-                itemSeleccionado = ControladorProveedor.getInstancia().getProveedorByID(sel.id);
+                itemSeleccionado = controladorP.getProveedorByID(sel.id);
 
                 txtCUIT.setText(
                         !itemSeleccionado.getCuit()
@@ -202,10 +207,10 @@ public class ViewAltaFacturas extends JFrame{
                         assert sel2 != null;
                         detectarPreciosImputs();
                         var ItemFactura = generarListaDeItemsFactura();
-                        var proveedor = ControladorProveedor.getInstancia().getProveedorByID(sel.id);
+                        var proveedor = controladorP.getProveedorByID(sel.id);
                         var fecha = DateParse.parse(textDate.getText());
                         Factura f = new Factura(proveedor, montoNeto, Iva, montoIva, montoTotal, fecha, ItemFactura);
-                        ControladorComprobantes.getInstancia().agregarFactura(f);
+                        controladorC.agregarFactura(f);
 
                         textTotal.setText("0");
                         textNeto.setText("0");
@@ -349,7 +354,7 @@ public class ViewAltaFacturas extends JFrame{
 
 
     private void setDDLProveedor() {
-        var model = ControladorProveedor.getInstancia().getOpcionesDDLProveedores();
+        var model = controladorP.getOpcionesDDLProveedores();
         this.ddlProveedor.setModel(new DefaultComboBoxModel(model.toArray()));
         ddlProveedor.removeItemAt(0);
     }
