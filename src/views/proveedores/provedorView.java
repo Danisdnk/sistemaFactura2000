@@ -1,12 +1,12 @@
 package views.proveedores;
 
 import javax.swing.*;
+import javax.swing.text.DateFormatter;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 import com.github.lgooddatepicker.components.DatePicker;
 
@@ -20,7 +20,8 @@ import views.documentosRecibidos.DocumentosView;
 import views.login.loginView;
 import views.ordenesDePago.OrdenesDePagoFrame;
 import models.proveedor.Proveedor;
-import views.utils.ValidadorNum;
+import models.proveedor.Proveedor;
+import views.utils.InputValidate;
 
 public class provedorView extends JFrame {
     private JPanel mainPanel;
@@ -37,7 +38,7 @@ public class provedorView extends JFrame {
     private JPanel panelProveedores;
     private JButton addProveedor;
     private JLabel labelProveedor;
-    private JComboBox<DDLItemDTO> dropListaProveedores;
+    private JComboBox<List> dropListaProveedores;
     private JTextField txtNombreFantasia;
     private JTextField txtRazonSocial;
     private JTextField txtCuit;
@@ -49,7 +50,6 @@ public class provedorView extends JFrame {
     private JComboBox<DDLItemDTO> dropRubro;
     private JButton removeProveedor;
     private JButton modifyProveedor;
-    private JComboBox ddlCertificadoRetencion;
     private JButton addRubroProveedor;
     private DatePicker datePickerAct;
     private JButton borrarButton;
@@ -74,8 +74,8 @@ public class provedorView extends JFrame {
         addProveedor.setEnabled(true);
         modifyProveedor.setEnabled(false);
         removeProveedor.setEnabled(false);
-        datePickerAct.setDateToToday();
 
+        datePickerAct.setDateToToday();
         ordenesDePagoButton.addActionListener(e -> {
             OrdenesDePagoFrame op = new OrdenesDePagoFrame();
             op.setVisible(true);
@@ -143,18 +143,19 @@ completo cargamos el dato como string vacio.asi almenos no pincha. ternario es (
         List<Rubro> rubrosAgregados = null; //TODO esto hay que modificarlo para que al hacer "+" agregue un rubro a la
         // lista del futuro nuevo proveedor
 
-        addRubroProveedor.addActionListener(e -> {
+        addRubroProveedor.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
 
-            var sel = (DDLItemDTO) dropRubro.getSelectedItem();
+                var sel = (DDLItemDTO) dropRubro.getSelectedItem();
 
-            if ( sel != null ) {
-                assert false;
-                rubrosAgregados.add(new Rubro(sel.descripcion));
+                if ( sel != null ) {
+                    rubrosAgregados.add(new Rubro(sel.descripcion));
+                }
             }
         });
 
         addProveedor.addActionListener(e -> {
-            //  SimpleDateFormat formatter = new SimpleDateFormat("EEE d MMM yyyy", Locale.getDefault());
             var patata = ControladorProveedor.getInstancia().getOpcionesDDLProveedores();
             var sel = (DDLItemDTO) dropListaProveedores.getSelectedItem();
 
@@ -182,8 +183,8 @@ completo cargamos el dato como string vacio.asi almenos no pincha. ternario es (
 
             var sel = (DDLItemDTO) dropListaProveedores.getSelectedItem();
             var seleccionado = dropListaProveedores.getSelectedIndex();
-
             boolean eliminado = false;
+
             if ( sel != null ) {
                 var provedor = controlador.getProveedorByID(sel.id);
                 eliminado = controlador.eliminarProveedor(provedor);
@@ -194,13 +195,11 @@ completo cargamos el dato como string vacio.asi almenos no pincha. ternario es (
                     JOptionPane.showMessageDialog(removeProveedor, "No se pudo eliminar el proveedor", "Proveedor Eliminado", JOptionPane.ERROR_MESSAGE);
                 }
             }
-
             if ( eliminado ) {
                 dropListaProveedores.setSelectedIndex(0);
                 dropListaProveedores.removeItemAt(seleccionado);
 
             }
-
         });
 
         modifyProveedor.addActionListener(e -> {
@@ -236,23 +235,26 @@ completo cargamos el dato como string vacio.asi almenos no pincha. ternario es (
             @Override
             public void keyPressed(KeyEvent e) {
                 super.keyPressed(e);
-                ValidadorNum.genericValidateJtextNumbers(txtCuit, e);
+                InputValidate.genericValidateJtextNumbers(txtCuit, e);
+                InputValidate.genericValidateJtextNumbers(txtCuit, e);
             }
         });
         txtIngresosBrutos.addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
                 super.keyPressed(e);
-                ValidadorNum.genericValidateJtextNumbers(txtIngresosBrutos, e);
+                InputValidate.genericValidateJtextNumbers(txtIngresosBrutos, e);
             }
         });
         txtTelefono.addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
                 super.keyPressed(e);
-                ValidadorNum.genericValidateJtextNumbers(txtTelefono, e);
+                InputValidate.genericValidateJtextNumbers(txtTelefono, e);
             }
         });
+        //no permite ingresar numeros o caracteres especiales
+
         txtDireccion.addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
@@ -284,11 +286,14 @@ completo cargamos el dato como string vacio.asi almenos no pincha. ternario es (
     }
 
     private void setDDLRubros() {
+        vistaProv.validate();
+        vistaProv.repaint();
         var controladorItem = ControladorItem.getInstancia().getOpcionesDDLRubros();
         this.dropRubro.setModel(new DefaultComboBoxModel(controladorItem.toArray()));
     }
 
     private Proveedor getCamposProveedor(DDLItemDTO sel) {
+
         return new Proveedor(
                 txtNombreFantasia.getText(),
                 txtDireccion.getText(),
@@ -307,6 +312,8 @@ completo cargamos el dato como string vacio.asi almenos no pincha. ternario es (
     }
 
     private void setDDLResponsableIva() {
+        //vistaProv.validate();// for JFrame up to Java7 is there only validate()
+        //vistaProv.repaint();
         var controladorProv = ControladorProveedor.getInstancia().getOpcionesDDLResponsableIva();
         this.dropResponsableIva.setModel(new DefaultComboBoxModel(controladorProv.toArray()));
     }
