@@ -4,7 +4,6 @@ import dal.Repository;
 import models.dtos.DDLItemDTO;
 import models.impuesto.ResponsableIva;
 import models.proveedor.Proveedor;
-import models.proveedor.Rubro;
 
 import java.util.List;
 
@@ -12,7 +11,7 @@ public class ControladorProveedor {
     private static ControladorProveedor instancia;
     private Repository<Proveedor> RepoProveedores;
     private  Repository<ResponsableIva> RepoResponsableIva;
-    public ControladorProveedor() {
+    private ControladorProveedor() {
         this.RepoProveedores =  RepoFactory.getRepoProveedores();
     }
 

@@ -22,7 +22,7 @@ public class ControladorItem {
     private Repository<Rubro> RepoRubros;
     private Repository<ProveedorItem> RepoProveedorItem;
 
-    public ControladorItem() {
+    private ControladorItem() {
         this.RepoItems = RepoFactory.getRepoItems();
         this.RepoRubros = RepoFactory.getRepoRubros();
         this.RepoProveedorItem = RepoFactory.getProveedorItem();

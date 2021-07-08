@@ -11,7 +11,7 @@ public class ControladorUsuario {
 
     private Repository<Usuario> RepoUsuarios; //repousuarios
 
-    public ControladorUsuario() {
+    private ControladorUsuario() {
         this.RepoUsuarios =  RepoFactory.getUsuarioRepository();
     }
 
